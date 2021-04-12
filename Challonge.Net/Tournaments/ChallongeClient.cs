@@ -272,17 +272,6 @@ namespace Challonge
             return ParseTournamentApiResult(responseString, includeMatches, includeParticipants);
         }
 
-        public async Task<Tournament> DeleteTournamentAsync(Tournament tournament)
-        {
-            string request = $"https://api.challonge.com/v1/tournaments/{tournament.Url}.json?api_key={apiKey}";
-            HttpResponseMessage response = await httpClient.DeleteAsync(request);
-
-            string responseString = await ErrorHandler.ParseResponseAsync(response);
-
-            TournamentData tournamentData = JsonSerializer.Deserialize<TournamentData>(responseString);
-            return tournamentData.Tournament;
-        }
-
         public async Task<Tournament> DeleteTournamentAsync(string url)
         {
             string request = $"https://api.challonge.com/v1/tournaments/{url}.json?api_key={apiKey}";
@@ -305,13 +294,6 @@ namespace Challonge
             return tournamentData.Tournament;
         }
 
-        public async Task<TournamentApiResult> ProcessCheckInsAsync(Tournament tournament, bool includeMatches = false, bool includeParticipants = false)
-        {
-            string request = $"https://api.challonge.com/v1/tournaments/{tournament.Url}/process_check_ins.json";
-
-            return await TournamentApiCallAsync(request, includeMatches, includeParticipants);
-        }
-
         public async Task<TournamentApiResult> ProcessCheckInsAsync(string url, bool includeMatches = false, bool includeParticipants = false)
         {
             string request = $"https://api.challonge.com/v1/tournaments/{url}/process_check_ins.json";
@@ -322,13 +304,6 @@ namespace Challonge
         public async Task<TournamentApiResult> ProcessCheckInsAsync(int id, bool includeMatches = false, bool includeParticipants = false)
         {
             string request = $"https://api.challonge.com/v1/tournaments/{id}/process_check_ins.json";
-
-            return await TournamentApiCallAsync(request, includeMatches, includeParticipants);
-        }
-
-        public async Task<TournamentApiResult> AbortCheckInAsync(Tournament tournament, bool includeMatches = false, bool includeParticipants = false)
-        {
-            string request = $"https://api.challonge.com/v1/tournaments/{tournament.Url}/abort_check_in.json";
 
             return await TournamentApiCallAsync(request, includeMatches, includeParticipants);
         }
@@ -347,13 +322,6 @@ namespace Challonge
             return await TournamentApiCallAsync(request, includeMatches, includeParticipants);
         }
 
-        public async Task<TournamentApiResult> StartTournamentAsync(Tournament tournament, bool includeMatches = false, bool includeParticipants = false)
-        {
-            string request = $"https://api.challonge.com/v1/tournaments/{tournament.Url}/start.json";
-
-            return await TournamentApiCallAsync(request, includeMatches, includeParticipants);
-        }
-
         public async Task<TournamentApiResult> StartTournamentAsync(string url, bool includeMatches = false, bool includeParticipants = false)
         {
             string request = $"https://api.challonge.com/v1/tournaments/{url}/start.json";
@@ -364,13 +332,6 @@ namespace Challonge
         public async Task<TournamentApiResult> StartTournamentAsync(int id, bool includeMatches = false, bool includeParticipants = false)
         {
             string request = $"https://api.challonge.com/v1/tournaments/{id}/start.json";
-
-            return await TournamentApiCallAsync(request, includeMatches, includeParticipants);
-        }
-
-        public async Task<TournamentApiResult> FinalizeTournamentAsync(Tournament tournament, bool includeMatches = false, bool includeParticipants = false)
-        {
-            string request = $"https://api.challonge.com/v1/tournaments/{tournament.Url}/finalize.json";
 
             return await TournamentApiCallAsync(request, includeMatches, includeParticipants);
         }
@@ -389,13 +350,6 @@ namespace Challonge
             return await TournamentApiCallAsync(request, includeMatches, includeParticipants);
         }
 
-        public async Task<TournamentApiResult> ResetTournamentAsync(Tournament tournament, bool includeMatches = false, bool includeParticipants = false)
-        {
-            string request = $"https://api.challonge.com/v1/tournaments/{tournament.Url}/reset.json";
-
-            return await TournamentApiCallAsync(request, includeMatches, includeParticipants);
-        }
-
         public async Task<TournamentApiResult> ResetTournamentAsync(string url, bool includeMatches = false, bool includeParticipants = false)
         {
             string request = $"https://api.challonge.com/v1/tournaments/{url}/reset.json";
@@ -406,13 +360,6 @@ namespace Challonge
         public async Task<TournamentApiResult> ResetTournamentAsync(int id, bool includeMatches = false, bool includeParticipants = false)
         {
             string request = $"https://api.challonge.com/v1/tournaments/{id}/reset.json";
-
-            return await TournamentApiCallAsync(request, includeMatches, includeParticipants);
-        }
-
-        public async Task<TournamentApiResult> OpenTournamentForPredictionsAsync(Tournament tournament, bool includeMatches = false, bool includeParticipants = false)
-        {
-            string request = $"https://api.challonge.com/v1/tournaments/{tournament.Url}/open_for_predictions.json";
 
             return await TournamentApiCallAsync(request, includeMatches, includeParticipants);
         }
