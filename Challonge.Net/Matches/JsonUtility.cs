@@ -2,9 +2,8 @@
 using System.Globalization;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Challonge.Matches;
 
-namespace Challonge.Json
+namespace Challonge.Matches.Json
 {
     internal class MatchStateJsonConverter : JsonConverter<MatchState>
     {
