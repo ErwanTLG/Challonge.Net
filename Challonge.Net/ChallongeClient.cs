@@ -10,11 +10,23 @@ namespace Challonge
     {
         internal readonly string apiKey;
 
-        internal static readonly HttpClient httpClient = new HttpClient();
+        internal readonly HttpClient httpClient = new HttpClient();
+
+        public TournamentHandler Tournaments { get; }
 
         public ChallongeClient(string key)
         {
             apiKey = key ?? throw new ArgumentNullException("key");
+
+            Tournaments = new TournamentHandler(apiKey, httpClient);
+        }
+
+        public ChallongeClient(string key, HttpClient httpClient)
+        {
+            apiKey = key ?? throw new ArgumentNullException("key");
+            this.httpClient = httpClient ?? throw new ArgumentNullException("httpClient");
+
+            Tournaments = new TournamentHandler(apiKey, httpClient);
         }
     }
 }

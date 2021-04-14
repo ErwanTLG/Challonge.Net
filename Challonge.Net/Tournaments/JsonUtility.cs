@@ -13,8 +13,8 @@ namespace Challonge.Tournaments.Json
             return enumValue switch
             {
                 "pending" => TournamentState.Pending,
-                "in_progress" => TournamentState.InProgress,
-                "ended" => TournamentState.Ended,
+                "in_progress" => TournamentState.Underway,
+                "ended" => TournamentState.Completed,
                 _ => TournamentState.Invalid
             };
         }
@@ -26,10 +26,10 @@ namespace Challonge.Tournaments.Json
                 case TournamentState.Pending:
                     writer.WriteStringValue("pending");
                     break;
-                case TournamentState.InProgress:
+                case TournamentState.Underway:
                     writer.WriteStringValue("in_progress");
                     break;
-                case TournamentState.Ended:
+                case TournamentState.Completed:
                     writer.WriteStringValue("ended");
                     break;
             }
