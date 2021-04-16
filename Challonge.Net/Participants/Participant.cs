@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Text.Json.Serialization;
 
 namespace Challonge.Participants
@@ -39,6 +37,10 @@ namespace Challonge.Participants
         [JsonPropertyName("invite_email")]
         public string InviteEmail { get; set; }
 
+        /// <summary>
+        /// Max: 255 characters. Multi-purpose field that is only visible via the API 
+        /// and handy for site integration (e.g. key to your users table)
+        /// </summary>
         [JsonPropertyName("misc")]
         public string Misc { get; set; }
 

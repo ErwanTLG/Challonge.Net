@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Net.Http;
 using System.Text.Json;
 using System.Threading.Tasks;
@@ -10,312 +9,318 @@ namespace Challonge
 {
     public partial class ChallongeClient
     {
-        public async Task<Participant[]> GetParticipantsAsync(string tournamentUrl)
+        public class ParticipantsHandler
         {
-            string request = $" https://api.challonge.com/v1/tournaments/{tournamentUrl}/participants.json";
+            private readonly string apiKey;
+            private readonly HttpClient httpClient;
 
-            HttpResponseMessage response = await httpClient.GetAsync(request);
-            string responseString = await ErrorHandler.ParseResponseAsync(response);
-
-            ParticipantData[] participantDatas = JsonSerializer.Deserialize<ParticipantData[]>(responseString);
-            Participant[] participants = new Participant[participantDatas.Length];
-
-            for (int i = 0; i < participantDatas.Length; i++)
-                participants[i] = participantDatas[i].Participant;
-
-            return participants;
-        }
-
-        public async Task<Participant[]> GetParticipantsAsync(int tournamentId)
-        {
-            string request = $" https://api.challonge.com/v1/tournaments/{tournamentId}/participants.json";
-
-            HttpResponseMessage response = await httpClient.GetAsync(request);
-            string responseString = await ErrorHandler.ParseResponseAsync(response);
-
-            ParticipantData[] participantDatas = JsonSerializer.Deserialize<ParticipantData[]>(responseString);
-            Participant[] participants = new Participant[participantDatas.Length];
-
-            for (int i = 0; i < participantDatas.Length; i++)
-                participants[i] = participantDatas[i].Participant;
-
-            return participants;
-        }
-
-        public async Task<Participant> CreateParticipantAsync(string tournamentUrl, string name = null,
-            string challongeUsername = null, string email = null, int? seed = null, string misc = null)
-        {
-            string request = $"https://api.challonge.com/v1/tournaments/{tournamentUrl}/participants.json";
-
-            Dictionary<string, string> parameters = new Dictionary<string, string>
+            public ParticipantsHandler(string apiKey, HttpClient httpClient)
             {
-                ["api_key"] = apiKey
-            };
-
-            if (name != null)
-                parameters["participant[name]"] = name;
-
-            if (challongeUsername != null)
-                parameters["participant[challonge_username]"] = challongeUsername;
-
-            if (email != null)
-                parameters["participant[email]"] = email;
-
-            if (seed != null)
-                parameters["participant[seed]"] = seed.ToString();
-
-            if (misc != null)
-                parameters["participant[misc]"] = misc;
-
-            FormUrlEncodedContent content = new FormUrlEncodedContent(parameters);
-            HttpResponseMessage response = await httpClient.PostAsync(request, content);
-
-            string responseString = await ErrorHandler.ParseResponseAsync(response);
-
-            ParticipantData participantData = JsonSerializer.Deserialize<ParticipantData>(responseString);
-            return participantData.Participant;
-        }
-
-        public async Task<Participant> CreateParticipantAsync(int tournamentId, string name = null,
-            string challongeUsername = null, string email = null, int? seed = null, string misc = null)
-        {
-            string request = $"https://api.challonge.com/v1/tournaments/{tournamentId}/participants.json";
-
-            Dictionary<string, string> parameters = new Dictionary<string, string>
-            {
-                ["api_key"] = apiKey
-            };
-
-            if (name != null)
-                parameters["participant[name]"] = name;
-
-            if (challongeUsername != null)
-                parameters["participant[challonge_username]"] = challongeUsername;
-
-            if (email != null)
-                parameters["participant[email]"] = email;
-
-            if (seed != null)
-                parameters["participant[seed]"] = seed.ToString();
-
-            if (misc != null)
-                parameters["participant[misc]"] = misc;
-
-            FormUrlEncodedContent content = new FormUrlEncodedContent(parameters);
-            HttpResponseMessage response = await httpClient.PostAsync(request, content);
-
-            string responseString = await ErrorHandler.ParseResponseAsync(response);
-
-            ParticipantData participantData = JsonSerializer.Deserialize<ParticipantData>(responseString);
-            return participantData.Participant;
-        }
-
-        public async Task<Participant> CreateParticipantAsync(string tournamentUrl, Participant participant)
-        {
-            return await CreateParticipantAsync(tournamentUrl, participant.Name, participant.ChallongeUsername,
-                participant.InviteEmail, participant.Seed, participant.Misc);
-        }
-
-        public async Task<Participant> CreateParticipantAsync(int tournamentId, Participant participant)
-        {
-            return await CreateParticipantAsync(tournamentId, participant.Name, participant.ChallongeUsername,
-                participant.InviteEmail, participant.Seed, participant.Misc);
-        }
-
-        //TODO add bulk add
-
-        public async Task<ParticipantApiResult> GetParticipantAsync(string tournamentUrl, int participantId, bool includeMatches = false)
-        {
-            string request = $"https://api.challonge.com/v1/tournaments/{tournamentUrl}/participants/{participantId}.json?api_key={apiKey}";
-
-            if (includeMatches)
-                request += "&include_matches=1";
-
-            HttpResponseMessage response = await httpClient.GetAsync(request);
-            string responseString = await ErrorHandler.ParseResponseAsync(response);
-
-            ParticipantApiResult result = new ParticipantApiResult();
-
-            if (includeMatches)
-            {
-                JsonElement matchesElement = JsonDocument.Parse(responseString).RootElement.GetProperty("participant").GetProperty("matches");
-                MatchData[] matches = JsonSerializer.Deserialize<MatchData[]>(matchesElement.ToString());
-                Match[] matchesResult = new Match[matches.Length];
-
-                for (int i = 0; i < matches.Length; i++)
-                    matchesResult[i] = matches[i];
-
-                result.Matches = matchesResult;
+                this.apiKey = apiKey;
+                this.httpClient = httpClient;
             }
-            else
-                result.Matches = null;
 
-            ParticipantData participantData = JsonSerializer.Deserialize<ParticipantData>(responseString);
-            result.Participant = participantData.Participant;
-
-            return result;
-        }
-
-        public async Task<ParticipantApiResult> GetParticipantAsync(int tournamentId, int participantId, bool includeMatches = false)
-        {
-            string request = $"https://api.challonge.com/v1/tournaments/{tournamentId}/participants/{participantId}.json?api_key={apiKey}";
-
-            if (includeMatches)
-                request += "&include_matches=1";
-
-            HttpResponseMessage response = await httpClient.GetAsync(request);
-            string responseString = await ErrorHandler.ParseResponseAsync(response);
-
-            ParticipantApiResult result = new ParticipantApiResult();
-
-            if (includeMatches)
+            /// <summary>
+            /// Retrieve a tournament's participant list. 
+            /// </summary>
+            /// <param name="tournament">Tournament ID (e.g. 10230) or URL (e.g. 'single_elim' for 
+            /// challonge.com/single_elim). If assigned to a subdomain, URL format must be 
+            /// subdomain-tournament_url (e.g. 'test-mytourney' for test.challonge.com/mytourney) </param>
+            /// <returns>The list of participants of the given tournament</returns>
+            public async Task<Participant[]> GetParticipantsAsync(string tournament)
             {
-                JsonElement matchesElement = JsonDocument.Parse(responseString).RootElement.GetProperty("participant").GetProperty("matches");
-                MatchData[] matches = JsonSerializer.Deserialize<MatchData[]>(matchesElement.ToString());
-                Match[] matchesResult = new Match[matches.Length];
+                string request = $" https://api.challonge.com/v1/tournaments/{tournament}/participants.json";
 
-                for (int i = 0; i < matches.Length; i++)
-                    matchesResult[i] = matches[i];
+                HttpResponseMessage response = await httpClient.GetAsync(request);
+                string responseString = await ErrorHandler.ParseResponseAsync(response);
 
-                result.Matches = matchesResult;
+                ParticipantData[] participantDatas = JsonSerializer.Deserialize<ParticipantData[]>(responseString);
+                Participant[] participants = new Participant[participantDatas.Length];
+
+                for (int i = 0; i < participantDatas.Length; i++)
+                    participants[i] = participantDatas[i].Participant;
+
+                return participants;
             }
-            else
-                result.Matches = null;
 
-            ParticipantData participantData = JsonSerializer.Deserialize<ParticipantData>(responseString);
-            result.Participant = participantData.Participant;
-
-            return result;
-        }
-
-        public async Task<Participant> UpdateParticipantAsync(string tournamentUrl, int participantId, string name = null,
-            string challongeUsername = null, string email = null, int? seed = null, string misc = null)
-        {
-            string request = $"https://api.challonge.com/v1/tournaments/{tournamentUrl}/participants{participantId}.json";
-
-            Dictionary<string, string> parameters = new Dictionary<string, string>
+            /// <summary>
+            /// Add a participant to a tournament (up until it is started)
+            /// </summary>
+            /// <param name="tournament">Tournament ID (e.g. 10230) or URL (e.g. 'single_elim' for 
+            /// challonge.com/single_elim). If assigned to a subdomain, URL format must be 
+            /// subdomain-tournament_url (e.g. 'test-mytourney' for test.challonge.com/mytourney) </param>
+            /// <param name="name">The name displayed in the bracket/schedule - not required if email 
+            /// or challongeUsername is provided. Must be unique per tournament. </param>
+            /// <param name="challongeUsername">Provide this if the participant has a Challonge account. 
+            /// He or she will be invited to the tournament. </param>
+            /// <param name="email">Providing this will first search for a matching Challonge account. If one 
+            /// is found, this will have the same effect as the "challonge_username" attribute. If one is not
+            /// found, the "new-user-email" attribute will be set, and the user will be invited via email to
+            /// create an account. </param>
+            /// <param name="seed">The participant's new seed. Must be between 1 and the current number of
+            /// participants (including the new record). Overwriting an existing seed will automatically bump
+            /// other participants as you would expect. </param>
+            /// <param name="misc"> Max: 255 characters. Multi-purpose field that is only visible via the API 
+            /// and handy for site integration (e.g. key to your users table) </param>
+            /// <returns>The created participant</returns>
+            public async Task<Participant> CreateParticipantAsync(string tournament, string name = null,
+                string challongeUsername = null, string email = null, int? seed = null, string misc = null)
             {
-                ["api_key"] = apiKey
-            };
+                string request = $"https://api.challonge.com/v1/tournaments/{tournament}/participants.json";
 
-            if (name != null)
-                parameters["participant[name]"] = name;
+                Dictionary<string, string> parameters = new Dictionary<string, string>
+                {
+                    ["api_key"] = apiKey
+                };
 
-            if (challongeUsername != null)
-                parameters["participant[challonge_username]"] = challongeUsername;
+                if (name != null)
+                    parameters["participant[name]"] = name;
 
-            if (email != null)
-                parameters["participant[email]"] = email;
+                if (challongeUsername != null)
+                    parameters["participant[challonge_username]"] = challongeUsername;
 
-            if (seed != null)
-                parameters["participant[seed]"] = seed.ToString();
+                if (email != null)
+                    parameters["participant[email]"] = email;
 
-            if (misc != null)
-                parameters["participant[misc]"] = misc;
+                if (seed != null)
+                    parameters["participant[seed]"] = seed.ToString();
 
-            FormUrlEncodedContent content = new FormUrlEncodedContent(parameters);
-            HttpResponseMessage response = await httpClient.PutAsync(request, content);
+                if (misc != null)
+                    parameters["participant[misc]"] = misc;
 
-            string responseString = await ErrorHandler.ParseResponseAsync(response);
+                FormUrlEncodedContent content = new FormUrlEncodedContent(parameters);
+                HttpResponseMessage response = await httpClient.PostAsync(request, content);
 
-            ParticipantData participantData = JsonSerializer.Deserialize<ParticipantData>(responseString);
-            return participantData.Participant;
-        }
+                string responseString = await ErrorHandler.ParseResponseAsync(response);
 
-        public async Task<Participant> UpdateParticipantAsync(int tournamentId, int participantId, string name = null,
-            string challongeUsername = null, string email = null, int? seed = null, string misc = null)
-        {
-            string request = $"https://api.challonge.com/v1/tournaments/{tournamentId}/participants/{participantId}.json";
+                ParticipantData participantData = JsonSerializer.Deserialize<ParticipantData>(responseString);
+                return participantData.Participant;
+            }
 
-            Dictionary<string, string> parameters = new Dictionary<string, string>
+            /// <summary>
+            /// Add a participant to a tournament (up until it is started)
+            /// </summary>
+            /// <param name="tournament">Tournament ID (e.g. 10230) or URL (e.g. 'single_elim' for 
+            /// challonge.com/single_elim). If assigned to a subdomain, URL format must be 
+            /// subdomain-tournament_url (e.g. 'test-mytourney' for test.challonge.com/mytourney) </param>
+            /// <param name="participant">Participant to create</param>
+            /// <returns>The created participant</returns>
+            /// <remarks>The returned participant will differ from the one you passed as an argument,
+            /// because the api will set some properties that you have not write access to.</remarks>
+            public async Task<Participant> CreateParticipantAsync(string tournament, Participant participant)
             {
-                ["api_key"] = apiKey
-            };
+                return await CreateParticipantAsync(tournament, participant.Name, participant.ChallongeUsername,
+                    participant.InviteEmail, participant.Seed, participant.Misc);
+            }
 
-            if (name != null)
-                parameters["participant[name]"] = name;
+            //TODO add bulk add
 
-            if (challongeUsername != null)
-                parameters["participant[challonge_username]"] = challongeUsername;
+            /// <summary>
+            /// Retrieve a single participant record for a tournament
+            /// </summary>
+            /// <param name="tournament">Tournament ID (e.g. 10230) or URL (e.g. 'single_elim' for 
+            /// challonge.com/single_elim). If assigned to a subdomain, URL format must be 
+            /// subdomain-tournament_url (e.g. 'test-mytourney' for test.challonge.com/mytourney) </param>
+            /// <param name="participantId">The participant's unique ID </param>
+            /// <param name="includeMatches"></param>
+            /// <returns>A result containing the participant and if requested its match records</returns>
+            public async Task<ParticipantApiResult> GetParticipantAsync(string tournament, int participantId, bool includeMatches = false)
+            {
+                string request = $"https://api.challonge.com/v1/tournaments/{tournament}/participants/{participantId}.json?api_key={apiKey}";
 
-            if (email != null)
-                parameters["participant[email]"] = email;
+                if (includeMatches)
+                    request += "&include_matches=1";
 
-            if (seed != null)
-                parameters["participant[seed]"] = seed.ToString();
+                HttpResponseMessage response = await httpClient.GetAsync(request);
+                string responseString = await ErrorHandler.ParseResponseAsync(response);
 
-            if (misc != null)
-                parameters["participant[misc]"] = misc;
+                ParticipantApiResult result = new ParticipantApiResult();
 
-            FormUrlEncodedContent content = new FormUrlEncodedContent(parameters);
-            HttpResponseMessage response = await httpClient.PutAsync(request, content);
+                if (includeMatches)
+                {
+                    JsonElement matchesElement = JsonDocument.Parse(responseString).RootElement.GetProperty("participant").GetProperty("matches");
+                    MatchData[] matches = JsonSerializer.Deserialize<MatchData[]>(matchesElement.ToString());
+                    Match[] matchesResult = new Match[matches.Length];
 
-            string responseString = await ErrorHandler.ParseResponseAsync(response);
+                    for (int i = 0; i < matches.Length; i++)
+                        matchesResult[i] = matches[i].Match;
 
-            ParticipantData participantData = JsonSerializer.Deserialize<ParticipantData>(responseString);
-            return participantData.Participant;
-        }
+                    result.Matches = matchesResult;
+                }
+                else
+                    result.Matches = null;
 
-        public async Task<Participant> UpdateParticipantAsync(string tournamentUrl, Participant participant)
-        {
-            return await UpdateParticipantAsync(tournamentUrl, participant.Id, participant.Name,
-                participant.ChallongeUsername, participant.InviteEmail, participant.Seed, participant.Misc);
-        }
+                ParticipantData participantData = JsonSerializer.Deserialize<ParticipantData>(responseString);
+                result.Participant = participantData.Participant;
 
-        public async Task<Participant> UpdateParticipantAsync(int tournamentId, Participant participant)
-        {
-            return await UpdateParticipantAsync(tournamentId, participant.Id, participant.Name,
-                participant.ChallongeUsername, participant.InviteEmail, participant.Seed, participant.Misc);
-        }
+                return result;
+            }
 
-        public async Task CheckInAsync(string tournamentUrl, int participantId)
-        {
-            string request = $"https://api.challonge.com/v1/tournaments/{tournamentUrl}/participants/{participantId}/check_in.json";
+            /// <summary>
+            /// Update the attributes of a tournament participant
+            /// </summary>
+            /// <param name="tournament">Tournament ID (e.g. 10230) or URL (e.g. 'single_elim' for 
+            /// challonge.com/single_elim). If assigned to a subdomain, URL format must be 
+            /// subdomain-tournament_url (e.g. 'test-mytourney' for test.challonge.com/mytourney) </param>
+            /// <param name="name">The name displayed in the bracket/schedule - not required if email 
+            /// or challongeUsername is provided. Must be unique per tournament. </param>
+            /// <param name="challongeUsername">Provide this if the participant has a Challonge account. 
+            /// He or she will be invited to the tournament. </param>
+            /// <param name="email">Providing this will first search for a matching Challonge account. If one 
+            /// is found, this will have the same effect as the "challonge_username" attribute. If one is not
+            /// found, the "new-user-email" attribute will be set, and the user will be invited via email to
+            /// create an account. </param>
+            /// <param name="seed">The participant's new seed. Must be between 1 and the current number of
+            /// participants (including the new record). Overwriting an existing seed will automatically bump
+            /// other participants as you would expect. </param>
+            /// <param name="misc"> Max: 255 characters. Multi-purpose field that is only visible via the API 
+            /// and handy for site integration (e.g. key to your users table) </param>
+            /// <returns>The updated participant</returns>
+            public async Task<Participant> UpdateParticipantAsync(string tournament, int participantId, string name = null,
+                string challongeUsername = null, string email = null, int? seed = null, string misc = null)
+            {
+                string request = $"https://api.challonge.com/v1/tournaments/{tournament}/participants{participantId}.json";
 
-            KeyValuePair<string, string> key = new KeyValuePair<string, string>("api_key", apiKey);
+                Dictionary<string, string> parameters = new Dictionary<string, string>
+                {
+                    ["api_key"] = apiKey
+                };
 
-            FormUrlEncodedContent content = new FormUrlEncodedContent(key);
-            await httpClient.PutAsync(request, content);
-        }
+                if (name != null)
+                    parameters["participant[name]"] = name;
 
-        public async Task UndoCheckInAsync(string tournamentUrl, int participantId)
-        {
-            string request = $"https://api.challonge.com/v1/tournaments/{tournamentUrl}/participants/{participantId}/undo_check_in.json";
+                if (challongeUsername != null)
+                    parameters["participant[challonge_username]"] = challongeUsername;
 
-            KeyValuePair<string, string> key = new KeyValuePair<string, string>("api_key", apiKey);
+                if (email != null)
+                    parameters["participant[email]"] = email;
 
-            FormUrlEncodedContent content = new FormUrlEncodedContent(key);
-            await httpClient.PutAsync(request, content);
-        }
+                if (seed != null)
+                    parameters["participant[seed]"] = seed.ToString();
 
-        public async Task DeleteParticipantAsync(string tournamentUrl, int participantId)
-        {
-            string request = $"https://api.challonge.com/v1/tournaments/{tournamentUrl}/participants/{participantId}.json";
+                if (misc != null)
+                    parameters["participant[misc]"] = misc;
 
-            KeyValuePair<string, string> key = new KeyValuePair<string, string>("api_key", apiKey);
+                FormUrlEncodedContent content = new FormUrlEncodedContent(parameters);
+                HttpResponseMessage response = await httpClient.PutAsync(request, content);
 
-            FormUrlEncodedContent content = new FormUrlEncodedContent(key);
-            await httpClient.DeleteAsync(request, content);
-        }
+                string responseString = await ErrorHandler.ParseResponseAsync(response);
 
-        public async Task ClearAsync(string tournamentUrl)
-        {
-            string request = $"https://api.challonge.com/v1/tournaments/{tournamentUrl}/participants/clear.json";
+                ParticipantData participantData = JsonSerializer.Deserialize<ParticipantData>(responseString);
+                return participantData.Participant;
+            }
 
-            KeyValuePair<string, string> key = new KeyValuePair<string, string>("api_key", apiKey);
+            /// <summary>
+            /// Update the attributes of a tournament participant
+            /// </summary>
+            /// <param name="tournament">Tournament ID (e.g. 10230) or URL (e.g. 'single_elim' for 
+            /// challonge.com/single_elim). If assigned to a subdomain, URL format must be 
+            /// subdomain-tournament_url (e.g. 'test-mytourney' for test.challonge.com/mytourney) </param>
+            /// <param name="participant">Updated participant</param>
+            /// <returns>The updated participant</returns>
+            /// <remarks>The returned participant will differ from the one you passed as an argument.
+            /// (the value UpdatedAt will have changed)</remarks>
+            public async Task<Participant> UpdateParticipantAsync(string tournament, Participant participant)
+            {
+                return await UpdateParticipantAsync(tournament, participant.Id, participant.Name,
+                    participant.ChallongeUsername, participant.InviteEmail, participant.Seed, participant.Misc);
+            }
 
-            FormUrlEncodedContent content = new FormUrlEncodedContent(key);
-            await httpClient.DeleteAsync(request, content);
-        }
+            /// <summary>
+            /// Checks a participant in, setting <see cref="Participant.CheckedInAt"/> to the current time. 
+            /// </summary>
+            /// <param name="tournament">Tournament ID (e.g. 10230) or URL (e.g. 'single_elim' for 
+            /// challonge.com/single_elim). If assigned to a subdomain, URL format must be 
+            /// subdomain-tournament_url (e.g. 'test-mytourney' for test.challonge.com/mytourney) </param>
+            /// <param name="participantId">The participant's unique id</param>
+            /// <returns></returns>
+            public async Task CheckInAsync(string tournament, int participantId)
+            {
+                string request = $"https://api.challonge.com/v1/tournaments/{tournament}/participants/{participantId}/check_in.json";
 
-        public async Task RandomizeAsync(string tournamentUrl)
-        {
-            string request = $"https://api.challonge.com/v1/tournaments/{tournamentUrl}/participants/randomize.json";
+                Dictionary<string, string> parameters = new Dictionary<string, string>
+                {
+                    ["api_key"] = apiKey
+                };
 
-            KeyValuePair<string, string> key = new KeyValuePair<string, string>("api_key", apiKey);
+                FormUrlEncodedContent content = new FormUrlEncodedContent(parameters);
+                await httpClient.PutAsync(request, content);
+            }
 
-            FormUrlEncodedContent content = new FormUrlEncodedContent(key);
-            await httpClient.PostAsync(request, content);
+            /// <summary>
+            /// Marks a participant as having not checked in, setting <see cref="Participant.CheckedInAt"/> to
+            /// <see langword="null"/>. 
+            /// </summary>
+            /// <param name="tournament">Tournament ID (e.g. 10230) or URL (e.g. 'single_elim' for 
+            /// challonge.com/single_elim). If assigned to a subdomain, URL format must be 
+            /// subdomain-tournament_url (e.g. 'test-mytourney' for test.challonge.com/mytourney) </param>
+            /// <param name="participantId"></param>
+            /// <returns></returns>
+            public async Task UndoCheckInAsync(string tournament, int participantId)
+            {
+                string request = $"https://api.challonge.com/v1/tournaments/{tournament}/participants/{participantId}/undo_check_in.json";
+
+                Dictionary<string, string> parameters = new Dictionary<string, string>
+                {
+                    ["api_key"] = apiKey
+                };
+
+                FormUrlEncodedContent content = new FormUrlEncodedContent(parameters);
+                await httpClient.PutAsync(request, content);
+            }
+
+            /// <summary>
+            /// If the tournament has not started, delete a participant, automatically filling in the abandoned
+            /// seed number. If tournament is underway, mark a participant inactive, automatically 
+            /// forfeiting his/her remaining matches.
+            /// </summary>
+            /// <param name="tournament">Tournament ID (e.g. 10230) or URL (e.g. 'single_elim' for 
+            /// challonge.com/single_elim). If assigned to a subdomain, URL format must be 
+            /// subdomain-tournament_url (e.g. 'test-mytourney' for test.challonge.com/mytourney) </param>
+            /// <param name="participantId"></param>
+            /// <returns></returns>
+            public async Task DeleteParticipantAsync(string tournament, int participantId)
+            {
+                string request = $"https://api.challonge.com/v1/tournaments/{tournament}/participants/{participantId}.json?api_key={apiKey}";
+
+                HttpResponseMessage response = await httpClient.DeleteAsync(request);
+                await ErrorHandler.ParseResponseAsync(response);
+            }
+
+            /// <summary>
+            /// Deletes all participants in a tournament. (Only allowed if tournament hasn't started yet) 
+            /// </summary>
+            /// <param name="tournament">Tournament ID (e.g. 10230) or URL (e.g. 'single_elim' for 
+            /// challonge.com/single_elim). If assigned to a subdomain, URL format must be 
+            /// subdomain-tournament_url (e.g. 'test-mytourney' for test.challonge.com/mytourney) </param>
+            /// <returns></returns>
+            public async Task ClearAsync(string tournament)
+            {
+                string request = $"https://api.challonge.com/v1/tournaments/{tournament}/participants/clear.json?api_key={apiKey}";
+
+                HttpResponseMessage response = await httpClient.DeleteAsync(request);
+                await ErrorHandler.ParseResponseAsync(response);
+            }
+
+            /// <summary>
+            /// Randomize seeds among participants. Only applicable before a tournament has started.
+            /// </summary>
+            /// <param name="tournament">Tournament ID (e.g. 10230) or URL (e.g. 'single_elim' for 
+            /// challonge.com/single_elim). If assigned to a subdomain, URL format must be 
+            /// subdomain-tournament_url (e.g. 'test-mytourney' for test.challonge.com/mytourney) </param>
+            /// <returns></returns>
+            public async Task RandomizeAsync(string tournament)
+            {
+                string request = $"https://api.challonge.com/v1/tournaments/{tournament}/participants/randomize.json";
+
+                Dictionary<string, string> parameters = new Dictionary<string, string>
+                {
+                    ["api_key"] = apiKey
+                };
+
+                FormUrlEncodedContent content = new FormUrlEncodedContent(parameters);
+                await httpClient.PostAsync(request, content);
+            }
         }
     }
 }

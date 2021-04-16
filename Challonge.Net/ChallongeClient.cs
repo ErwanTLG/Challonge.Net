@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Threading.Tasks;
 using System.Net.Http;
-using System.Text.Json;
-using Challonge.Matches;
 
 namespace Challonge
 {
@@ -13,12 +10,14 @@ namespace Challonge
         internal readonly HttpClient httpClient = new HttpClient();
 
         public TournamentHandler Tournaments { get; }
+        public ParticipantsHandler Participants { get; }
 
         public ChallongeClient(string key)
         {
             apiKey = key ?? throw new ArgumentNullException("key");
 
             Tournaments = new TournamentHandler(apiKey, httpClient);
+            Participants = new ParticipantsHandler(apiKey, httpClient);
         }
 
         public ChallongeClient(string key, HttpClient httpClient)
@@ -27,6 +26,7 @@ namespace Challonge
             this.httpClient = httpClient ?? throw new ArgumentNullException("httpClient");
 
             Tournaments = new TournamentHandler(apiKey, httpClient);
+            Participants = new ParticipantsHandler(apiKey, httpClient);
         }
     }
 }

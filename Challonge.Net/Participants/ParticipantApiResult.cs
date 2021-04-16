@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Challonge.Matches;
+﻿using Challonge.Matches;
 
 namespace Challonge.Participants
 {

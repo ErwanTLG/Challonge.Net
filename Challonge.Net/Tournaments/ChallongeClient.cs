@@ -183,7 +183,9 @@ namespace Challonge
             /// <summary>
             /// Retrieve a set of tournaments created with your account. 
             /// </summary>
-            /// <param name="state"></param>
+            /// <param name="state">Either <see cref="TournamentState.Pending"/>, 
+            /// <see cref="TournamentState.Underway"/> or <see cref="TournamentState.Completed"/>. Any other
+            /// value will result in a query searching for all tournaments.</param>
             /// <param name="type"></param>
             /// <param name="createdBefore"></param>
             /// <param name="createdAfter"></param>
