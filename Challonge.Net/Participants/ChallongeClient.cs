@@ -1,9 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using Challonge.Matches;
+using Challonge.Participants;
+using System.Collections.Generic;
 using System.Net.Http;
 using System.Text.Json;
 using System.Threading.Tasks;
-using Challonge.Participants;
-using Challonge.Matches;
 
 namespace Challonge
 {

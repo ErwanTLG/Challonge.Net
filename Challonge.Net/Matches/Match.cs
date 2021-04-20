@@ -1,6 +1,6 @@
-﻿using System;
+﻿using Challonge.Matches.Json;
+using System;
 using System.Text.Json.Serialization;
-using Challonge.Matches.Json;
 
 namespace Challonge.Matches
 {

@@ -1,7 +1,7 @@
-﻿using System;
-using System.Text.Json.Serialization;
+﻿using Challonge.Participants;
 using Challonge.Tournaments.Json;
-using Challonge.Participants;
+using System;
+using System.Text.Json.Serialization;
 
 namespace Challonge.Tournaments
 {
@@ -131,7 +131,7 @@ namespace Challonge.Tournaments
         public bool IsPrivate { get; set; }
 
         [JsonPropertyName("progress_meter")]
-        public int ProgressMeter { get; internal set;  }
+        public int ProgressMeter { get; internal set; }
 
         [JsonPropertyName("pts_for_bye")]
         [JsonNumberHandling(JsonNumberHandling.AllowReadingFromString | JsonNumberHandling.WriteAsString)]

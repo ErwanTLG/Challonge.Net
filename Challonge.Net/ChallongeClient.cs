@@ -11,6 +11,7 @@ namespace Challonge
 
         public TournamentHandler Tournaments { get; }
         public ParticipantsHandler Participants { get; }
+        public MatchesHandler Matches { get; }
 
         public ChallongeClient(string key)
         {
@@ -18,6 +19,7 @@ namespace Challonge
 
             Tournaments = new TournamentHandler(apiKey, httpClient);
             Participants = new ParticipantsHandler(apiKey, httpClient);
+            Matches = new MatchesHandler(apiKey, httpClient);
         }
 
         public ChallongeClient(string key, HttpClient httpClient)
@@ -27,6 +29,7 @@ namespace Challonge
 
             Tournaments = new TournamentHandler(apiKey, httpClient);
             Participants = new ParticipantsHandler(apiKey, httpClient);
+            Matches = new MatchesHandler(apiKey, httpClient);
         }
     }
 }

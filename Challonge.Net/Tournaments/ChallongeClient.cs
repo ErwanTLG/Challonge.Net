@@ -1,12 +1,12 @@
-﻿using System;
+﻿using Challonge.Matches;
+using Challonge.Participants;
+using Challonge.Tournaments;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Net.Http;
 using System.Text.Json;
 using System.Threading.Tasks;
-using Challonge.Matches;
-using Challonge.Participants;
-using Challonge.Tournaments;
 
 namespace Challonge
 {
@@ -382,7 +382,7 @@ namespace Challonge
             /// <param name="startAt"></param>
             /// <param name="checkInDuration">Length of the participant check-in window in minutes.</param>
             /// <returns>The updated tournament</returns>
-            public async Task<Tournament> UpdateTournamentAsync(string tournament,string name = null, 
+            public async Task<Tournament> UpdateTournamentAsync(string tournament, string name = null,
                 string url = null, TournamentType type = TournamentType.SingleElimination,
                 string subdomain = null, string description = null, bool openSignup = false, bool holdThirdPlaceMatch = false,
                 float ptsForMatchWin = 1.0f, float ptsForMatchTie = 0.5f, float ptsForGameWin = 0f, float ptsForGameTie = 0f,

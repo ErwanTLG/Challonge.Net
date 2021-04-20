@@ -1,6 +1,6 @@
-﻿using Challonge.Tournaments;
+﻿using Challonge.Matches;
 using Challonge.Participants;
-using Challonge.Matches;
+using Challonge.Tournaments;
 
 namespace Challonge
 {
