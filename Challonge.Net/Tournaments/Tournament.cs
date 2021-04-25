@@ -1,4 +1,5 @@
 ﻿using Challonge.Participants;
+using Challonge.Json;
 using Challonge.Tournaments.Json;
 using System;
 using System.Text.Json.Serialization;
@@ -23,34 +24,36 @@ namespace Challonge.Tournaments
         /// Whether or not verified Challonge users are allowed to report their own matches
         /// </summary>
         [JsonPropertyName("allow_participant_match_reporting")]
-        public bool AllowParticipantMatchReporting { get; internal set; }
+        public bool AllowParticipantMatchReporting { get; set; }
 
         /// <summary>
         /// Whether or not anonymous votes/predictions are enabled
         /// </summary>
         [JsonPropertyName("anonymous_voting")]
-        public bool AnonymousVoting { get; internal set; }
+        public bool AnonymousVoting { get; set; }
 
         [JsonPropertyName("category")]
-        public string Category { get; internal set; }   // I'm not sure what type this should be parsed to
+        public string Category { get; set; }   // I'm not sure what type this should be parsed to
 
         [JsonPropertyName("check_in_duration")]
         public int? CheckInDuration { get; set; }
 
         [JsonPropertyName("completed_at")]
-        public DateTimeOffset? CompletedAt { get; internal set; }
+        [JsonConverter(typeof(JsonDateTimeConverter))]
+        public DateTimeOffset? CompletedAt { get; set; }
 
         [JsonPropertyName("created_at")]
-        public DateTimeOffset CreatedAt { get; internal set; }
+        [JsonConverter(typeof(JsonDateTimeConverter))]
+        public DateTimeOffset? CreatedAt { get; set; }
 
         /// <summary>
         /// Whether or not the tournament was created by an api call
         /// </summary>
         [JsonPropertyName("created_by_api")]
-        public bool CreatedByApi { get; internal set; }
+        public bool CreatedByApi { get; set; }
 
         [JsonPropertyName("credit_capped")]
-        public bool CreditCapped { get; internal set; }
+        public bool CreditCapped { get; set; }
 
         /// <summary>
         /// Description/instructions displayed above the bracket
@@ -62,10 +65,10 @@ namespace Challonge.Tournaments
         /// The unique identifier of the game that your tournament is played on
         /// </summary>
         [JsonPropertyName("game_id")]
-        public int? GameId { get; internal set; }
+        public int? GameId { get; set; }
 
         [JsonPropertyName("group_stages_enabled")]
-        public bool GroupStagesEnabled { get; internal set; }
+        public bool GroupStagesEnabled { get; set; }
 
         /// <summary>
         /// Hide the forum tab on your Challonge page
@@ -74,7 +77,7 @@ namespace Challonge.Tournaments
         public bool HideForum { get; set; }
 
         [JsonPropertyName("hide_seeds")]
-        public bool HideSeeds { get; internal set; }
+        public bool HideSeeds { get; set; }
 
         /// <summary>
         /// Whether or not to include a match between the semifinals losers. (only works with single elimination brackets)
@@ -86,10 +89,10 @@ namespace Challonge.Tournaments
         /// Your tournament's unique identifier
         /// </summary>
         [JsonPropertyName("id")]
-        public int Id { get; internal set; }
+        public int Id { get; set; }
 
         [JsonPropertyName("max_predictions_per_user")]
-        public int MaxPredictionsPerUser { get; internal set; }
+        public int MaxPredictionsPerUser { get; set; }
 
         /// <summary>
         /// Your tournament's name/title (max: 60 characters)
@@ -116,13 +119,14 @@ namespace Challonge.Tournaments
         public bool OpenSignup { get; set; }
 
         [JsonPropertyName("participants_count")]
-        public int ParticipantsCount { get; internal set; }
+        public int ParticipantsCount { get; set; }
 
         [JsonPropertyName("prediction_method")]
-        public TournamentPredictionMethod PredictionMethod { get; internal set; }
+        public TournamentPredictionMethod PredictionMethod { get; set; }
 
         [JsonPropertyName("predictions_opened_at")]
-        public DateTimeOffset? PredictionsOpenedAt { get; internal set; }
+        [JsonConverter(typeof(JsonDateTimeConverter))]
+        public DateTimeOffset? PredictionsOpenedAt { get; set; }
 
         /// <summary>
         /// Hide this tournament from the public browsable index and your profile
@@ -131,7 +135,7 @@ namespace Challonge.Tournaments
         public bool IsPrivate { get; set; }
 
         [JsonPropertyName("progress_meter")]
-        public int ProgressMeter { get; internal set; }
+        public int ProgressMeter { get; set; }
 
         [JsonPropertyName("pts_for_bye")]
         [JsonNumberHandling(JsonNumberHandling.AllowReadingFromString | JsonNumberHandling.WriteAsString)]
@@ -157,13 +161,13 @@ namespace Challonge.Tournaments
         /// When set to true, you can report the winner without the scores
         /// </summary>
         [JsonPropertyName("quick_advance")]
-        public bool QuickAdvance { get; internal set; }
+        public bool QuickAdvance { get; set; }
 
         [JsonPropertyName("ranked_by")]
         public string RankedBy { get; set; }     // not sure (enum maybe)
 
         [JsonPropertyName("require_score_agreement")]
-        public bool RequireScoreAgreement { get; internal set; }
+        public bool RequireScoreAgreement { get; set; }
 
         [JsonPropertyName("rr_pts_for_game_tie")]
         [JsonNumberHandling(JsonNumberHandling.AllowReadingFromString | JsonNumberHandling.WriteAsString)]
@@ -201,16 +205,20 @@ namespace Challonge.Tournaments
         public int? SignupCap { get; set; }
 
         [JsonPropertyName("start_at")]
+        [JsonConverter(typeof(JsonDateTimeConverter))]
         public DateTimeOffset? StartAt { get; set; }
 
         [JsonPropertyName("started_at")]
-        public DateTimeOffset? StartedAt { get; internal set; }
+        [JsonConverter(typeof(JsonDateTimeConverter))]
+        public DateTimeOffset? StartedAt { get; set; }
 
         [JsonPropertyName("started_checking_in_at")]
-        public DateTimeOffset? StartedCheckingInAt { get; internal set; }
+        [JsonConverter(typeof(JsonDateTimeConverter))]
+        public DateTimeOffset? StartedCheckingInAt { get; set; }
 
         [JsonPropertyName("state")]
-        public DateTimeOffset State { get; internal set; }
+        [JsonConverter(typeof(TournamentStateJsonConverter))]
+        public TournamentState State { get; set; }
 
         /// <summary>
         /// Number of rounds to be played. Only works for swiss type tournaments.
@@ -219,17 +227,18 @@ namespace Challonge.Tournaments
         public int SwissRounds { get; set; }
 
         [JsonPropertyName("teams")]
-        public bool? Teams { get; internal set; }
+        public bool? Teams { get; set; }
 
         [JsonPropertyName("tie_breaks")]
-        public string[] TieBreaks { get; internal set; }  // stack or queue of enums or something like that
+        public string[] TieBreaks { get; set; }  // stack or queue of enums or something like that
 
         [JsonPropertyName("tournament_type")]
         [JsonConverter(typeof(TournamentTypeJsonConverter))]
         public TournamentType TournamentType { get; set; }
 
         [JsonPropertyName("updated_at")]
-        public DateTimeOffset UpdatedAt { get; internal set; }
+        [JsonConverter(typeof(JsonDateTimeConverter))]
+        public DateTimeOffset? UpdatedAt { get; set; }
 
         /// <summary>
         /// Your tournament's url (challonge.com/url)
@@ -239,7 +248,7 @@ namespace Challonge.Tournaments
         public string Url { get; set; }
 
         [JsonPropertyName("description_source")]
-        public string DescriptionSource { get; internal set; }
+        public string DescriptionSource { get; set; }
 
         /// <summary>
         /// Your tournament's subdomain (subdomain.challonge.com/url)
@@ -249,37 +258,37 @@ namespace Challonge.Tournaments
         public string Subdomain { get; set; }
 
         [JsonPropertyName("full_challonge_url")]
-        public string FullChallongeUrl { get; internal set; }
+        public string FullChallongeUrl { get; set; }
 
         [JsonPropertyName("live_image_url")]
-        public string LiveImageUrl { get; internal set; }
+        public string LiveImageUrl { get; set; }
 
         [JsonPropertyName("sign_up_url")]
-        public string SignupUrl { get; internal set; }
+        public string SignupUrl { get; set; }
 
         [JsonPropertyName("review_before_finalizing")]
-        public bool ReviewBeforeFinalizing { get; internal set; }
+        public bool ReviewBeforeFinalizing { get; set; }
 
         [JsonPropertyName("accepting_predictions")]
-        public bool AcceptingPredictions { get; internal set; }
+        public bool AcceptingPredictions { get; set; }
 
         [JsonPropertyName("participants_locked")]
-        public bool ParticipantsLocked { get; internal set; }
+        public bool ParticipantsLocked { get; set; }
 
         /// <summary>
         /// The name of the game your tournament is played on
         /// </summary>
         [JsonPropertyName("game_name")]
-        public string GameName { get; internal set; }
+        public string GameName { get; set; }
 
         [JsonPropertyName("participants_swappable")]
-        public bool ParticipantsSwappable { get; internal set; }
+        public bool ParticipantsSwappable { get; set; }
 
         [JsonPropertyName("team_convertable")]
-        public bool TeamConvertable { get; internal set; }
+        public bool TeamConvertable { get; set; }
 
         [JsonPropertyName("group_stages_were_started")]
-        public bool GroupStageWereStarted { get; internal set; }
+        public bool GroupStageWereStarted { get; set; }
     }
 
     public enum TournamentType

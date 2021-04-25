@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Net;
 using System.Net.Http;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -23,26 +24,27 @@ namespace Challonge
         /// <exception cref="ChallongeValidationException">Throws this exception if the request was successful, but not the api validation</exception>
         async static public Task<string> ParseResponseAsync(HttpResponseMessage response)
         {
-            switch ((int)response.StatusCode)
-            {
-                case 200:   // OK
-                    return await response.Content.ReadAsStringAsync();
-                case 401:   // Unauthorized (Invalid API key or insufficient permissions)
-                    throw new ChallongeException("Challonge api request returned 401: Unauthorized. (Invalid API key or insufficient permissions)");
-                case 404:   // Not found
-                    throw new ChallongeException("Challonge api request returned 404: Object not found.");
-                case 406:   // Request format not supported
-                    throw new ChallongeException("Challonge api request returned 406: Requested format is not supported - request JSON or XML only");
-                case 500:   // Server-side error
-                    throw new ChallongeException("Challonge api request returned 500: Something went wrong the server side. If you continually receive this, please contact the challonge team.");
-                case 422:   // Validation error
-                    string responseString = await response.Content.ReadAsStringAsync();
-                    ErrorData errorData = JsonSerializer.Deserialize<ErrorData>(responseString);
+            string responseString = await response.Content.ReadAsStringAsync();
 
-                    string errorMessage = "The following errors happend while trying to reach the Challonge API:\n";
-                    foreach (string message in errorData.Errors)
-                        errorMessage += message + "\n";
-                    throw new ChallongeValidationException(errorMessage);
+            if (response.StatusCode == HttpStatusCode.OK)
+                return responseString;
+
+            ErrorData errorData = JsonSerializer.Deserialize<ErrorData>(responseString);
+            string errors = string.Concat(errorData.Errors);
+
+            switch (response.StatusCode)
+            {
+                case HttpStatusCode.Unauthorized:   // Unauthorized (Invalid API key or insufficient permissions)
+                    throw new ChallongeException("Challonge api request returned 401: Unauthorized. (Invalid API key or insufficient permissions). " + errors);
+                case HttpStatusCode.NotFound:   // Not found
+                    throw new ChallongeException("Challonge api request returned 404: Object not found. " + errors);
+                case HttpStatusCode.NotAcceptable:   // Request format not supported
+                    throw new ChallongeException("Challonge api request returned 406: Requested format is not supported - request JSON or XML only. " + errors);
+                case HttpStatusCode.InternalServerError:   // Server-side error
+                    throw new ChallongeException("Challonge api request returned 500: Something went wrong the server side. If you continually receive this, please contact the challonge team. " + errors);
+                case HttpStatusCode.UnprocessableEntity:   // Validation error
+                    string errorMessage = "The following errors happend while trying to reach the Challonge API:\n" + errors;
+                    throw new ChallongeException(errorMessage);
                 default:    // We assume that by default, the request was successful
                     return await response.Content.ReadAsStringAsync();
             }
@@ -54,12 +56,5 @@ namespace Challonge
         public ChallongeException() { }
 
         public ChallongeException(string message) : base(message) { }
-    }
-
-    public class ChallongeValidationException : ChallongeException
-    {
-        public ChallongeValidationException() { }
-
-        public ChallongeValidationException(string message) : base(message) { }
     }
 }

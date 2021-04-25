@@ -50,10 +50,13 @@ namespace Challonge
             {
                 TournamentApiResult result = new TournamentApiResult();
 
+                JsonElement rootElement = JsonDocument.Parse(responseString).RootElement;
+
                 if (includeMatches)
                 {
-                    JsonElement matchesElement = JsonDocument.Parse(responseString).RootElement.GetProperty("tournament").GetProperty("matches");
-                    MatchData[] matches = JsonSerializer.Deserialize<MatchData[]>(matchesElement.ToString());
+                    JsonElement matchesElement = rootElement.GetProperty("tournament").GetProperty("matches");
+
+                    MatchData[] matches = JsonSerializer.Deserialize<MatchData[]>(matchesElement.GetRawText());
                     Match[] matchesResult = new Match[matches.Length];
 
                     for (int i = 0; i < matches.Length; i++)
@@ -66,7 +69,7 @@ namespace Challonge
 
                 if (includeParticipants)
                 {
-                    JsonElement participantsElement = JsonDocument.Parse(responseString).RootElement.GetProperty("tournament").GetProperty("participants");
+                    JsonElement participantsElement = rootElement.GetProperty("tournament").GetProperty("participants");
                     ParticipantData[] participants = JsonSerializer.Deserialize<ParticipantData[]>(participantsElement.ToString());
                     Participant[] participantsResult = new Participant[participants.Length];
 
@@ -79,9 +82,7 @@ namespace Challonge
                     result.Participants = null;
 
                 TournamentData tournamentData = JsonSerializer.Deserialize<TournamentData>(responseString);
-                Tournament tournament = tournamentData.Tournament;
-
-                result.Tournament = tournament;
+                result.Tournament = tournamentData.Tournament;
 
                 return result;
             }

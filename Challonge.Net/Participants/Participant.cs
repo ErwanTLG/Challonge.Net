@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Challonge.Json;
+using System;
 using System.Text.Json.Serialization;
 
 namespace Challonge.Participants
@@ -11,28 +12,30 @@ namespace Challonge.Participants
     public struct Participant
     {
         [JsonPropertyName("acitve")]
-        public bool Active { get; internal set; }
+        public bool Active { get; set; }
 
         [JsonPropertyName("checked_in_at")]
-        public DateTimeOffset? CheckedInAt { get; internal set; }
+        [JsonConverter(typeof(JsonDateTimeConverter))]
+        public DateTimeOffset? CheckedInAt { get; set; }
 
         [JsonPropertyName("created_at")]
-        public DateTimeOffset CreatedAt { get; internal set; }
+        [JsonConverter(typeof(JsonDateTimeConverter))]
+        public DateTimeOffset? CreatedAt { get; set; }
 
         [JsonPropertyName("final_rank")]
-        public int? FinalRank { get; internal set; }
+        public int? FinalRank { get; set; }
 
         [JsonPropertyName("group_id")]
-        public int? GroupId { get; internal set; }
+        public int? GroupId { get; set; }
 
         [JsonPropertyName("icon")]
-        public string Icon { get; internal set; }
+        public string Icon { get; set; }
 
         [JsonPropertyName("id")]
-        public int Id { get; internal set; }
+        public int Id { get; set; }
 
         [JsonPropertyName("invitation_id")]
-        public int? InvitationId { get; internal set; }
+        public int? InvitationId { get; set; }
 
         [JsonPropertyName("invite_email")]
         public string InviteEmail { get; set; }
@@ -48,54 +51,55 @@ namespace Challonge.Participants
         public string Name { get; set; }
 
         [JsonPropertyName("on_waiting_list")]
-        public bool OnWaitingList { get; internal set; }
+        public bool OnWaitingList { get; set; }
 
         [JsonPropertyName("seed")]
         public int Seed { get; set; }
 
         [JsonPropertyName("tournament_id")]
-        public int TournamentId { get; internal set; }
+        public int TournamentId { get; set; }
 
         [JsonPropertyName("updated_at")]
-        public DateTimeOffset UpdatedAt { get; internal set; }
+        [JsonConverter(typeof(JsonDateTimeConverter))]
+        public DateTimeOffset? UpdatedAt { get; set; }
 
         [JsonPropertyName("challonge_username")]
-        public string ChallongeUsername { get; internal set; }
+        public string ChallongeUsername { get; set; }
 
         [JsonPropertyName("challonge_email_address_verified")]
-        public string ChallongeEmailAddressVerified { get; internal set; }
+        public string ChallongeEmailAddressVerified { get; set; }
 
         [JsonPropertyName("removable")]
-        public bool Removable { get; internal set; }
+        public bool Removable { get; set; }
 
         [JsonPropertyName("participatable_or_invitation_attached")]
-        public bool ParticipatableOrInvitaionAttached { get; internal set; }
+        public bool ParticipatableOrInvitaionAttached { get; set; }
 
         [JsonPropertyName("confirm_remove")]
-        public bool ConfirmRemove { get; internal set; }
+        public bool ConfirmRemove { get; set; }
 
         [JsonPropertyName("invitation_pending")]
-        public bool InvitationPending { get; internal set; }
+        public bool InvitationPending { get; set; }
 
         [JsonPropertyName("display_name_with_invitation_email_address")]
-        public string DisplayNameWithInvitationEmailAddress { get; internal set; }
+        public string DisplayNameWithInvitationEmailAddress { get; set; }
 
         [JsonPropertyName("email_hash")]
-        public string EmailHash { get; internal set; }
+        public string EmailHash { get; set; }
 
         [JsonPropertyName("username")]
-        public string Username { get; internal set; }
+        public string Username { get; set; }
 
         [JsonPropertyName("attached_participatable_portrait_url")]
-        public string AttachedParticipatablePortraitUrl { get; internal set; }
+        public string AttachedParticipatablePortraitUrl { get; set; }
 
         [JsonPropertyName("can_check_in")]
-        public bool CanCheckIn { get; internal set; }
+        public bool CanCheckIn { get; set; }
 
         [JsonPropertyName("checked_in")]
-        public bool CheckedIn { get; internal set; }
+        public bool CheckedIn { get; set; }
 
         [JsonPropertyName("reactiviatable")]
-        public bool Reactivatable { get; internal set; }
+        public bool Reactivatable { get; set; }
     }
 }
