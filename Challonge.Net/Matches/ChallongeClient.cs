@@ -1,7 +1,6 @@
 ﻿using Challonge.Matches;
 using System.Collections.Generic;
 using System.Net.Http;
-using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace Challonge
@@ -17,23 +16,6 @@ namespace Challonge
             {
                 this.apiKey = apiKey;
                 this.httpClient = httpClient;
-            }
-
-            private async Task<Match> MatchApiCallAsync(string request)
-            {
-                Dictionary<string, string> parameters = new Dictionary<string, string>
-                {
-                    ["api_key"] = apiKey
-                };
-
-                FormUrlEncodedContent content = new FormUrlEncodedContent(parameters);
-                HttpResponseMessage response = await httpClient.PostAsync(request, content);
-
-                string responseString = await ErrorHandler.ParseResponseAsync(response);
-
-                MatchData matchData = JsonSerializer.Deserialize<MatchData>(responseString);
-
-                return matchData.Match;
             }
 
             /// <summary>
@@ -66,11 +48,7 @@ namespace Challonge
                 if (participantId != null)
                     request += "&participant_id=" + participantId;
 
-
-                HttpResponseMessage response = await httpClient.GetAsync(request);
-                string responseString = await ErrorHandler.ParseResponseAsync(response);
-
-                MatchData[] matchDatas = JsonSerializer.Deserialize<MatchData[]>(responseString);
+                MatchData[] matchDatas = await GetAsync<MatchData[]>(httpClient, request);
                 Match[] matches = new Match[matchDatas.Length];
 
                 for (int i = 0; i < matchDatas.Length; i++)
@@ -93,11 +71,7 @@ namespace Challonge
             {
                 string request = $"https://api.challonge.com/v1/tournaments/{tournament}/matches/{matchId}.json?api_key={apiKey}";
 
-                HttpResponseMessage response = await httpClient.GetAsync(request);
-                string responseString = await ErrorHandler.ParseResponseAsync(response);
-
-                MatchData matchData = JsonSerializer.Deserialize<MatchData>(responseString);
-
+                MatchData matchData = await GetAsync<MatchData>(httpClient, request);
                 return matchData.Match;
             }
 
@@ -125,6 +99,8 @@ namespace Challonge
             public async Task<Match> UpdateMatchAsync(string tournament, int matchId, string scoresCsv = null,
                 int? winnerId = null, int? player1Votes = null, int? player2Votes = null)
             {
+                string request = $"https://api.challonge.com/v1/tournaments/{tournament}/matches/{matchId}.json";
+
                 Dictionary<string, string> parameters = new Dictionary<string, string>
                 {
                     ["api_key"] = apiKey
@@ -143,12 +119,8 @@ namespace Challonge
                     parameters["match[player2_votes]"] = player2Votes.ToString();
 
                 FormUrlEncodedContent content = new FormUrlEncodedContent(parameters);
-                HttpResponseMessage response = await httpClient.PutAsync(
-                    $"https://api.challonge.com/v1/tournaments/{tournament}/matches/{matchId}.json", content);
 
-                string responseString = await ErrorHandler.ParseResponseAsync(response);
-
-                MatchData matchData = JsonSerializer.Deserialize<MatchData>(responseString);
+                MatchData matchData = await PutAsync<MatchData>(httpClient, request, content);
                 return matchData.Match;
             }
 
@@ -179,12 +151,11 @@ namespace Challonge
             /// challonge.com/single_elim). If assigned to a subdomain, URL format must be 
             /// subdomain-tournamentUrl (e.g. 'test-mytourney' for test.challonge.com/mytourney) </param>
             /// <param name="matchId">The match's unique id</param>
-            /// <returns></returns>
-            public async Task<Match> ReopenMatchAsync(string tournament, int matchId)
+            public async Task ReopenMatchAsync(string tournament, int matchId)
             {
                 string request = $"https://api.challonge.com/v1/tournaments/{tournament}/matches/{matchId}/reopen.json";
 
-                return await MatchApiCallAsync(request);
+                await ApiCallAsync(httpClient, apiKey, request);
             }
 
             /// <summary>
@@ -194,12 +165,11 @@ namespace Challonge
             /// challonge.com/single_elim). If assigned to a subdomain, URL format must be 
             /// subdomain-tournamentUrl (e.g. 'test-mytourney' for test.challonge.com/mytourney) </param>
             /// <param name="matchId">The match's unique id</param>
-            /// <returns></returns>
-            public async Task<Match> MarkMatchAsUnderwayAsync(string tournament, int matchId)
+            public async Task MarkMatchAsUnderwayAsync(string tournament, int matchId)
             {
                 string request = $"https://api.challonge.com/v1/tournaments/{tournament}/matches/{matchId}/mark_as_underway.json";
 
-                return await MatchApiCallAsync(request);
+                await ApiCallAsync(httpClient, apiKey, request);
             }
 
             /// <summary>
@@ -209,12 +179,11 @@ namespace Challonge
             /// challonge.com/single_elim). If assigned to a subdomain, URL format must be 
             /// subdomain-tournamentUrl (e.g. 'test-mytourney' for test.challonge.com/mytourney) </param>
             /// <param name="matchId">The match's unique id</param>
-            /// <returns></returns>
-            public async Task<Match> UnmarkMatchAsUnderwayAsync(string tournament, int matchId)
+            public async Task UnmarkMatchAsUnderwayAsync(string tournament, int matchId)
             {
                 string request = $"https://api.challonge.com/v1/tournaments/{tournament}/matches/{matchId}/mark_as_underway.json";
 
-                return await MatchApiCallAsync(request);
+                await ApiCallAsync(httpClient, apiKey, request);
             }
         }
     }

@@ -4,7 +4,9 @@ using Challonge.Tournaments;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.IO;
 using System.Net.Http;
+using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 
@@ -42,11 +44,10 @@ namespace Challonge
                 // raises the errors if there are any
                 string responseString = await ErrorHandler.ParseResponseAsync(response);
 
-                return ParseTournamentApiResult(responseString, includeMatches, includeParticipants);
+                return await ParseTournamentApiResultAsync(responseString, includeMatches, includeParticipants);
             }
 
-            // TODO make async
-            private static TournamentApiResult ParseTournamentApiResult(string responseString, bool includeMatches, bool includeParticipants)
+            private static async Task<TournamentApiResult> ParseTournamentApiResultAsync(string responseString, bool includeMatches, bool includeParticipants)
             {
                 TournamentApiResult result = new TournamentApiResult();
 
@@ -56,7 +57,9 @@ namespace Challonge
                 {
                     JsonElement matchesElement = rootElement.GetProperty("tournament").GetProperty("matches");
 
-                    MatchData[] matches = JsonSerializer.Deserialize<MatchData[]>(matchesElement.GetRawText());
+                    MemoryStream reader = new MemoryStream(Encoding.UTF8.GetBytes(matchesElement.GetRawText()));
+
+                    MatchData[] matches = await JsonSerializer.DeserializeAsync<MatchData[]>(reader);
                     Match[] matchesResult = new Match[matches.Length];
 
                     for (int i = 0; i < matches.Length; i++)
@@ -70,7 +73,10 @@ namespace Challonge
                 if (includeParticipants)
                 {
                     JsonElement participantsElement = rootElement.GetProperty("tournament").GetProperty("participants");
-                    ParticipantData[] participants = JsonSerializer.Deserialize<ParticipantData[]>(participantsElement.ToString());
+
+                    MemoryStream reader = new MemoryStream(Encoding.UTF8.GetBytes(participantsElement.GetRawText()));
+                    ParticipantData[] participants = await JsonSerializer.DeserializeAsync<ParticipantData[]>(reader);
+
                     Participant[] participantsResult = new Participant[participants.Length];
 
                     for (int i = 0; i < participants.Length; i++)
@@ -81,7 +87,8 @@ namespace Challonge
                 else
                     result.Participants = null;
 
-                TournamentData tournamentData = JsonSerializer.Deserialize<TournamentData>(responseString);
+                MemoryStream stream = new MemoryStream(Encoding.UTF8.GetBytes(responseString));
+                TournamentData tournamentData = await JsonSerializer.DeserializeAsync<TournamentData>(stream);
                 result.Tournament = tournamentData.Tournament;
 
                 return result;
@@ -235,10 +242,7 @@ namespace Challonge
                 if (subdomain != null)
                     request += "&subdomain=" + subdomain;
 
-                HttpResponseMessage response = await httpClient.GetAsync(request);
-                string responseString = await ErrorHandler.ParseResponseAsync(response);
-
-                TournamentData[] tournamentDatas = JsonSerializer.Deserialize<TournamentData[]>(responseString);
+                TournamentData[] tournamentDatas = await GetAsync<TournamentData[]>(httpClient, request);
                 Tournament[] tournaments = new Tournament[tournamentDatas.Length];
 
                 for (int i = 0; i < tournamentDatas.Length; i++)
@@ -307,19 +311,17 @@ namespace Challonge
                 bool notifyUsersWhenTournamentsEnds = false, bool sequentialPairings = false, int? signupCap = null,
                 DateTimeOffset? startAt = null, int? checkInDuration = null /*GRAND FINALS MODIFIER*/)
             {
+                string request = "https://api.challonge.com/v1/tournaments.json";
+
                 Dictionary<string, string> parameters = PrepareParams(name, url, type, subdomain, description,
                     openSignup, holdThirdPlaceMatch, ptsForMatchWin, ptsForMatchTie, ptsForGameWin, ptsForGameTie,
                     ptsForBye, swissRounds, rankedBy, rrPtsForMatchWin, rrPtsForMatchTie, rrPtsForGameWin, rrPtsForGameTie,
                     acceptAttachments, hideForum, showRounds, isPrivate, notifyUsersWhenMatchesOpen,
                     notifyUsersWhenTournamentsEnds, sequentialPairings, signupCap, startAt, checkInDuration);
 
-                // request
                 FormUrlEncodedContent content = new FormUrlEncodedContent(parameters);
-                HttpResponseMessage response = await httpClient.PostAsync("https://api.challonge.com/v1/tournaments.json", content);
 
-                string responseString = await ErrorHandler.ParseResponseAsync(response);
-                TournamentData tournamentData = JsonSerializer.Deserialize<TournamentData>(responseString); //TODO make async
-
+                TournamentData tournamentData = await PostAsync<TournamentData>(httpClient, request, content);
                 return tournamentData.Tournament;
             }
 
@@ -345,7 +347,7 @@ namespace Challonge
                 HttpResponseMessage response = await httpClient.GetAsync(request);
                 string responseString = await ErrorHandler.ParseResponseAsync(response);
 
-                return ParseTournamentApiResult(responseString, includeMatches, includeParticipants);
+                return await ParseTournamentApiResultAsync(responseString, includeMatches, includeParticipants);
             }
 
             /// <summary>
@@ -402,11 +404,8 @@ namespace Challonge
                     notifyUsersWhenTournamentsEnds, sequentialPairings, signupCap, startAt, checkInDuration);
 
                 FormUrlEncodedContent content = new FormUrlEncodedContent(parameters);
-                HttpResponseMessage response = await httpClient.PutAsync(request, content);
 
-                string responseString = await ErrorHandler.ParseResponseAsync(response);
-
-                TournamentData tournamentData = JsonSerializer.Deserialize<TournamentData>(responseString);
+                TournamentData tournamentData = await PutAsync<TournamentData>(httpClient, request, content);
                 return tournamentData.Tournament;
             }
 
@@ -419,9 +418,8 @@ namespace Challonge
             public async Task DeleteTournamentAsync(string tournament)
             {
                 string request = $"https://api.challonge.com/v1/tournaments/{tournament}.json?api_key={apiKey}";
-                HttpResponseMessage response = await httpClient.DeleteAsync(request);
 
-                await ErrorHandler.ParseResponseAsync(response);
+                await DeleteAsync(httpClient, request);
             }
 
             /// <summary>

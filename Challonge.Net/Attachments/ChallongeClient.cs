@@ -1,9 +1,8 @@
 ﻿using Challonge.Attachments;
 using System;
 using System.Collections.Generic;
-using System.Text.Json;
-using System.Threading.Tasks;
 using System.Net.Http;
+using System.Threading.Tasks;
 
 namespace Challonge
 {
@@ -28,10 +27,7 @@ namespace Challonge
             {
                 string request = $" https://api.challonge.com/v1/tournaments/{tournament}/matches/{matchId}/attachments.json?api_key={apiKey}";
 
-                HttpResponseMessage response = await httpClient.GetAsync(request);
-                string responseString = await ErrorHandler.ParseResponseAsync(response);
-
-                AttachmentData[] attachmentDatas = JsonSerializer.Deserialize<AttachmentData[]>(responseString);
+                AttachmentData[] attachmentDatas = await GetAsync<AttachmentData[]>(httpClient, request);
                 Attachment[] result = new Attachment[attachmentDatas.Length];
 
                 for (int i = 0; i < attachmentDatas.Length; i++)
@@ -41,7 +37,7 @@ namespace Challonge
             }
 
             //TODO add file upload
-            public async Task<Attachment> CreateAttachmentAsync(string tournament, int matchId, 
+            public async Task<Attachment> CreateAttachmentAsync(string tournament, int matchId,
                 string file = null, string url = null, string description = null)
             {
                 string request = $"https://api.challonge.com/v1/tournaments/{tournament}/matches/{matchId}/attachments.json";
@@ -64,11 +60,8 @@ namespace Challonge
                     parameters["match_attachment[description]"] = description;
 
                 FormUrlEncodedContent content = new FormUrlEncodedContent(parameters);
-                HttpResponseMessage response = await httpClient.PostAsync(request, content);
 
-                string responseString = await ErrorHandler.ParseResponseAsync(response);
-
-                AttachmentData attachmentData = JsonSerializer.Deserialize<AttachmentData>(responseString);
+                AttachmentData attachmentData = await PostAsync<AttachmentData>(httpClient, request, content);
                 return attachmentData.Attachment;
             }
 
@@ -76,10 +69,7 @@ namespace Challonge
             {
                 string request = $" https://api.challonge.com/v1/tournaments/{tournament}/matches/{matchId}/attachments/{attachmentId}.?api_key={apiKey}";
 
-                HttpResponseMessage response = await httpClient.GetAsync(request);
-                string responseString = await ErrorHandler.ParseResponseAsync(response);
-
-                AttachmentData attachmentData = JsonSerializer.Deserialize<AttachmentData>(responseString);
+                AttachmentData attachmentData = await GetAsync<AttachmentData>(httpClient, request);
                 return attachmentData.Attachment;
             }
 
@@ -107,11 +97,8 @@ namespace Challonge
                     parameters["match_attachment[description]"] = description;
 
                 FormUrlEncodedContent content = new FormUrlEncodedContent(parameters);
-                HttpResponseMessage response = await httpClient.PutAsync(request, content);
 
-                string responseString = await ErrorHandler.ParseResponseAsync(response);
-
-                AttachmentData attachmentData = JsonSerializer.Deserialize<AttachmentData>(responseString);
+                AttachmentData attachmentData = await PutAsync<AttachmentData>(httpClient, request, content);
                 return attachmentData.Attachment;
             }
 
@@ -119,9 +106,7 @@ namespace Challonge
             {
                 string request = $"https://api.challonge.com/v1/tournaments/{tournament}/matches/{matchId}/attachments/{attachmentId}.json?api_key={apiKey}";
 
-                HttpResponseMessage response = await httpClient.DeleteAsync(request);
-
-                await ErrorHandler.ParseResponseAsync(response);
+                await DeleteAsync(httpClient, request);
             }
         }
     }

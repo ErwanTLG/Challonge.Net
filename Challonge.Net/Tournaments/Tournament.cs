@@ -1,5 +1,5 @@
-﻿using Challonge.Participants;
-using Challonge.Json;
+﻿using Challonge.Json;
+using Challonge.Participants;
 using Challonge.Tournaments.Json;
 using System;
 using System.Text.Json.Serialization;
