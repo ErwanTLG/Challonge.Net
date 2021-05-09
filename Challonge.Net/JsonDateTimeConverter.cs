@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using System.Globalization;
 
 namespace Challonge.Json
 {
@@ -13,23 +14,8 @@ namespace Challonge.Json
             if (value == "null")
                 return null;
 
-            if (value.Contains('+'))
-            {
-                string[] time = value.Split('+');
-                DateTimeOffset dateTime = DateTimeOffset.Parse(time[0]);
-                string hours = time[1].Split(':')[0];
-                dateTime.AddHours(int.Parse(hours));
-                return dateTime;
-            }
-            else
-            {
-                //Console.WriteLine(value);
-                string[] time = value.Split('-');
-                DateTimeOffset dateTime = DateTimeOffset.Parse(time[0]);
-                string hours = time[1].Split(':')[0];
-                dateTime.AddHours(-int.Parse(hours));
-                return dateTime;
-            }
+            //return DateTimeOffset.ParseExact(value, "O", CultureInfo.InvariantCulture);
+            return DateTimeOffset.ParseExact(value, "yyyy'-'MM'-'dd'T'HH':'mm':'ss'.'fffzzz", CultureInfo.InvariantCulture);
         }
 
         public override void Write(Utf8JsonWriter writer, DateTimeOffset? value, JsonSerializerOptions options)

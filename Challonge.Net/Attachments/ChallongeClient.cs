@@ -1,5 +1,6 @@
 ﻿using Challonge.Attachments;
 using System;
+using System.IO;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -38,7 +39,7 @@ namespace Challonge
 
             //TODO add file upload
             public async Task<Attachment> CreateAttachmentAsync(string tournament, int matchId,
-                string file = null, string url = null, string description = null)
+                FileStream file = null, string url = null, string description = null)
             {
                 string request = $"https://api.challonge.com/v1/tournaments/{tournament}/matches/{matchId}/attachments.json";
 
@@ -50,18 +51,24 @@ namespace Challonge
                     ["api_key"] = apiKey
                 };
 
-                if (file != null)
-                    parameters["match_attachment[asset]"] = file;
-
                 if (url != null)
                     parameters["match_attachment[url]"] = url;
 
                 if (description != null)
                     parameters["match_attachment[description]"] = description;
 
+                //MultipartFormDataContent form = new MultipartFormDataContent();
+                MultipartContent form = new MultipartContent();
                 FormUrlEncodedContent content = new FormUrlEncodedContent(parameters);
+                form.Add(content);
 
-                AttachmentData attachmentData = await PostAsync<AttachmentData>(httpClient, request, content);
+                //if (file != null)
+                //{
+                //    StreamContent stream = new StreamContent(file);
+                //    form.Add(stream, "match_attachment[asset]");
+                //}
+
+                AttachmentData attachmentData = await PostAsync<AttachmentData>(httpClient, request, form);
                 return attachmentData.Attachment;
             }
 
