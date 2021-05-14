@@ -105,12 +105,14 @@ namespace Challonge
             {
                 Dictionary<string, string> parameters = new Dictionary<string, string>
                 {
-                    ["api_key"] = apiKey,
-                    ["tournament[url]"] = url ?? throw new ArgumentNullException("url")
+                    ["api_key"] = apiKey
                 };
 
                 if (name != null)
                     parameters["tournament[name]"] = name;
+                
+                if (url != null)
+                    parameters["tournament[url]"] = url;
 
                 switch (type)
                 {
