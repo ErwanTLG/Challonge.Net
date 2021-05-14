@@ -259,7 +259,7 @@ namespace Challonge
             /// <returns>The tournament that was created</returns>
             public async Task<Tournament> CreateTournamentAsync(Tournament tournament)
             {
-                return await CreateTournamentAsync(tournament.Name, tournament.Url, tournament.TournamentType, tournament.Subdomain,
+                return await CreateTournamentAsync(tournament.Url, tournament.Name, tournament.TournamentType, tournament.Subdomain,
                     tournament.Description, tournament.OpenSignup, tournament.HoldThirdPlaceMatch, tournament.PointsForMatchWin,
                     tournament.PointsForMatchTie, tournament.PointsForGameWin, tournament.PointsForGameTie,
                     tournament.PointsForBye, tournament.SwissRounds, tournament.RankedBy, tournament.RoundRobinPointsForMatchWin,
