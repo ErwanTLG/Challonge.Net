@@ -17,10 +17,8 @@ namespace Challonge
         public TournamentHandler Tournaments { get; }
         public ParticipantsHandler Participants { get; }
         public MatchesHandler Matches { get; }
-        public AttachmentsHandler Attachments
-        {
-            get;
-        }
+        public AttachmentsHandler Attachments { get; }
+
         public ChallongeClient(string key)
         {
             apiKey = key ?? throw new ArgumentNullException("key");

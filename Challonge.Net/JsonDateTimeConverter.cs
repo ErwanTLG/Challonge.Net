@@ -6,6 +6,7 @@ namespace Challonge.Json
 {
     internal class JsonDateTimeConverter : JsonConverter<DateTimeOffset?>
     {
+        // TODO fix the reader (issues when formatted with a -)
         public override DateTimeOffset? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
         {
             string value = reader.GetString();
