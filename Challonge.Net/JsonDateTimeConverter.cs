@@ -7,7 +7,6 @@ namespace Challonge.Json
 {
     internal class JsonDateTimeConverter : JsonConverter<DateTimeOffset?>
     {
-        // TODO fix the reader (issues when formatted with a -)
         public override DateTimeOffset? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
         {
             string value = reader.GetString();
@@ -15,7 +14,6 @@ namespace Challonge.Json
             if (value == "null")
                 return null;
 
-            //return DateTimeOffset.ParseExact(value, "O", CultureInfo.InvariantCulture);
             return DateTimeOffset.ParseExact(value, "yyyy'-'MM'-'dd'T'HH':'mm':'ss'.'fffzzz", CultureInfo.InvariantCulture);
         }
 
