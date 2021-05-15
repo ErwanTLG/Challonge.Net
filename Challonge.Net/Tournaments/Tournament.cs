@@ -1,5 +1,4 @@
-﻿using Challonge.Json;
-using Challonge.Participants;
+﻿using Challonge.Participants;
 using Challonge.Tournaments.Json;
 using System;
 using System.Text.Json.Serialization;
@@ -39,11 +38,9 @@ namespace Challonge.Tournaments
         public int? CheckInDuration { get; set; }
 
         [JsonPropertyName("completed_at")]
-        [JsonConverter(typeof(JsonDateTimeConverter))]
         public DateTimeOffset? CompletedAt { get; set; }
 
         [JsonPropertyName("created_at")]
-        [JsonConverter(typeof(JsonDateTimeConverter))]
         public DateTimeOffset? CreatedAt { get; set; }
 
         /// <summary>
@@ -125,7 +122,6 @@ namespace Challonge.Tournaments
         public TournamentPredictionMethod PredictionMethod { get; set; }
 
         [JsonPropertyName("predictions_opened_at")]
-        [JsonConverter(typeof(JsonDateTimeConverter))]
         public DateTimeOffset? PredictionsOpenedAt { get; set; }
 
         /// <summary>
@@ -205,15 +201,12 @@ namespace Challonge.Tournaments
         public int? SignupCap { get; set; }
 
         [JsonPropertyName("start_at")]
-        [JsonConverter(typeof(JsonDateTimeConverter))]
         public DateTimeOffset? StartAt { get; set; }
 
         [JsonPropertyName("started_at")]
-        [JsonConverter(typeof(JsonDateTimeConverter))]
         public DateTimeOffset? StartedAt { get; set; }
 
         [JsonPropertyName("started_checking_in_at")]
-        [JsonConverter(typeof(JsonDateTimeConverter))]
         public DateTimeOffset? StartedCheckingInAt { get; set; }
 
         [JsonPropertyName("state")]
@@ -237,7 +230,6 @@ namespace Challonge.Tournaments
         public TournamentType TournamentType { get; set; }
 
         [JsonPropertyName("updated_at")]
-        [JsonConverter(typeof(JsonDateTimeConverter))]
         public DateTimeOffset? UpdatedAt { get; set; }
 
         /// <summary>

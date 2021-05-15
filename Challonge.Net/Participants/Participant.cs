@@ -1,5 +1,4 @@
-﻿using Challonge.Json;
-using System;
+﻿using System;
 using System.Text.Json.Serialization;
 
 namespace Challonge.Participants
@@ -15,11 +14,9 @@ namespace Challonge.Participants
         public bool Active { get; set; }
 
         [JsonPropertyName("checked_in_at")]
-        [JsonConverter(typeof(JsonDateTimeConverter))]
         public DateTimeOffset? CheckedInAt { get; set; }
 
         [JsonPropertyName("created_at")]
-        [JsonConverter(typeof(JsonDateTimeConverter))]
         public DateTimeOffset? CreatedAt { get; set; }
 
         [JsonPropertyName("final_rank")]
@@ -60,7 +57,6 @@ namespace Challonge.Participants
         public int TournamentId { get; set; }
 
         [JsonPropertyName("updated_at")]
-        [JsonConverter(typeof(JsonDateTimeConverter))]
         public DateTimeOffset? UpdatedAt { get; set; }
 
         [JsonPropertyName("challonge_username")]

@@ -1,5 +1,4 @@
-﻿using Challonge.Json;
-using Challonge.Matches.Json;
+﻿using Challonge.Matches.Json;
 using System;
 using System.Text.Json.Serialization;
 
@@ -17,7 +16,6 @@ namespace Challonge.Matches
         public int? AttachmentCount { get; set; }
 
         [JsonPropertyName("created_at")]
-        [JsonConverter(typeof(JsonDateTimeConverter))]
         public DateTimeOffset? CreatedAt { get; set; }
 
         [JsonPropertyName("group_id")]
@@ -66,11 +64,9 @@ namespace Challonge.Matches
         public int Round { get; set; }
 
         [JsonPropertyName("scheduled_time")]
-        [JsonConverter(typeof(JsonDateTimeConverter))]
         public DateTimeOffset? ScheduledTime { get; set; }
 
         [JsonPropertyName("started_at")]
-        [JsonConverter(typeof(JsonDateTimeConverter))]
         public DateTimeOffset? StartedAt { get; set; }
 
         [JsonPropertyName("state")]
@@ -81,11 +77,9 @@ namespace Challonge.Matches
         public int TournamentId { get; set; }
 
         [JsonPropertyName("underway_at")]
-        [JsonConverter(typeof(JsonDateTimeConverter))]
         public DateTimeOffset? UnderwayAt { get; set; }
 
         [JsonPropertyName("updated_at")]
-        [JsonConverter(typeof(JsonDateTimeConverter))]
         public DateTimeOffset? UpdatedAt { get; set; }
 
         [JsonPropertyName("winner_id")]
