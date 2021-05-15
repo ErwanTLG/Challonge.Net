@@ -160,8 +160,9 @@ namespace Challonge.Tournaments
         public bool QuickAdvance { get; set; }
 
         [JsonPropertyName("ranked_by")]
-        public string RankedBy { get; set; }     // not sure (enum maybe)
-
+        [JsonConverter(typeof(TournamentRankingStatsJsonConverter))]
+        public TournamentRankingStats RankedBy { get; set; }
+        
         [JsonPropertyName("require_score_agreement")]
         public bool RequireScoreAgreement { get; set; }
 
@@ -223,7 +224,8 @@ namespace Challonge.Tournaments
         public bool? Teams { get; set; }
 
         [JsonPropertyName("tie_breaks")]
-        public string[] TieBreaks { get; set; }  // stack or queue of enums or something like that
+        [JsonConverter(typeof(TournamentTieBreakArrayJsonConverter))]
+        public TournamentTieBreak[] TieBreaks { get; set; }
 
         [JsonPropertyName("tournament_type")]
         [JsonConverter(typeof(TournamentTypeJsonConverter))]
@@ -318,6 +320,29 @@ namespace Challonge.Tournaments
     {
         Exponential = 1,
         Linear = 2,
+        Invalid
+    }
+
+    public enum TournamentRankingStats
+    {
+        MatchWins,
+        GameWins,
+        GameWinPercentage,
+        PointsScored,
+        PointsDifference,
+        Custom,
+        Invalid
+    }
+
+    public enum TournamentTieBreak
+    {
+        MatchWins,
+        GameWins,
+        GameWinPercentage,
+        PointsScored,
+        PointsDifference,
+        WinsVSTiedParticipants,
+        MedianBuchholz,
         Invalid
     }
 }
