@@ -2,6 +2,7 @@
 using System;
 using System.IO;
 using System.Collections.Generic;
+using System.IO;
 using System.Net.Http;
 using System.Threading.Tasks;
 
@@ -37,7 +38,7 @@ namespace Challonge
                 return result;
             }
 
-            //TODO add file upload
+            //TODO add file upload (they do not work currently)
             public async Task<Attachment> CreateAttachmentAsync(string tournament, int matchId,
                 FileStream file = null, string url = null, string description = null)
             {
@@ -57,16 +58,16 @@ namespace Challonge
                 if (description != null)
                     parameters["match_attachment[description]"] = description;
 
-                //MultipartFormDataContent form = new MultipartFormDataContent();
-                MultipartContent form = new MultipartContent();
+                MultipartFormDataContent form = new MultipartFormDataContent();
+                
                 FormUrlEncodedContent content = new FormUrlEncodedContent(parameters);
                 form.Add(content);
 
-                //if (file != null)
-                //{
-                //    StreamContent stream = new StreamContent(file);
-                //    form.Add(stream, "match_attachment[asset]");
-                //}
+                if (file != null)
+                {
+                    StreamContent stream = new StreamContent(file);
+                    form.Add(stream, "match_attachment[asset]");
+                }
 
                 AttachmentData attachmentData = await PostAsync<AttachmentData>(httpClient, request, form);
                 return attachmentData.Attachment;

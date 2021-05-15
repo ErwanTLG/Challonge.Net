@@ -293,16 +293,15 @@ namespace Challonge.Tournaments
 
     public enum TournamentType
     {
-        Invalid,
         SingleElimination,
         DoubleElimination,
         RoundRobin,
-        Swiss
+        Swiss,
+        Invalid
     }
 
     public enum TournamentState
     {
-        Invalid,
         /// <summary>
         /// The check-in process has started
         /// </summary>
@@ -319,13 +318,14 @@ namespace Challonge.Tournaments
         /// The tournament has started
         /// </summary>
         Underway,
-        Completed
+        Completed,
+        Invalid
     }
 
     public enum TournamentPredictionMethod
     {
-        Invalid,
         Exponential = 1,
-        Linear = 2
+        Linear = 2,
+        Invalid
     }
 }

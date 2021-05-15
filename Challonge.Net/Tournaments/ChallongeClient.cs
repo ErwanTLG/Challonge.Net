@@ -105,12 +105,14 @@ namespace Challonge
             {
                 Dictionary<string, string> parameters = new Dictionary<string, string>
                 {
-                    ["api_key"] = apiKey,
-                    ["tournament[url]"] = url ?? throw new ArgumentNullException("url")
+                    ["api_key"] = apiKey
                 };
 
                 if (name != null)
                     parameters["tournament[name]"] = name;
+                
+                if (url != null)
+                    parameters["tournament[url]"] = url;
 
                 switch (type)
                 {
@@ -177,7 +179,7 @@ namespace Challonge
                     parameters["tournament[signup_cap]"] = signupCap.Value.ToString();
 
                 if (startAt != null)
-                    parameters["tournament[start_at]"] = startAt.Value.ToString("");    //TODO fix format here
+                    parameters["tournament[start_at]"] = startAt.Value.ToString("yyyy'-'MM'-'dd'T'HH':'mm':'ss'.'fffzzz");
 
                 if (checkInDuration != null)
                     parameters["tournament[check_in_duration]"] = checkInDuration.Value.ToString();
@@ -268,6 +270,7 @@ namespace Challonge
                     tournament.NotifyUsersWhenMatchesOpen, tournament.NotifyUsersWhenTournamentEnds, tournament.SequentialPairing, tournament.SignupCap, tournament.StartAt, tournament.CheckInDuration);
             }
 
+            // TODO fix ranked by and grand finals modifier
             /// <summary>
             /// Creates a new tournament
             /// </summary>
@@ -302,10 +305,10 @@ namespace Challonge
             /// <param name="startAt"></param>
             /// <param name="checkInDuration">Length of the participant check-in window in minutes.</param>
             /// <returns></returns>
-            public async Task<Tournament> CreateTournamentAsync(string url, string name = null, TournamentType type = TournamentType.SingleElimination,
+            public async Task<Tournament> CreateTournamentAsync(string name, string url = null, TournamentType type = TournamentType.SingleElimination,
                 string subdomain = null, string description = null, bool openSignup = false, bool holdThirdPlaceMatch = false,
                 float ptsForMatchWin = 1.0f, float ptsForMatchTie = 0.5f, float ptsForGameWin = 0f, float ptsForGameTie = 0f,
-                float ptsForBye = 1.0f, int? swissRounds = null, string rankedBy = null/*RANKED BY HERE*/, float rrPtsForMatchWin = 1.0f,
+                float ptsForBye = 1.0f, int? swissRounds = null, string rankedBy = null, float rrPtsForMatchWin = 1.0f,
                 float rrPtsForMatchTie = 0.5f, float rrPtsForGameWin = 0f, float rrPtsForGameTie = 0f, bool acceptAttachments = false,
                 bool hideForum = false, bool showRounds = false, bool isPrivate = false, bool notifyUsersWhenMatchesOpen = false,
                 bool notifyUsersWhenTournamentsEnds = false, bool sequentialPairings = false, int? signupCap = null,

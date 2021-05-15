@@ -30,7 +30,9 @@ namespace Challonge
                 return responseString;
 
             ErrorData errorData = JsonSerializer.Deserialize<ErrorData>(responseString);
-            string errors = string.Concat(errorData.Errors);
+            string errors = "";
+            foreach (string error in errorData.Errors)
+                errors += error + " ; ";
 
             switch (response.StatusCode)
             {
@@ -43,7 +45,7 @@ namespace Challonge
                 case HttpStatusCode.InternalServerError:   // Server-side error
                     throw new ChallongeException("Challonge api request returned 500: Something went wrong the server side. If you continually receive this, please contact the challonge team. " + errors);
                 case HttpStatusCode.UnprocessableEntity:   // Validation error
-                    string errorMessage = "The following errors happend while trying to reach the Challonge API:\n" + errors;
+                    string errorMessage = "Challonge api request returned 422: The following errors happend while trying to reach the Challonge API:\n" + errors;
                     throw new ChallongeException(errorMessage);
                 default:    // We assume that by default, the request was successful
                     return await response.Content.ReadAsStringAsync();
