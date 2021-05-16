@@ -101,7 +101,7 @@ namespace Challonge
                 float rrPtsForMatchTie, float rrPtsForGameWin, float rrPtsForGameTie, bool acceptAttachments,
                 bool hideForum, bool showRounds, bool isPrivate, bool notifyUsersWhenMatchesOpen,
                 bool notifyUsersWhenTournamentsEnds, bool sequentialPairings, int? signupCap,
-                DateTimeOffset? startAt, int? checkInDuration/*GRAND FINALS MODIFIER*/)
+                DateTimeOffset? startAt, int? checkInDuration, TournamentGrandFinals? grandFinalsModifier)
             {
                 Dictionary<string, string> parameters = new Dictionary<string, string>
                 {
@@ -152,9 +152,25 @@ namespace Challonge
                 if (swissRounds != null)
                     parameters["swiss_rounds]"] = swissRounds.Value.ToString();
 
-
-                // ranked by here
-                parameters["tournament[ranked_by]"] = "match wins";
+                switch (rankedBy)
+                {
+                    // TODO check if the api accepts game wins percentage
+                    case TournamentRankingStats.MatchWins:
+                        parameters["tournament[ranked_by]"] = "match wins";
+                        break;
+                    case TournamentRankingStats.GameWins:
+                        parameters["tournament[ranked_by]"] = "game wins";
+                        break;
+                    case TournamentRankingStats.PointsScored:
+                        parameters["tournament[ranked_by]"] = "points scored";
+                        break;
+                    case TournamentRankingStats.PointsDifference:
+                        parameters["tournament[ranked_by]"] = "points difference";
+                        break;
+                    case TournamentRankingStats.Custom:
+                        parameters["tournament[ranked_by]"] = "custom";
+                        break;
+                }
 
                 parameters["tournament[rr_pts_for_match_win]"] = string.Format(CultureInfo.InvariantCulture, "{0:G}", rrPtsForMatchWin);
                 parameters["tournament[rr_pts_f, or_match_tie]"] = string.Format(CultureInfo.InvariantCulture, "{0:G}", rrPtsForMatchTie);
@@ -184,8 +200,16 @@ namespace Challonge
                 if (checkInDuration != null)
                     parameters["tournament[check_in_duration]"] = checkInDuration.Value.ToString();
 
-                // grand final modifier
-                parameters["tournament[grand_finals_modifier]"] = "";
+                switch (grandFinalsModifier)
+                {
+                    // Two matches is the default value, so we don't need to send it
+                    case TournamentGrandFinals.Skip:
+                        parameters["tournament[grand_finals_modifier]"] = "skip";
+                        break;
+                    case TournamentGrandFinals.SingleMatch:
+                        parameters["tournament[grand_finals_modifier]"] = "single match";
+                        break;
+                }
 
                 return parameters;
             }
@@ -270,7 +294,6 @@ namespace Challonge
                     tournament.NotifyUsersWhenMatchesOpen, tournament.NotifyUsersWhenTournamentEnds, tournament.SequentialPairing, tournament.SignupCap, tournament.StartAt, tournament.CheckInDuration);
             }
 
-            // TODO fix ranked by and grand finals modifier
             /// <summary>
             /// Creates a new tournament
             /// </summary>
@@ -312,7 +335,8 @@ namespace Challonge
                 float rrPtsForMatchTie = 0.5f, float rrPtsForGameWin = 0f, float rrPtsForGameTie = 0f, bool acceptAttachments = false,
                 bool hideForum = false, bool showRounds = false, bool isPrivate = false, bool notifyUsersWhenMatchesOpen = false,
                 bool notifyUsersWhenTournamentsEnds = false, bool sequentialPairings = false, int? signupCap = null,
-                DateTimeOffset? startAt = null, int? checkInDuration = null /*GRAND FINALS MODIFIER*/)
+                DateTimeOffset? startAt = null, int? checkInDuration = null, 
+                TournamentGrandFinals? grandFinalsModifier = null)
             {
                 string request = "https://api.challonge.com/v1/tournaments.json";
 
@@ -320,7 +344,8 @@ namespace Challonge
                     openSignup, holdThirdPlaceMatch, ptsForMatchWin, ptsForMatchTie, ptsForGameWin, ptsForGameTie,
                     ptsForBye, swissRounds, rankedBy, rrPtsForMatchWin, rrPtsForMatchTie, rrPtsForGameWin, rrPtsForGameTie,
                     acceptAttachments, hideForum, showRounds, isPrivate, notifyUsersWhenMatchesOpen,
-                    notifyUsersWhenTournamentsEnds, sequentialPairings, signupCap, startAt, checkInDuration);
+                    notifyUsersWhenTournamentsEnds, sequentialPairings, signupCap, startAt, checkInDuration,
+                    grandFinalsModifier);
 
                 FormUrlEncodedContent content = new FormUrlEncodedContent(parameters);
 
@@ -396,7 +421,8 @@ namespace Challonge
                 float rrPtsForMatchTie = 0.5f, float rrPtsForGameWin = 0f, float rrPtsForGameTie = 0f, bool acceptAttachments = false,
                 bool hideForum = false, bool showRounds = false, bool isPrivate = false, bool notifyUsersWhenMatchesOpen = false,
                 bool notifyUsersWhenTournamentsEnds = false, bool sequentialPairings = false, int? signupCap = null,
-                DateTimeOffset? startAt = null, int? checkInDuration = null /*GRAND FINALS MODIFIER*/)
+                DateTimeOffset? startAt = null, int? checkInDuration = null, 
+                TournamentGrandFinals? grandFinalsModifier = null)
             {
                 string request = $"https://api.challonge.com/v1/tournaments/{tournament}.json";
 
@@ -404,7 +430,8 @@ namespace Challonge
                     openSignup, holdThirdPlaceMatch, ptsForMatchWin, ptsForMatchTie, ptsForGameWin, ptsForGameTie,
                     ptsForBye, swissRounds, rankedBy, rrPtsForMatchWin, rrPtsForMatchTie, rrPtsForGameWin, rrPtsForGameTie,
                     acceptAttachments, hideForum, showRounds, isPrivate, notifyUsersWhenMatchesOpen,
-                    notifyUsersWhenTournamentsEnds, sequentialPairings, signupCap, startAt, checkInDuration);
+                    notifyUsersWhenTournamentsEnds, sequentialPairings, signupCap, startAt, checkInDuration,
+                    grandFinalsModifier);
 
                 FormUrlEncodedContent content = new FormUrlEncodedContent(parameters);
 

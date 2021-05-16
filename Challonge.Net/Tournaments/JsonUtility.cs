@@ -186,4 +186,34 @@ namespace Challonge.Tournaments.Json
             writer.WriteEndArray();
         }
     }
+
+    internal class TournamentGrandFinalsJsonConverter : JsonConverter<TournamentGrandFinals>
+    {
+        public override TournamentGrandFinals Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+        {
+            string value = reader.GetString();
+
+            return value switch
+            {
+                "single match" => TournamentGrandFinals.SingleMatch,
+                "skip" => TournamentGrandFinals.Skip,
+                _ => TournamentGrandFinals.TwoChances   // default value, even when blank
+            };
+        }
+
+        public override void Write(Utf8JsonWriter writer, TournamentGrandFinals value, JsonSerializerOptions options)
+        {
+            switch (value)
+            {
+                case TournamentGrandFinals.TwoChances:  // should be empty or blank
+                    break;
+                case TournamentGrandFinals.SingleMatch:
+                    writer.WriteStringValue("single match");
+                    break;
+                case TournamentGrandFinals.Skip:
+                    writer.WriteStringValue("skip");
+                    break;
+            }
+        }
+    }
 }

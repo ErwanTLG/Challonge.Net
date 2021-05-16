@@ -283,6 +283,10 @@ namespace Challonge.Tournaments
 
         [JsonPropertyName("group_stages_were_started")]
         public bool GroupStageWereStarted { get; set; }
+
+        [JsonPropertyName("grand_finals_modifier")]
+        [JsonConverter(typeof(TournamentGrandFinalsJsonConverter))]
+        public TournamentGrandFinals GrandFinalsModifier { get; set; }
     }
 
     public enum TournamentType
@@ -344,5 +348,12 @@ namespace Challonge.Tournaments
         WinsVSTiedParticipants,
         MedianBuchholz,
         Invalid
+    }
+
+    public enum TournamentGrandFinals
+    {
+        TwoChances,
+        SingleMatch,
+        Skip
     }
 }
