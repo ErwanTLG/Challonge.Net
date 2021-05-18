@@ -5,6 +5,7 @@ namespace Challonge.Participants
 {
     internal class ParticipantData
     {
+        [JsonPropertyName("participant")]
         public Participant Participant { get; set; }
     }
 

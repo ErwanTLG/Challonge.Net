@@ -31,7 +31,7 @@ namespace Challonge
             /// <returns>The list of participants of the given tournament</returns>
             public async Task<Participant[]> GetParticipantsAsync(string tournament)
             {
-                string request = $" https://api.challonge.com/v1/tournaments/{tournament}/participants.json";
+                string request = $" https://api.challonge.com/v1/tournaments/{tournament}/participants.json?api_key={apiKey}";
 
                 ParticipantData[] participantDatas = await GetAsync<ParticipantData[]>(httpClient, request);
                 Participant[] participants = new Participant[participantDatas.Length];
@@ -109,7 +109,42 @@ namespace Challonge
                     participant.InviteEmail, participant.Seed, participant.Misc);
             }
 
-            //TODO add bulk add
+            public async Task<Participant[]> CreateParticipantsAsync(string tournament, string[] names = null,
+                string[] challongeUsernames = null, int[] seeds = null, string[] miscs = null)
+            {
+                string request = $" https://api.challonge.com/v1/tournaments/{tournament}/participants/bulk_add.json";
+
+                List<KeyValuePair<string, string>> parameters = new List<KeyValuePair<string, string>>
+                {
+                    new KeyValuePair<string, string>("api_key", apiKey)
+                };
+
+                for (int i = 0; i < names.Length; i++)
+                {
+                    if (names != null)
+                        parameters.Add(new KeyValuePair<string, string>("participants[][name]", names[i]));
+
+                    if (challongeUsernames != null)
+                        parameters.Add(new KeyValuePair<string, string>("participants[][invite_name_or_email]",
+                            challongeUsernames[i]));
+
+                    if (seeds != null)
+                        parameters.Add(new KeyValuePair<string, string>("participants[][seed]", seeds[i].ToString()));
+
+                    if (miscs != null)
+                        parameters.Add(new KeyValuePair<string, string>("participants[][misc]", miscs[i]));
+                }
+
+                FormUrlEncodedContent content = new FormUrlEncodedContent(parameters);
+                ParticipantData[] participantDatas = await PostAsync<ParticipantData[]>(httpClient, request, content);
+
+                Participant[] participants = new Participant[participantDatas.Length];
+
+                for (int i = 0; i < participantDatas.Length; i++)
+                    participants[i] = participantDatas[i].Participant;
+
+                return participants;
+            }
 
             /// <summary>
             /// Retrieve a single participant record for a tournament
