@@ -162,7 +162,7 @@ namespace Challonge.Tournaments
         [JsonPropertyName("ranked_by")]
         [JsonConverter(typeof(TournamentRankingStatsJsonConverter))]
         public TournamentRankingStats RankedBy { get; set; }
-        
+
         [JsonPropertyName("require_score_agreement")]
         public bool RequireScoreAgreement { get; set; }
 

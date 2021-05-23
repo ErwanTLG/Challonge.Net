@@ -110,7 +110,7 @@ namespace Challonge
 
                 if (name != null)
                     parameters["tournament[name]"] = name;
-                
+
                 if (url != null)
                     parameters["tournament[url]"] = url;
 
@@ -335,7 +335,7 @@ namespace Challonge
                 float rrPtsForMatchTie = 0.5f, float rrPtsForGameWin = 0f, float rrPtsForGameTie = 0f, bool acceptAttachments = false,
                 bool hideForum = false, bool showRounds = false, bool isPrivate = false, bool notifyUsersWhenMatchesOpen = false,
                 bool notifyUsersWhenTournamentsEnds = false, bool sequentialPairings = false, int? signupCap = null,
-                DateTimeOffset? startAt = null, int? checkInDuration = null, 
+                DateTimeOffset? startAt = null, int? checkInDuration = null,
                 TournamentGrandFinals? grandFinalsModifier = null)
             {
                 string request = "https://api.challonge.com/v1/tournaments.json";
@@ -374,7 +374,7 @@ namespace Challonge
 
                 HttpResponseMessage response = await httpClient.GetAsync(request);
                 string responseString = await ErrorHandler.ParseResponseAsync(response);
-
+                
                 return await ParseTournamentApiResultAsync(responseString, includeMatches, includeParticipants);
             }
 
@@ -421,7 +421,7 @@ namespace Challonge
                 float rrPtsForMatchTie = 0.5f, float rrPtsForGameWin = 0f, float rrPtsForGameTie = 0f, bool acceptAttachments = false,
                 bool hideForum = false, bool showRounds = false, bool isPrivate = false, bool notifyUsersWhenMatchesOpen = false,
                 bool notifyUsersWhenTournamentsEnds = false, bool sequentialPairings = false, int? signupCap = null,
-                DateTimeOffset? startAt = null, int? checkInDuration = null, 
+                DateTimeOffset? startAt = null, int? checkInDuration = null,
                 TournamentGrandFinals? grandFinalsModifier = null)
             {
                 string request = $"https://api.challonge.com/v1/tournaments/{tournament}.json";
