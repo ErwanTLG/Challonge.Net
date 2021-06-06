@@ -10,7 +10,7 @@ namespace Challonge.Matches
         public Match Match { get; set; }
     }
 
-    public struct Match
+    public class Match
     {
         [JsonPropertyName("attachment_count")]
         public int? AttachmentCount { get; set; }

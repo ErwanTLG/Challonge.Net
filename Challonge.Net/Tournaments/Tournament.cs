@@ -11,7 +11,7 @@ namespace Challonge.Tournaments
         public Tournament Tournament { get; set; }
     }
 
-    public struct Tournament
+    public class Tournament
     {
         /// <summary>
         /// Allow match attachment uploads

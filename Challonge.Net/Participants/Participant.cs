@@ -9,7 +9,7 @@ namespace Challonge.Participants
         public Participant Participant { get; set; }
     }
 
-    public struct Participant
+    public class Participant
     {
         [JsonPropertyName("acitve")]
         public bool Active { get; set; }

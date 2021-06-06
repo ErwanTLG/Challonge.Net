@@ -1,11 +1,35 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netstandard2.1</TargetFramework>
+    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+    <Version>1.0.0-beta.1</Version>
+    <Authors>Challonge.Net Contributors</Authors>
+    <Company>Challonge.Net</Company>
+    <Description>An unofficial API wrapper for Challonge! It uses modern async code.</Description>
+    <PackageLicenseFile>LICENSE</PackageLicenseFile>
+    <PackageProjectUrl>https://github.com/ErwanTLG/Challonge.Net</PackageProjectUrl>
+    <PackageIcon></PackageIcon>
+    <PackageTags>Challonge; ChallongeAPI</PackageTags>
+    <RepositoryType>git</RepositoryType>
+    <RepositoryUrl>https://github.com/ErwanTLG/Challonge.Net</RepositoryUrl>
+    <PackageReleaseNotes>Initial pre-release. May contain bugs.</PackageReleaseNotes>
+    <SignAssembly>false</SignAssembly>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="System.Text.Json" Version="5.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="../LICENSE.txt">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
+    <None Include="..\LICENSE">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
   </ItemGroup>
 
 </Project>

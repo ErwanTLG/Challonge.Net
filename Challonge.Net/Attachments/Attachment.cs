@@ -9,7 +9,7 @@ namespace Challonge.Attachments
         public Attachment Attachment { get; set; }
     }
 
-    public struct Attachment
+    public class Attachment
     {
         [JsonPropertyName("id")]
         public int Id { get; set; }

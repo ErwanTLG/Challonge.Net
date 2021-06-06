@@ -1,6 +1,8 @@
 ﻿using System;
+using System.IO;
 using System.Net;
 using System.Net.Http;
+using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
@@ -29,18 +31,25 @@ namespace Challonge
             if (response.StatusCode == HttpStatusCode.OK)
                 return responseString;
 
-            ErrorData errorData = JsonSerializer.Deserialize<ErrorData>(responseString);
-            string errors = "";
-            foreach (string error in errorData.Errors)
-                errors += error + " ; ";
+            byte[] bytes = Encoding.UTF8.GetBytes(responseString);
+            MemoryStream stream = new MemoryStream(bytes);
+            ErrorData errorData = await JsonSerializer.DeserializeAsync<ErrorData>(stream);
 
+            string errors = "";
+            for (int i = 0; i < errorData.Errors.Length; i++)
+            {
+                errors += errorData.Errors[i];
+                if (i < errorData.Errors.Length - 1)
+                    errors += " ; ";
+            }
+            
             switch (response.StatusCode)
             {
                 case HttpStatusCode.Unauthorized:   // Unauthorized (Invalid API key or insufficient permissions)
                     throw new ChallongeException("Challonge api request returned 401: Unauthorized. (Invalid API key or insufficient permissions). " + errors);
-                case HttpStatusCode.NotFound:   // Not found
+                case HttpStatusCode.NotFound:       // Not found
                     throw new ChallongeException("Challonge api request returned 404: Object not found. " + errors);
-                case HttpStatusCode.NotAcceptable:   // Request format not supported
+                case HttpStatusCode.NotAcceptable:  // Request format not supported
                     throw new ChallongeException("Challonge api request returned 406: Requested format is not supported - request JSON or XML only. " + errors);
                 case HttpStatusCode.InternalServerError:   // Server-side error
                     throw new ChallongeException("Challonge api request returned 500: Something went wrong the server side. If you continually receive this, please contact the challonge team. " + errors);
@@ -48,7 +57,7 @@ namespace Challonge
                     string errorMessage = "Challonge api request returned 422: The following errors happend while trying to reach the Challonge API:\n" + errors;
                     throw new ChallongeException(errorMessage);
                 default:    // We assume that by default, the request was successful
-                    return await response.Content.ReadAsStringAsync();
+                    return responseString;
             }
         }
     }
