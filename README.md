@@ -19,3 +19,10 @@ class Program
 
 By default, the ChallongeClient class is instantiated with a new [HttpClient class](https://docs.microsoft.com/en-us/dotnet/api/system.net.http.httpclient?view=net-5.0).
 You can pass an HttpClient as an argument to the ChallongeClient constructor to avoid the creation of a new HttpClient.
+
+# State of the project
+Currently, the project is available as a pre-release. It is not suited for production, because it may contain bugs and it is currently not well documented.
+
+So what's left to do before the first stable release is to:
+- Extensively test the entire project (using a testing framework)
+- Document the project, at least the public methods and properties.
