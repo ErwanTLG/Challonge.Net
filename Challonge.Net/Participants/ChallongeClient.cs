@@ -279,7 +279,7 @@ namespace Challonge
             /// <param name="tournament">Tournament ID (e.g. 10230) or URL (e.g. 'single_elim' for 
             /// challonge.com/single_elim). If assigned to a subdomain, URL format must be 
             /// subdomain-tournament_url (e.g. 'test-mytourney' for test.challonge.com/mytourney) </param>
-            /// <param name="participantId"></param>
+            /// <param name="participantId">The participant's unique id</param>
             public async Task UndoCheckInAsync(string tournament, int participantId)
             {
                 string request = $"https://api.challonge.com/v1/tournaments/{tournament}/participants/{participantId}/undo_check_in.json";
@@ -295,7 +295,7 @@ namespace Challonge
             /// <param name="tournament">Tournament ID (e.g. 10230) or URL (e.g. 'single_elim' for 
             /// challonge.com/single_elim). If assigned to a subdomain, URL format must be 
             /// subdomain-tournament_url (e.g. 'test-mytourney' for test.challonge.com/mytourney) </param>
-            /// <param name="participantId"></param>
+            /// <param name="participantId">The participant's unique id</param>
             /// <returns></returns>
             public async Task DeleteParticipantAsync(string tournament, int participantId)
             {
