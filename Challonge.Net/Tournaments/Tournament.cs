@@ -34,12 +34,21 @@ namespace Challonge.Tournaments
         [JsonPropertyName("category")]
         public string Category { get; set; }   // I'm not sure what type this should be parsed to
 
+        /// <summary>
+        /// Length of the participant check-in window in minutes
+        /// </summary>
         [JsonPropertyName("check_in_duration")]
         public int? CheckInDuration { get; set; }
 
+        /// <summary>
+        /// When the tournament was completed
+        /// </summary>
         [JsonPropertyName("completed_at")]
         public DateTimeOffset? CompletedAt { get; set; }
 
+        /// <summary>
+        /// When the tournament was created
+        /// </summary>
         [JsonPropertyName("created_at")]
         public DateTimeOffset? CreatedAt { get; set; }
 
@@ -73,6 +82,9 @@ namespace Challonge.Tournaments
         [JsonPropertyName("hide_forum")]
         public bool HideForum { get; set; }
 
+        /// <summary>
+        /// Hide the seed numbers in the bracket
+        /// </summary>
         [JsonPropertyName("hide_seeds")]
         public bool HideSeeds { get; set; }
 
@@ -115,6 +127,9 @@ namespace Challonge.Tournaments
         [JsonPropertyName("open_signup")]
         public bool OpenSignup { get; set; }
 
+        /// <summary>
+        /// Current number of participants
+        /// </summary>
         [JsonPropertyName("participants_count")]
         public int ParticipantsCount { get; set; }
 
@@ -130,25 +145,43 @@ namespace Challonge.Tournaments
         [JsonPropertyName("private")]
         public bool IsPrivate { get; set; }
 
+        /// <summary>
+        /// An integer between 0 and 100 representing the tournament completion %
+        /// </summary>
         [JsonPropertyName("progress_meter")]
         public int ProgressMeter { get; set; }
 
+        /// <summary>
+        /// For swiss rounds only: points gained for a bye round
+        /// </summary>
         [JsonPropertyName("pts_for_bye")]
         [JsonNumberHandling(JsonNumberHandling.AllowReadingFromString | JsonNumberHandling.WriteAsString)]
         public float PointsForBye { get; set; }
 
+        /// <summary>
+        /// For swiss rounds only: points gained for a game tie
+        /// </summary>
         [JsonPropertyName("pts_for_game_tie")]
         [JsonNumberHandling(JsonNumberHandling.AllowReadingFromString | JsonNumberHandling.WriteAsString)]
         public float PointsForGameTie { get; set; }
 
+        /// <summary>
+        /// For swiss rounds only: points gained for a game wain
+        /// </summary>
         [JsonPropertyName("pts_for_game_win")]
         [JsonNumberHandling(JsonNumberHandling.AllowReadingFromString | JsonNumberHandling.WriteAsString)]
         public float PointsForGameWin { get; set; }
 
+        /// <summary>
+        /// For swiss rounds only: points gained for a match tie
+        /// </summary>
         [JsonPropertyName("pts_for_match_tie")]
         [JsonNumberHandling(JsonNumberHandling.AllowReadingFromString | JsonNumberHandling.WriteAsString)]
         public float PointsForMatchTie { get; set; }
 
+        /// <summary>
+        /// For swiss rounds only: points gained for a match win
+        /// </summary>
         [JsonPropertyName("pts_for_match_win")]
         [JsonNumberHandling(JsonNumberHandling.AllowReadingFromString | JsonNumberHandling.WriteAsString)]
         public float PointsForMatchWin { get; set; }
@@ -159,29 +192,52 @@ namespace Challonge.Tournaments
         [JsonPropertyName("quick_advance")]
         public bool QuickAdvance { get; set; }
 
+        /// <summary>
+        /// For round robin and siss: how the participants are ranked
+        /// </summary>
         [JsonPropertyName("ranked_by")]
         [JsonConverter(typeof(TournamentRankingStatsJsonConverter))]
         public TournamentRankingStats RankedBy { get; set; }
 
+        /// <summary>
+        /// Whether or not both teams need to report the score before the match is marked as completed
+        /// </summary>
         [JsonPropertyName("require_score_agreement")]
         public bool RequireScoreAgreement { get; set; }
 
+        /// <summary>
+        /// For round robin only: number of points gainded for a game tie
+        /// </summary>
         [JsonPropertyName("rr_pts_for_game_tie")]
         [JsonNumberHandling(JsonNumberHandling.AllowReadingFromString | JsonNumberHandling.WriteAsString)]
         public float RoundRobinPointsForGameTie { get; set; }
 
+        /// <summary>
+        /// For round robin only: number of points gainded for a game win
+        /// </summary>
         [JsonPropertyName("rr_pts_for_game_win")]
         [JsonNumberHandling(JsonNumberHandling.AllowReadingFromString | JsonNumberHandling.WriteAsString)]
         public float RoundRobinPointsForGameWin { get; set; }
 
+        /// <summary>
+        /// For round robin only: number of points gainded for a match tie
+        /// </summary>
         [JsonPropertyName("rr_pts_for_match_tie")]
         [JsonNumberHandling(JsonNumberHandling.AllowReadingFromString | JsonNumberHandling.WriteAsString)]
         public float RoundRobinPointsForMatchTie { get; set; }
 
+        /// <summary>
+        /// For round robin only: number of points gainded for a match win
+        /// </summary>
         [JsonPropertyName("rr_pts_for_match_win")]
         [JsonNumberHandling(JsonNumberHandling.AllowReadingFromString | JsonNumberHandling.WriteAsString)]
         public float RoundRobinPointsForMatchWin { get; set; }
 
+        /// <summary>
+        /// When enabled, instead of traditional seeding rules, make pairings by going straight
+        /// down the list of participants. First round matches are filled in top to bottom, 
+        /// then qualifying matches (if applicable)
+        /// </summary>
         [JsonPropertyName("sequential_pairings")]
         public bool SequentialPairing { get; set; }
 
@@ -201,15 +257,27 @@ namespace Challonge.Tournaments
         [JsonPropertyName("signup_cap")]
         public int? SignupCap { get; set; }
 
+        /// <summary>
+        /// When the tournament is scheduled to start
+        /// </summary>
         [JsonPropertyName("start_at")]
         public DateTimeOffset? StartAt { get; set; }
 
+        /// <summary>
+        /// When the tournament has started
+        /// </summary>
         [JsonPropertyName("started_at")]
         public DateTimeOffset? StartedAt { get; set; }
 
+        /// <summary>
+        /// When the check-in started
+        /// </summary>
         [JsonPropertyName("started_checking_in_at")]
         public DateTimeOffset? StartedCheckingInAt { get; set; }
 
+        /// <summary>
+        /// Current state of the tournament
+        /// </summary>
         [JsonPropertyName("state")]
         [JsonConverter(typeof(TournamentStateJsonConverter))]
         public TournamentState State { get; set; }
@@ -220,17 +288,29 @@ namespace Challonge.Tournaments
         [JsonPropertyName("swiss_rounds")]
         public int SwissRounds { get; set; }
 
+        /// <summary>
+        /// Whether or not teams are enabled
+        /// </summary>
         [JsonPropertyName("teams")]
         public bool? Teams { get; set; }
 
+        /// <summary>
+        /// How to handle ties: sorted by descending priority
+        /// </summary>
         [JsonPropertyName("tie_breaks")]
         [JsonConverter(typeof(TournamentTieBreakArrayJsonConverter))]
         public TournamentTieBreak[] TieBreaks { get; set; }
 
+        /// <summary>
+        /// The type of the tournament
+        /// </summary>
         [JsonPropertyName("tournament_type")]
         [JsonConverter(typeof(TournamentTypeJsonConverter))]
         public TournamentType TournamentType { get; set; }
 
+        /// <summary>
+        /// When the tournament was last updated
+        /// </summary>
         [JsonPropertyName("updated_at")]
         public DateTimeOffset? UpdatedAt { get; set; }
 
@@ -251,18 +331,27 @@ namespace Challonge.Tournaments
         [JsonPropertyName("subdomain")]
         public string Subdomain { get; set; }
 
+        /// <summary>
+        /// The tournament's url
+        /// </summary>
         [JsonPropertyName("full_challonge_url")]
         public string FullChallongeUrl { get; set; }
 
         [JsonPropertyName("live_image_url")]
         public string LiveImageUrl { get; set; }
 
+        /// <summary>
+        /// Signup page's url
+        /// </summary>
         [JsonPropertyName("sign_up_url")]
         public string SignupUrl { get; set; }
 
         [JsonPropertyName("review_before_finalizing")]
         public bool ReviewBeforeFinalizing { get; set; }
 
+        /// <summary>
+        /// Whether or not the predictions are enabled
+        /// </summary>
         [JsonPropertyName("accepting_predictions")]
         public bool AcceptingPredictions { get; set; }
 
@@ -281,9 +370,15 @@ namespace Challonge.Tournaments
         [JsonPropertyName("team_convertable")]
         public bool TeamConvertable { get; set; }
 
+        /// <summary>
+        /// Two stage tournaments only: whether or not the group stage were started
+        /// </summary>
         [JsonPropertyName("group_stages_were_started")]
         public bool GroupStageWereStarted { get; set; }
 
+        /// <summary>
+        /// How the grand finals are played
+        /// </summary>
         [JsonPropertyName("grand_finals_modifier")]
         [JsonConverter(typeof(TournamentGrandFinalsJsonConverter))]
         public TournamentGrandFinals GrandFinalsModifier { get; set; }
@@ -295,6 +390,10 @@ namespace Challonge.Tournaments
         DoubleElimination,
         RoundRobin,
         Swiss,
+        TimeTrial,
+        SingleRace,
+        GrandPrix,
+        FreeForAll,
         Invalid
     }
 

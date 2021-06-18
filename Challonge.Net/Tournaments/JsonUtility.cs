@@ -49,6 +49,10 @@ namespace Challonge.Tournaments.Json
                 "double elimination" => TournamentType.DoubleElimination,
                 "round robin" => TournamentType.RoundRobin,
                 "swiss" => TournamentType.Swiss,
+                "time trial" => TournamentType.TimeTrial,
+                "single race" => TournamentType.SingleRace,
+                "grand prix" => TournamentType.GrandPrix,
+                "free for all" => TournamentType.FreeForAll,
                 _ => TournamentType.Invalid,
             };
         }
@@ -68,6 +72,18 @@ namespace Challonge.Tournaments.Json
                     break;
                 case TournamentType.Swiss:
                     writer.WriteStringValue("swiss");
+                    break;
+                case TournamentType.TimeTrial:
+                    writer.WriteStringValue("time trial");
+                    break;
+                case TournamentType.SingleRace:
+                    writer.WriteStringValue("single race");
+                    break;
+                case TournamentType.GrandPrix:
+                    writer.WriteStringValue("grand prix");
+                    break;
+                case TournamentType.FreeForAll:
+                    writer.WriteStringValue("free for all");
                     break;
                 default:
                     writer.WriteStringValue("null");

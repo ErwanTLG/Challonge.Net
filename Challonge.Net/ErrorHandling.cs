@@ -42,7 +42,7 @@ namespace Challonge
                 if (i < errorData.Errors.Length - 1)
                     errors += " ; ";
             }
-            
+
             switch (response.StatusCode)
             {
                 case HttpStatusCode.Unauthorized:   // Unauthorized (Invalid API key or insufficient permissions)

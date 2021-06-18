@@ -43,7 +43,7 @@ namespace Challonge
                     throw new ArgumentNullException("At least 1 of the 2 optional parameters must be provided.");
 
                 string request = $"https://api.challonge.com/v1/tournaments/{tournament}/matches/{matchId}/attachments.json";
-                
+
                 Dictionary<string, string> parameters = new Dictionary<string, string>
                 {
                     ["api_key"] = apiKey

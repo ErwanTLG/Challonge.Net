@@ -220,7 +220,7 @@ namespace Challonge
             /// <param name="state">Either <see cref="TournamentState.Pending"/>, 
             /// <see cref="TournamentState.Underway"/> or <see cref="TournamentState.Completed"/>. Any other
             /// value will result in a query searching for all tournaments.</param>
-            /// <param name="type"></param>
+            /// <param name="type">The type of the tournaments you want to retrieve</param>
             /// <param name="createdBefore"></param>
             /// <param name="createdAfter"></param>
             /// <param name="subdomain">A Challonge subdomain you've published tournaments to. 
@@ -260,10 +260,10 @@ namespace Challonge
                 }
 
                 if (createdAfter != null)
-                    request += "&created_after=" + createdAfter.Value.ToString("yyyy-MM-dd");
+                    request += "&created_after=" + createdAfter?.ToString("yyyy-MM-dd");
 
                 if (createdBefore != null)
-                    request += "&created_before=" + createdBefore.Value.ToString("yyyy-MM-dd");
+                    request += "&created_before=" + createdBefore?.ToString("yyyy-MM-dd");
 
                 if (subdomain != null)
                     request += "&subdomain=" + subdomain;
@@ -283,6 +283,8 @@ namespace Challonge
             /// <param name="tournament">Tournament to create. Make sure its url is unique 
             /// (you can leave it blank and have challonge pick a random url for you)</param>
             /// <returns>The tournament that was created</returns>
+            /// <remarks>The tournament that is returned will be different from the one passed as an argument, 
+            /// because Challonge will set some other fields for you</remarks>
             public async Task<Tournament> CreateTournamentAsync(Tournament tournament)
             {
                 return await CreateTournamentAsync(tournament.Name, tournament.Url, tournament.TournamentType, tournament.Subdomain,
@@ -291,7 +293,8 @@ namespace Challonge
                     tournament.PointsForBye, tournament.SwissRounds, tournament.RankedBy, tournament.RoundRobinPointsForMatchWin,
                     tournament.RoundRobinPointsForMatchTie, tournament.RoundRobinPointsForGameWin, tournament.RoundRobinPointsForGameTie,
                     tournament.AcceptAttachments, tournament.HideForum, tournament.ShowRounds, tournament.IsPrivate,
-                    tournament.NotifyUsersWhenMatchesOpen, tournament.NotifyUsersWhenTournamentEnds, tournament.SequentialPairing, tournament.SignupCap, tournament.StartAt, tournament.CheckInDuration);
+                    tournament.NotifyUsersWhenMatchesOpen, tournament.NotifyUsersWhenTournamentEnds, tournament.SequentialPairing,
+                    tournament.SignupCap, tournament.StartAt, tournament.CheckInDuration);
             }
 
             /// <summary>
@@ -306,28 +309,35 @@ namespace Challonge
             /// <param name="description">Description/instructions to be displayed above the bracket</param>
             /// <param name="openSignup">Have Challonge host a sign-up page (otherwise, you manually add all participants)</param>
             /// <param name="holdThirdPlaceMatch">Single Elimination only. Include a match between semifinal losers?</param>
-            /// <param name="ptsForMatchWin"></param>
-            /// <param name="ptsForMatchTie"></param>
-            /// <param name="ptsForGameWin"></param>
-            /// <param name="ptsForGameTie"></param>
-            /// <param name="ptsForBye"></param>
-            /// <param name="swissRounds"></param>
-            /// <param name="rankedBy"></param>
-            /// <param name="rrPtsForMatchWin"></param>
-            /// <param name="rrPtsForMatchTie"></param>
-            /// <param name="rrPtsForGameWin"></param>
-            /// <param name="rrPtsForGameTie"></param>
-            /// <param name="acceptAttachments">Allow match attachment uploadsparam>
+            /// <param name="ptsForMatchWin">Swiss only: number of points gained for a match win</param>
+            /// <param name="ptsForMatchTie">Swiss only: number of points gained for a match tie</param>
+            /// <param name="ptsForGameWin">Swiss only: number of points gained for a game win</param>
+            /// <param name="ptsForGameTie">Swiss only: number of points gained for a game tie</param>
+            /// <param name="ptsForBye">Swiss only: number of points gained for a bye</param>
+            /// <param name="swissRounds">Number of rounds</param>
+            /// <param name="rankedBy">How the participants are ranked</param>
+            /// <param name="rrPtsForMatchWin">Round robin only: number of points gained for a match win</param>
+            /// <param name="rrPtsForMatchTie">Round robin only: number of points gained for a match tie</param>
+            /// <param name="rrPtsForGameWin">Round robin only: number of points gained for a game win</param>
+            /// <param name="rrPtsForGameTie">Round robin only: number of points gained for a game tie</param>
+            /// <param name="acceptAttachments">Allow match attachment uploads</param>
             /// <param name="hideForum">Hide the forum tab on your Challonge page</param>
-            /// <param name="showRounds"></param>
+            /// <param name="showRounds">Whether or not to label each round above the bracket</param>
             /// <param name="isPrivate">Hide this tournament from the public browsable index and your profile</param>
-            /// <param name="notifyUsersWhenMatchesOpen"></param>
-            /// <param name="notifyUsersWhenTournamentsEnds"></param>
-            /// <param name="sequentialPairings"></param>
-            /// <param name="signupCap">Maximum number of participants in the bracket. A waiting list (attribute on Participant) will capture participants once the cap is reached.</param>
+            /// <param name="notifyUsersWhenMatchesOpen">Whether or not to email regisitered Challonge 
+            /// participants when matches open up for them</param>
+            /// <param name="notifyUsersWhenTournamentsEnds">Whether or not to email registered Challonge
+            /// participants when this tournament ends</param>
+            /// <param name="sequentialPairings">When enabled, instead of traditional seeding rules, make 
+            /// pairings by going straight down the list of participants. First round matches are filled in top 
+            /// to bottom, then qualifying matches (if applicable).</param>
+            /// <param name="signupCap">Maximum number of participants in the bracket. Once the cap is reached, 
+            /// new participants will be put in waiting list, and <see cref="Participant.OnWaitingList"/> will 
+            /// be set to <see langword="true"/></param>
             /// <param name="startAt"></param>
             /// <param name="checkInDuration">Length of the participant check-in window in minutes.</param>
-            /// <returns></returns>
+            /// <param name="grandFinalsModifier">Double elimination only: how the grand finals will be played</param>
+            /// <returns>The tournament that was created</returns>
             public async Task<Tournament> CreateTournamentAsync(string name, string url = null, TournamentType type = TournamentType.SingleElimination,
                 string subdomain = null, string description = null, bool openSignup = false, bool holdThirdPlaceMatch = false,
                 float ptsForMatchWin = 1.0f, float ptsForMatchTie = 0.5f, float ptsForGameWin = 0f, float ptsForGameTie = 0f,
@@ -374,7 +384,7 @@ namespace Challonge
 
                 HttpResponseMessage response = await httpClient.GetAsync(request);
                 string responseString = await ErrorHandler.ParseResponseAsync(response);
-                
+
                 return await ParseTournamentApiResultAsync(responseString, includeMatches, includeParticipants);
             }
 
@@ -391,27 +401,34 @@ namespace Challonge
             /// <param name="description">Description/instructions to be displayed above the bracket</param>
             /// <param name="openSignup">Have Challonge host a sign-up page (otherwise, you manually add all participants)</param>
             /// <param name="holdThirdPlaceMatch">Single Elimination only. Include a match between semifinal losers?</param>
-            /// <param name="ptsForMatchWin"></param>
-            /// <param name="ptsForMatchTie"></param>
-            /// <param name="ptsForGameWin"></param>
-            /// <param name="ptsForGameTie"></param>
-            /// <param name="ptsForBye"></param>
-            /// <param name="swissRounds"></param>
-            /// <param name="rankedBy"></param>
-            /// <param name="rrPtsForMatchWin"></param>
-            /// <param name="rrPtsForMatchTie"></param>
-            /// <param name="rrPtsForGameWin"></param>
-            /// <param name="rrPtsForGameTie"></param>
-            /// <param name="acceptAttachments">Allow match attachment uploadsparam>
+            /// <param name="ptsForMatchWin">Swiss only: number of points gained for a match win</param>
+            /// <param name="ptsForMatchTie">Swiss only: number of points gained for a match tie</param>
+            /// <param name="ptsForGameWin">Swiss only: number of points gained for a game win</param>
+            /// <param name="ptsForGameTie">Swiss only: number of points gained for a game tie</param>
+            /// <param name="ptsForBye">Swiss only: number of points gained for a bye</param>
+            /// <param name="swissRounds">Number of rounds</param>
+            /// <param name="rankedBy">How the participants are ranked</param>
+            /// <param name="rrPtsForMatchWin">Round robin only: number of points gained for a match win</param>
+            /// <param name="rrPtsForMatchTie">Round robin only: number of points gained for a match tie</param>
+            /// <param name="rrPtsForGameWin">Round robin only: number of points gained for a game win</param>
+            /// <param name="rrPtsForGameTie">Round robin only: number of points gained for a game tie</param>
+            /// <param name="acceptAttachments">Allow match attachment uploads</param>
             /// <param name="hideForum">Hide the forum tab on your Challonge page</param>
-            /// <param name="showRounds"></param>
+            /// <param name="showRounds">Whether or not to label each round above the bracket</param>
             /// <param name="isPrivate">Hide this tournament from the public browsable index and your profile</param>
-            /// <param name="notifyUsersWhenMatchesOpen"></param>
-            /// <param name="notifyUsersWhenTournamentsEnds"></param>
-            /// <param name="sequentialPairings"></param>
-            /// <param name="signupCap">Maximum number of participants in the bracket. A waiting list (attribute on Participant) will capture participants once the cap is reached.</param>
+            /// <param name="notifyUsersWhenMatchesOpen">Whether or not to email regisitered Challonge 
+            /// participants when matches open up for them</param>
+            /// <param name="notifyUsersWhenTournamentsEnds">Whether or not to email registered Challonge
+            /// participants when this tournament ends</param>
+            /// <param name="sequentialPairings">When enabled, instead of traditional seeding rules, make 
+            /// pairings by going straight down the list of participants. First round matches are filled in top 
+            /// to bottom, then qualifying matches (if applicable).</param>
+            /// <param name="signupCap">Maximum number of participants in the bracket. Once the cap is reached, 
+            /// new participants will be put in waiting list, and <see cref="Participant.OnWaitingList"/> will 
+            /// be set to <see langword="true"/></param>
             /// <param name="startAt"></param>
             /// <param name="checkInDuration">Length of the participant check-in window in minutes.</param>
+            /// <param name="grandFinalsModifier">Double elimination only: how the grand finals will be played</param>
             /// <returns>The updated tournament</returns>
             public async Task<Tournament> UpdateTournamentAsync(string tournament, string name = null,
                 string url = null, TournamentType type = TournamentType.SingleElimination,
@@ -462,7 +479,9 @@ namespace Challonge
             /// </list>
             /// </summary>
             /// <remarks>Checked in participants on the waiting list will be promoted if slots become available.</remarks>
-            /// <param name="tournament"></param>
+            /// <param name="tournament">Tournament ID (e.g. 10230) or URL (e.g. 'single_elim' for 
+            /// challonge.com/single_elim). If assigned to a subdomain, URL format must be 
+            /// "subdomain-tournament_url" (e.g. 'test-mytourney' for test.challonge.com/mytourney)</param>
             /// <param name="includeMatches"></param>
             /// <param name="includeParticipants"></param>
             /// <returns></returns>
@@ -531,8 +550,8 @@ namespace Challonge
             }
 
             /// <summary>
-            /// Resets a tournament, clearing all of its scores and attachments. You can then add/remove/
-            /// edit participants before starting the tournament again. 
+            /// Resets a tournament, clearing all of its scores and attachments. You can then add/remove/edit 
+            /// participants before starting the tournament again. 
             /// </summary>
             /// <param name="tournament">Tournament ID (e.g. 10230) or URL (e.g. 'single_elim' for 
             /// challonge.com/single_elim). If assigned to a subdomain, URL format must be 
@@ -549,8 +568,9 @@ namespace Challonge
 
             /// <summary>
             /// Sets the state of the tournament to start accepting predictions. Your <see 
-            /// cref="Tournament.PredictionMethod"/> attribute must be set to 1 (exponential scoring) or 2 
-            /// (linear scoring) to use this option.
+            /// cref="Tournament.PredictionMethod"/> attribute must be set to 
+            /// <see cref="TournamentPredictionMethod.Exponential"/> or 
+            /// <see cref="TournamentPredictionMethod.Linear"/> to use this option
             /// </summary>
             /// <remarks>
             /// Once open for predictions, match records will be persisted, so participant additions and 
