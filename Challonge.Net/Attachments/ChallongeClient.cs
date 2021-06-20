@@ -20,7 +20,7 @@ namespace Challonge
             }
 
             /// <summary>
-            /// Retrieve a match's attachments.
+            /// Retrieve a match's attachments
             /// </summary>
             /// <returns></returns>
             public async Task<Attachment[]> GetAttachmentsAsync(string tournament, int matchId)
@@ -36,6 +36,22 @@ namespace Challonge
                 return result;
             }
 
+            /// <summary>
+            /// Creates an attachment
+            /// </summary>
+            /// <param name="tournament">Tournament ID (e.g. 10230) or URL (e.g. 'single_elim' for 
+            /// challonge.com/single_elim). If assigned to a subdomain, URL format must be 
+            /// subdomain-tournament_url (e.g. 'test-mytourney' for test.challonge.com/mytourney)</param>
+            /// <param name="matchId">The match's unique id</param>
+            /// <param name="url">A web url</param>
+            /// <param name="description">Text to describe the URL attachment, or this can simply be 
+            /// standalone text</param>
+            /// <returns>The created attachment</returns>
+            /// <remarks>
+            /// <list type="bullet">The associated tournament's <see cref="Tournaments.Tournament.AcceptAttachments"/> 
+            /// attribute must be <see langword="true"/> for this action to succeed. </list>
+            /// <list type="bullet">At least one of the two optional parameters must be provided.</list>
+            /// </remarks>
             public async Task<Attachment> CreateAttachmentAsync(string tournament, int matchId,
                 /*FileStream file = null,*/ string url = null, string description = null)
             {
@@ -75,6 +91,15 @@ namespace Challonge
                 return attachmentData.Attachment;
             }
 
+            /// <summary>
+            /// Retrieve a single match attachment record
+            /// </summary>
+            /// <param name="tournament">Tournament ID (e.g. 10230) or URL (e.g. 'single_elim' for 
+            /// challonge.com/single_elim). If assigned to a subdomain, URL format must be 
+            /// subdomain-tournament_url (e.g. 'test-mytourney' for test.challonge.com/mytourney)</param>
+            /// <param name="matchId">The match's unique id</param>
+            /// <param name="attachmentId">The attachment's unique id</param>
+            /// <returns></returns>
             public async Task<Attachment> GetAttachmentAsync(string tournament, int matchId, int attachmentId)
             {
                 string request = $" https://api.challonge.com/v1/tournaments/{tournament}/matches/{matchId}/attachments/{attachmentId}.?api_key={apiKey}";
@@ -83,6 +108,19 @@ namespace Challonge
                 return attachmentData.Attachment;
             }
 
+            /// <summary>
+            /// Update the attributes of a match attachment
+            /// </summary>
+            /// <param name="tournament">Tournament ID (e.g. 10230) or URL (e.g. 'single_elim' for 
+            /// challonge.com/single_elim). If assigned to a subdomain, URL format must be 
+            /// subdomain-tournament_url (e.g. 'test-mytourney' for test.challonge.com/mytourney)</param>
+            /// <param name="matchId">The match's unique id</param>
+            /// <param name="attachmentId">The tournament's unique id</param>
+            /// <param name="url">A web URL</param>
+            /// <param name="description">Text to describe the file or URL attachment, or this can simply be 
+            /// standalone text</param>
+            /// <returns>The updated attachment</returns>
+            /// <remarks>At least one of the two optional parameters must be provided</remarks>
             public async Task<Attachment> UpdateAttachmentAsync(string tournament, int matchId, int attachmentId,
                 string url = null, string description = null)
             {
@@ -108,6 +146,15 @@ namespace Challonge
                 return attachmentData.Attachment;
             }
 
+            /// <summary>
+            /// Deletes a match attachment
+            /// </summary>
+            /// <param name="tournament">Tournament ID (e.g. 10230) or URL (e.g. 'single_elim' for 
+            /// challonge.com/single_elim). If assigned to a subdomain, URL format must be 
+            /// subdomain-tournament_url (e.g. 'test-mytourney' for test.challonge.com/mytourney)</param>
+            /// <param name="matchId">The match's unique id</param>
+            /// <param name="attachmentId">The attachment's unique id</param>
+            /// <returns></returns>
             public async Task DeleteAttachmentAsync(string tournament, int matchId, int attachmentId)
             {
                 string request = $"https://api.challonge.com/v1/tournaments/{tournament}/matches/{matchId}/attachments/{attachmentId}.json?api_key={apiKey}";

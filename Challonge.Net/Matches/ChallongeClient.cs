@@ -27,7 +27,7 @@ namespace Challonge
             /// <param name="state">If provided, only retrieves matches which are in the given state</param>
             /// <param name="participantId">If provided, only retrieves matches that include the specified
             /// participant</param>
-            /// <returns></returns>
+            /// <returns>The matches corresponding to the given query</returns>
             public async Task<Match[]> GetMatchesAsync(string tournament, MatchState? state = null, int? participantId = null)
             {
                 string request = $"https://api.challonge.com/v1/tournaments/{tournament}/matches.json?api_key={apiKey}";
@@ -57,7 +57,6 @@ namespace Challonge
                 return matches;
             }
 
-            // TODO handle attachements
             /// <summary>
             /// Retrieve a single match record for a tournament. 
             /// </summary>
