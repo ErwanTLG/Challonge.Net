@@ -7,6 +7,9 @@ namespace Challonge
 {
     public partial class ChallongeClient
     {
+        /// <summary>
+        /// This class contains all the functions related to the matches api
+        /// </summary>
         public class MatchesHandler
         {
             private readonly string apiKey;

@@ -8,6 +8,9 @@ namespace Challonge
 {
     public partial class ChallongeClient
     {
+        /// <summary>
+        /// This class contains all the functions related to the attachments api
+        /// </summary>
         public class AttachmentsHandler
         {
             private readonly string apiKey;

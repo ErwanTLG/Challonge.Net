@@ -14,9 +14,21 @@ namespace Challonge
 
         internal readonly HttpClient httpClient = new HttpClient();
 
+        /// <summary>
+        /// Tournaments API handler
+        /// </summary>
         public TournamentHandler Tournaments { get; }
+        /// <summary>
+        /// Participants API handler
+        /// </summary>
         public ParticipantsHandler Participants { get; }
+        /// <summary>
+        /// Matches API handler
+        /// </summary>
         public MatchesHandler Matches { get; }
+        /// <summary>
+        /// Attachments API handler
+        /// </summary>
         public AttachmentsHandler Attachments { get; }
 
         public ChallongeClient(string key)

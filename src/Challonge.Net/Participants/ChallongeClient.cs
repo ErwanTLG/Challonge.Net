@@ -11,6 +11,9 @@ namespace Challonge
 {
     public partial class ChallongeClient
     {
+        /// <summary>
+        /// This class contains all the functions related to the participants api
+        /// </summary>
         public class ParticipantsHandler
         {
             private readonly string apiKey;
