@@ -1,0 +1,462 @@
+{
+  "homepages": [],
+  "source_base_path": "C:/Users/erwan/RiderProjects/Challonge.Net/docs",
+  "xrefmap": "xrefmap.yml",
+  "files": [
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Challonge.Attachments.Attachment.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Challonge.Attachments.Attachment.html",
+          "hash": "Ekm0p7g5yy3vQI0d+bnuyDO29/8yYnv1GeCHkV0g4vA="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Challonge.Attachments.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Challonge.Attachments.html",
+          "hash": "74He6bE9TTlaxAvSy5HWm4qJS6TtTTiT+RTcFW5jga0="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Challonge.ChallongeClient.AttachmentsHandler.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Challonge.ChallongeClient.AttachmentsHandler.html",
+          "hash": "L9BKMpCRjVUNvCWcbJqYAFhPYbUTI/FylhYT0xgYVgo="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Challonge.ChallongeClient.MatchesHandler.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Challonge.ChallongeClient.MatchesHandler.html",
+          "hash": "jcAZRKPKpF6KzaAaX6Zfxq1qDONf0BddeNURVQWIK1U="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Challonge.ChallongeClient.ParticipantsHandler.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Challonge.ChallongeClient.ParticipantsHandler.html",
+          "hash": "ov4LDhytD9Yt49d9xBD0VeYgA7nFGHUifsboK+kF0xk="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Challonge.ChallongeClient.TournamentHandler.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Challonge.ChallongeClient.TournamentHandler.html",
+          "hash": "AUq0Ry9TZiMHZ815YzXaWmqCbyAFz1HXVg4u13dudCM="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Challonge.ChallongeClient.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Challonge.ChallongeClient.html",
+          "hash": "FG2uB3utYAgzo4IS2ztECnaiOKOiI664msBkfRSFNec="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Challonge.ChallongeException.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Challonge.ChallongeException.html",
+          "hash": "9kf8e+7fkdVT31uvos8WvtPyV1Z5US8T5HhS+y8VVyI="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Challonge.Matches.Match.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Challonge.Matches.Match.html",
+          "hash": "g0Yrw5xPuVk9ZZ4PLVeNpACz2A1Y2IZlq6XF62bWAM4="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Challonge.Matches.MatchBuilder.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Challonge.Matches.MatchBuilder.html",
+          "hash": "EywFoADBsVTCA1ngavLJp7xeKE8Yary/E4ZK2MnRgHo="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Challonge.Matches.MatchState.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Challonge.Matches.MatchState.html",
+          "hash": "oI2xvydmW0eoG65D799VH7Qpd0uduGZYwG4kQk2fELM="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Challonge.Matches.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Challonge.Matches.html",
+          "hash": "CwZZvQus4vamezjGRgLz/ct7dDz8nqwGbNAjjVO+QkE="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Challonge.Participants.Participant.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Challonge.Participants.Participant.html",
+          "hash": "AAmfjlEPrIPgFMFiOd8eK8nAPblMnbdQznc7kMBSxlY="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Challonge.Participants.ParticipantApiResult.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Challonge.Participants.ParticipantApiResult.html",
+          "hash": "1rRCTSSX1KbfEv0eT2OwfI8olprBvuVKR0tmJ0Cy8bY="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Challonge.Participants.ParticipantBuilder.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Challonge.Participants.ParticipantBuilder.html",
+          "hash": "jUkPcSWcE5lafHlAOynrVKjjgjVn9fax2/2EO2DEW5w="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Challonge.Participants.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Challonge.Participants.html",
+          "hash": "k2wwh1ro7/ig0DLfRFSSLBEx4J3h9mNtdmiEyAsehps="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Challonge.TournamentApiResult.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Challonge.TournamentApiResult.html",
+          "hash": "1VBIvwviSEVVtWdo8Y2d9O+lj1a9e5SmTYKmB1dVGDA="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Challonge.Tournaments.Tournament.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Challonge.Tournaments.Tournament.html",
+          "hash": "MdY0x+o1ERJIJD/+qp0x2SrgtQQeyWyo3WWWn+CBwYE="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Challonge.Tournaments.TournamentBuilder.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Challonge.Tournaments.TournamentBuilder.html",
+          "hash": "j6M/tjifjeaVcwT6XrVIyIyYq1SeaTuKkXYpGEOJ2p8="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Challonge.Tournaments.TournamentGrandFinals.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Challonge.Tournaments.TournamentGrandFinals.html",
+          "hash": "sTdXRtj6P3evhRJyHmFGf2XINerYuWxc2iTu/TKPXsw="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Challonge.Tournaments.TournamentPredictionMethod.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Challonge.Tournaments.TournamentPredictionMethod.html",
+          "hash": "S295lAw3563vgcWuxcbHKgNW4gbU5emUzjNEQxByKMU="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Challonge.Tournaments.TournamentRankingStats.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Challonge.Tournaments.TournamentRankingStats.html",
+          "hash": "h6NfcehpUIfmQkeP+sfs6o18jDKF1L7H7u8+RTqxOQs="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Challonge.Tournaments.TournamentState.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Challonge.Tournaments.TournamentState.html",
+          "hash": "EV0BAEtI86ZeQ6TlKjFh4tTkHZ+gaa1xW2eFVeY2dtc="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Challonge.Tournaments.TournamentTieBreak.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Challonge.Tournaments.TournamentTieBreak.html",
+          "hash": "IPPMBqq0VqvAxd+3DMC1AMqkjH1RYqAGG0aKA6Hay18="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Challonge.Tournaments.TournamentType.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Challonge.Tournaments.TournamentType.html",
+          "hash": "tWGqomwtoaLmh/ea4v8iM1pRQiClW91lOS0OM1GZn4E="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Challonge.Tournaments.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Challonge.Tournaments.html",
+          "hash": "XBFZ+yDXgLnqWJcLYGJYGTvdAVb/rt/hPn49zg5B564="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Challonge.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Challonge.html",
+          "hash": "8osTOvmahPvkT/IAoQdO9y1DdleVrnJew1YXvx6SZvc="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "api/index.md",
+      "output": {
+        ".html": {
+          "relative_path": "api/index.html",
+          "hash": "nbkE16k8oIBs4yfsg4woER/dcWZO8vV7L88MUS/H6Yo="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "api/toc.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/toc.html",
+          "hash": "Ii+xrihD/wkV9GwCFnCrhIPx8YXZuCtRRQLo3QJa1Gs="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "articles/first_steps.md",
+      "output": {
+        ".html": {
+          "relative_path": "articles/first_steps.html",
+          "hash": "wME9pDjGoaj4Hz+QwrjFFmKaNJrQPBlzVUUNYwE6aTQ="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "articles/index.md",
+      "output": {
+        ".html": {
+          "relative_path": "articles/index.html",
+          "hash": "ONpjxi/TdLtj7NpWmfL5QU4D8T2FgfHZOAWHGL/SLSg="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "articles/toc.yml",
+      "output": {
+        ".html": {
+          "relative_path": "articles/toc.html",
+          "hash": "rfDYSv7zbAGvN+EMNJhlyWGKjIHGEdH+b/bQiW1W+ZI="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "index.md",
+      "output": {
+        ".html": {
+          "relative_path": "index.html",
+          "hash": "xnkiDvhyrZjTIK58UarQijp+AaTJNYiLMNBvQIBZwCs="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "toc.yml",
+      "output": {
+        ".html": {
+          "relative_path": "toc.html",
+          "hash": "oTURDwgwfWcgGnkMfPIFGUWw9jF6WwZuYd0QxVje1KU="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    }
+  ],
+  "incremental_info": [
+    {
+      "status": {
+        "can_incremental": true,
+        "incrementalPhase": "build",
+        "total_file_count": 0,
+        "skipped_file_count": 0
+      },
+      "processors": {
+        "ConceptualDocumentProcessor": {
+          "can_incremental": true,
+          "incrementalPhase": "build",
+          "total_file_count": 4,
+          "skipped_file_count": 2
+        },
+        "ManagedReferenceDocumentProcessor": {
+          "can_incremental": true,
+          "incrementalPhase": "build",
+          "total_file_count": 27,
+          "skipped_file_count": 27
+        },
+        "TocDocumentProcessor": {
+          "can_incremental": false,
+          "details": "Processor TocDocumentProcessor cannot support incremental build because the processor doesn't implement ISupportIncrementalDocumentProcessor interface.",
+          "incrementalPhase": "build",
+          "total_file_count": 0,
+          "skipped_file_count": 0
+        }
+      }
+    },
+    {
+      "status": {
+        "can_incremental": true,
+        "details": "Can support incremental post processing.",
+        "incrementalPhase": "postProcessing",
+        "total_file_count": 0,
+        "skipped_file_count": 0
+      },
+      "processors": {}
+    }
+  ],
+  "version_info": {},
+  "groups": [
+    {
+      "xrefmap": "xrefmap.yml"
+    }
+  ]
+}
