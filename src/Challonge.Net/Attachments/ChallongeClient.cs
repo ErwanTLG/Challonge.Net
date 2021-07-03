@@ -13,13 +13,13 @@ namespace Challonge
         /// </summary>
         public class AttachmentsHandler
         {
-            private readonly string apiKey;
-            private readonly HttpClient httpClient;
+            private readonly string _apiKey;
+            private readonly HttpClient _httpClient;
 
             public AttachmentsHandler(string apiKey, HttpClient httpClient)
             {
-                this.apiKey = apiKey;
-                this.httpClient = httpClient;
+                _apiKey = apiKey;
+                _httpClient = httpClient;
             }
 
             /// <summary>
@@ -28,9 +28,9 @@ namespace Challonge
             /// <returns></returns>
             public async Task<Attachment[]> GetAttachmentsAsync(string tournament, int matchId)
             {
-                string request = $" https://api.challonge.com/v1/tournaments/{tournament}/matches/{matchId}/attachments.json?api_key={apiKey}";
+                string request = $" https://api.challonge.com/v1/tournaments/{tournament}/matches/{matchId}/attachments.json?api_key={_apiKey}";
 
-                AttachmentData[] attachmentDatas = await GetAsync<AttachmentData[]>(httpClient, request);
+                AttachmentData[] attachmentDatas = await GetAsync<AttachmentData[]>(_httpClient, request);
                 Attachment[] result = new Attachment[attachmentDatas.Length];
 
                 for (int i = 0; i < attachmentDatas.Length; i++)
@@ -65,7 +65,7 @@ namespace Challonge
 
                 Dictionary<string, string> parameters = new Dictionary<string, string>
                 {
-                    ["api_key"] = apiKey
+                    ["api_key"] = _apiKey
                 };
 
                 if (url != null)
@@ -90,7 +90,7 @@ namespace Challonge
                 //    //form.Add(stream, "match_attachment[asset]");
                 //}
 
-                AttachmentData attachmentData = await PostAsync<AttachmentData>(httpClient, request, content);
+                AttachmentData attachmentData = await PostAsync<AttachmentData>(_httpClient, request, content);
                 return attachmentData.Attachment;
             }
 
@@ -105,9 +105,9 @@ namespace Challonge
             /// <returns></returns>
             public async Task<Attachment> GetAttachmentAsync(string tournament, int matchId, int attachmentId)
             {
-                string request = $" https://api.challonge.com/v1/tournaments/{tournament}/matches/{matchId}/attachments/{attachmentId}.?api_key={apiKey}";
+                string request = $" https://api.challonge.com/v1/tournaments/{tournament}/matches/{matchId}/attachments/{attachmentId}.?api_key={_apiKey}";
 
-                AttachmentData attachmentData = await GetAsync<AttachmentData>(httpClient, request);
+                AttachmentData attachmentData = await GetAsync<AttachmentData>(_httpClient, request);
                 return attachmentData.Attachment;
             }
 
@@ -134,7 +134,7 @@ namespace Challonge
 
                 Dictionary<string, string> parameters = new Dictionary<string, string>
                 {
-                    ["api_key"] = apiKey
+                    ["api_key"] = _apiKey
                 };
 
                 if (url != null)
@@ -145,7 +145,7 @@ namespace Challonge
 
                 FormUrlEncodedContent content = new FormUrlEncodedContent(parameters);
 
-                AttachmentData attachmentData = await PutAsync<AttachmentData>(httpClient, request, content);
+                AttachmentData attachmentData = await PutAsync<AttachmentData>(_httpClient, request, content);
                 return attachmentData.Attachment;
             }
 
@@ -160,9 +160,9 @@ namespace Challonge
             /// <returns></returns>
             public async Task DeleteAttachmentAsync(string tournament, int matchId, int attachmentId)
             {
-                string request = $"https://api.challonge.com/v1/tournaments/{tournament}/matches/{matchId}/attachments/{attachmentId}.json?api_key={apiKey}";
+                string request = $"https://api.challonge.com/v1/tournaments/{tournament}/matches/{matchId}/attachments/{attachmentId}.json?api_key={_apiKey}";
 
-                await DeleteAsync(httpClient, request);
+                await DeleteAsync(_httpClient, request);
             }
         }
     }

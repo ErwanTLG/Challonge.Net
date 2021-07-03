@@ -22,9 +22,8 @@ namespace Challonge
         /// </summary>
         /// <param name="response">Response to the http request</param>
         /// <returns>The content of the request if it was successful</returns>
-        /// <exception cref="ChallongeException">Throws this exception if the request was unsuccessful</exception>
-        /// <exception cref="ChallongeValidationException">Throws this exception if the request was successful, but not the api validation</exception>
-        async static public Task<string> ParseResponseAsync(HttpResponseMessage response)
+        /// <exception cref="ChallongeException">Throws this exception if the request was unsuccessful or not validated</exception>
+        public static async Task<string> ParseResponseAsync(HttpResponseMessage response)
         {
             string responseString = await response.Content.ReadAsStringAsync();
 
@@ -54,7 +53,7 @@ namespace Challonge
                 case HttpStatusCode.InternalServerError:   // Server-side error
                     throw new ChallongeException("Challonge api request returned 500: Something went wrong the server side. If you continually receive this, please contact the challonge team. " + errors);
                 case HttpStatusCode.UnprocessableEntity:   // Validation error
-                    string errorMessage = "Challonge api request returned 422: The following errors happend while trying to reach the Challonge API:\n" + errors;
+                    string errorMessage = "Challonge api request returned 422: The following errors happened while trying to reach the Challonge API:\n" + errors;
                     throw new ChallongeException(errorMessage);
                 default:    // We assume that by default, the request was successful
                     return responseString;

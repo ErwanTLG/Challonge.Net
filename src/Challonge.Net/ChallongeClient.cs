@@ -33,7 +33,7 @@ namespace Challonge
 
         public ChallongeClient(string key)
         {
-            apiKey = key ?? throw new ArgumentNullException("key");
+            apiKey = key ?? throw new ArgumentNullException(nameof(key));
 
             Tournaments = new TournamentHandler(apiKey, httpClient);
             Participants = new ParticipantsHandler(apiKey, httpClient);
@@ -43,8 +43,8 @@ namespace Challonge
 
         public ChallongeClient(string key, HttpClient httpClient)
         {
-            apiKey = key ?? throw new ArgumentNullException("key");
-            this.httpClient = httpClient ?? throw new ArgumentNullException("httpClient");
+            apiKey = key ?? throw new ArgumentNullException(nameof(key));
+            this.httpClient = httpClient ?? throw new ArgumentNullException(nameof(httpClient));
 
             Tournaments = new TournamentHandler(apiKey, httpClient);
             Participants = new ParticipantsHandler(apiKey, httpClient);

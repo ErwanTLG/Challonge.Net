@@ -19,20 +19,20 @@ namespace Challonge
         /// </summary>
         public class TournamentHandler
         {
-            private readonly string apiKey;
-            private readonly HttpClient httpClient;
+            private readonly string _apiKey;
+            private readonly HttpClient _httpClient;
 
             public TournamentHandler(string apiKey, HttpClient httpClient)
             {
-                this.apiKey = apiKey;
-                this.httpClient = httpClient;
+                _apiKey = apiKey;
+                _httpClient = httpClient;
             }
 
             private async Task<TournamentApiResult> TournamentApiCallAsync(string request, bool includeMatches, bool includeParticipants)
             {
                 Dictionary<string, string> parameters = new Dictionary<string, string>
                 {
-                    ["api_key"] = apiKey
+                    ["api_key"] = _apiKey
                 };
 
                 if (includeMatches)
@@ -42,7 +42,7 @@ namespace Challonge
                     parameters["include_participants"] = "1";
 
                 FormUrlEncodedContent content = new FormUrlEncodedContent(parameters);
-                HttpResponseMessage response = await httpClient.PostAsync(request, content);
+                HttpResponseMessage response = await _httpClient.PostAsync(request, content);
 
                 // raises the errors if there are any
                 string responseString = await ErrorHandler.ParseResponseAsync(response);
@@ -100,17 +100,16 @@ namespace Challonge
             private Dictionary<string, string> PrepareParams(string name, string url, TournamentType type,
                 string subdomain, string description, bool openSignup, bool holdThirdPlaceMatch,
                 float ptsForMatchWin, float ptsForMatchTie, float ptsForGameWin, float ptsForGameTie,
-                float ptsForBye, int? swissRounds, TournamentRankingStats? rankedBy, float rrPtsForMatchWin,
-                float rrPtsForMatchTie, float rrPtsForGameWin, float rrPtsForGameTie, bool acceptAttachments,
+                float ptsForBye, int? swissRounds, TournamentRankingStats rankedBy, bool acceptAttachments,
                 bool hideForum, bool showRounds, bool isPrivate, bool notifyUsersWhenMatchesOpen,
                 bool notifyUsersWhenTournamentsEnds, bool sequentialPairings, int? signupCap,
-                DateTimeOffset? startAt, int? checkInDuration, TournamentGrandFinals? grandFinalsModifier)
+                DateTimeOffset? startAt, int? checkInDuration, TournamentGrandFinals grandFinalsModifier)
             {
                 Dictionary<string, string> parameters = new Dictionary<string, string>
                 {
-                    ["api_key"] = apiKey
+                    ["api_key"] = _apiKey
                 };
-
+    
                 if (name != null)
                     parameters["tournament[name]"] = name;
 
@@ -152,6 +151,10 @@ namespace Challonge
                 parameters["tournament[pts_for_game_tie]"] = string.Format(CultureInfo.InvariantCulture, "{0:G}", ptsForGameTie);
                 parameters["tournament[pts_for_bye]"] = string.Format(CultureInfo.InvariantCulture, "{0:G}", ptsForBye);
 
+                parameters["tournament[rr_pts_for_match_win]"] = string.Format(CultureInfo.InvariantCulture, "{0:G}", ptsForMatchWin);
+                parameters["tournament[rr_pts_f, or_match_tie]"] = string.Format(CultureInfo.InvariantCulture, "{0:G}", ptsForMatchTie);
+                parameters["tournament[rr_pts_for_game_tie]"] = string.Format(CultureInfo.InvariantCulture, "{0:G}", ptsForGameTie);
+                parameters["tournament[rr_pts_fo r_game_win]"] = string.Format(CultureInfo.InvariantCulture, "{0:G}", ptsForGameWin);
                 if (swissRounds != null)
                     parameters["swiss_rounds]"] = swissRounds.Value.ToString();
 
@@ -174,11 +177,6 @@ namespace Challonge
                         parameters["tournament[ranked_by]"] = "custom";
                         break;
                 }
-
-                parameters["tournament[rr_pts_for_match_win]"] = string.Format(CultureInfo.InvariantCulture, "{0:G}", rrPtsForMatchWin);
-                parameters["tournament[rr_pts_f, or_match_tie]"] = string.Format(CultureInfo.InvariantCulture, "{0:G}", rrPtsForMatchTie);
-                parameters["tournament[rr_pts_for_game_tie]"] = string.Format(CultureInfo.InvariantCulture, "{0:G}", rrPtsForGameTie);
-                parameters["tournament[rr_pts_fo r_game_win]"] = string.Format(CultureInfo.InvariantCulture, "{0:G}", rrPtsForGameWin);
 
                 parameters["tournament[accept_attachments]"] = acceptAttachments.ToString().ToLower();
 
@@ -205,7 +203,9 @@ namespace Challonge
 
                 switch (grandFinalsModifier)
                 {
-                    // Two matches is the default value, so we don't need to send it
+                    case TournamentGrandFinals.TwoChances:
+                        parameters["tournament[grand_finals_modifier]"] = "";
+                        break;
                     case TournamentGrandFinals.Skip:
                         parameters["tournament[grand_finals_modifier]"] = "skip";
                         break;
@@ -232,7 +232,7 @@ namespace Challonge
             public async Task<Tournament[]> GetTournamentsAsync(TournamentState? state = null, TournamentType? type = null,
             DateTimeOffset? createdBefore = null, DateTimeOffset? createdAfter = null, string subdomain = null)
             {
-                string request = $"https://api.challonge.com/v1/tournaments.json?api_key={apiKey}";
+                string request = $"https://api.challonge.com/v1/tournaments.json?api_key={_apiKey}";
                 switch (state)
                 {
                     case TournamentState.Pending:
@@ -271,7 +271,7 @@ namespace Challonge
                 if (subdomain != null)
                     request += "&subdomain=" + subdomain;
 
-                TournamentData[] tournamentDatas = await GetAsync<TournamentData[]>(httpClient, request);
+                TournamentData[] tournamentDatas = await GetAsync<TournamentData[]>(_httpClient, request);
                 Tournament[] tournaments = new Tournament[tournamentDatas.Length];
 
                 for (int i = 0; i < tournamentDatas.Length; i++)
@@ -283,21 +283,18 @@ namespace Challonge
             /// <summary>
             /// Creates a new tournament
             /// </summary>
-            /// <param name="tournament">Tournament to create. Make sure its url is unique 
+            /// <param name="builder">Tournament to create. Make sure its url is unique 
             /// (you can leave it blank and have challonge pick a random url for you)</param>
             /// <returns>The tournament that was created</returns>
-            /// <remarks>The tournament that is returned will be different from the one passed as an argument, 
-            /// because Challonge will set some other fields for you</remarks>
-            public async Task<Tournament> CreateTournamentAsync(Tournament tournament)
+            public async Task<Tournament> CreateTournamentAsync(TournamentBuilder builder)
             {
-                return await CreateTournamentAsync(tournament.Name, tournament.Url, tournament.TournamentType, tournament.Subdomain,
-                    tournament.Description, tournament.OpenSignup, tournament.HoldThirdPlaceMatch, tournament.PointsForMatchWin,
-                    tournament.PointsForMatchTie, tournament.PointsForGameWin, tournament.PointsForGameTie,
-                    tournament.PointsForBye, tournament.SwissRounds, tournament.RankedBy, tournament.RoundRobinPointsForMatchWin,
-                    tournament.RoundRobinPointsForMatchTie, tournament.RoundRobinPointsForGameWin, tournament.RoundRobinPointsForGameTie,
-                    tournament.AcceptAttachments, tournament.HideForum, tournament.ShowRounds, tournament.IsPrivate,
-                    tournament.NotifyUsersWhenMatchesOpen, tournament.NotifyUsersWhenTournamentEnds, tournament.SequentialPairing,
-                    tournament.SignupCap, tournament.StartAt, tournament.CheckInDuration);
+                return await CreateTournamentAsync(builder.Name, builder.Url, builder.TournamentType, builder.Subdomain,
+                    builder.Description, builder.OpenSignup, builder.HoldThirdPlaceMatch, builder.PointsForMatchWin,
+                    builder.PointsForMatchTie, builder.PointsForGameWin, builder.PointsForGameTie,
+                    builder.PointsForBye, builder.SwissRounds, builder.RankedBy, builder.AcceptAttachments, 
+                    builder.HideForum, builder.ShowRounds, builder.IsPrivate, builder.NotifyUsersWhenMatchesOpen,
+                    builder.NotifyUsersWhenTournamentEnds, builder.SequentialPairings, builder.SignupCap,
+                    builder.StartAt, builder.CheckInDuration);
             }
 
             /// <summary>
@@ -319,10 +316,6 @@ namespace Challonge
             /// <param name="ptsForBye">Swiss only: number of points gained for a bye</param>
             /// <param name="swissRounds">Number of rounds</param>
             /// <param name="rankedBy">How the participants are ranked</param>
-            /// <param name="rrPtsForMatchWin">Round robin only: number of points gained for a match win</param>
-            /// <param name="rrPtsForMatchTie">Round robin only: number of points gained for a match tie</param>
-            /// <param name="rrPtsForGameWin">Round robin only: number of points gained for a game win</param>
-            /// <param name="rrPtsForGameTie">Round robin only: number of points gained for a game tie</param>
             /// <param name="acceptAttachments">Allow match attachment uploads</param>
             /// <param name="hideForum">Hide the forum tab on your Challonge page</param>
             /// <param name="showRounds">Whether or not to label each round above the bracket</param>
@@ -341,28 +334,28 @@ namespace Challonge
             /// <param name="checkInDuration">Length of the participant check-in window in minutes.</param>
             /// <param name="grandFinalsModifier">Double elimination only: how the grand finals will be played</param>
             /// <returns>The tournament that was created</returns>
-            public async Task<Tournament> CreateTournamentAsync(string name, string url = null, TournamentType type = TournamentType.SingleElimination,
-                string subdomain = null, string description = null, bool openSignup = false, bool holdThirdPlaceMatch = false,
-                float ptsForMatchWin = 1.0f, float ptsForMatchTie = 0.5f, float ptsForGameWin = 0f, float ptsForGameTie = 0f,
-                float ptsForBye = 1.0f, int? swissRounds = null, TournamentRankingStats? rankedBy = null, float rrPtsForMatchWin = 1.0f,
-                float rrPtsForMatchTie = 0.5f, float rrPtsForGameWin = 0f, float rrPtsForGameTie = 0f, bool acceptAttachments = false,
-                bool hideForum = false, bool showRounds = false, bool isPrivate = false, bool notifyUsersWhenMatchesOpen = false,
-                bool notifyUsersWhenTournamentsEnds = false, bool sequentialPairings = false, int? signupCap = null,
-                DateTimeOffset? startAt = null, int? checkInDuration = null,
-                TournamentGrandFinals? grandFinalsModifier = null)
+            public async Task<Tournament> CreateTournamentAsync(string name, string url = null, 
+                TournamentType type = TournamentType.SingleElimination, string subdomain = null, string description = null, 
+                bool openSignup = false, bool holdThirdPlaceMatch = false, float ptsForMatchWin = 1.0f, 
+                float ptsForMatchTie = 0.5f, float ptsForGameWin = 0f, float ptsForGameTie = 0f,
+                float ptsForBye = 1.0f, int? swissRounds = null, TournamentRankingStats rankedBy = TournamentRankingStats.MatchWins,
+                bool acceptAttachments = false, bool hideForum = false, bool showRounds = false, bool isPrivate = false,
+                bool notifyUsersWhenMatchesOpen = false, bool notifyUsersWhenTournamentsEnds = false, 
+                bool sequentialPairings = false, int? signupCap = null, DateTimeOffset? startAt = null, 
+                int? checkInDuration = null, TournamentGrandFinals grandFinalsModifier = TournamentGrandFinals.TwoChances)
             {
                 string request = "https://api.challonge.com/v1/tournaments.json";
 
                 Dictionary<string, string> parameters = PrepareParams(name, url, type, subdomain, description,
                     openSignup, holdThirdPlaceMatch, ptsForMatchWin, ptsForMatchTie, ptsForGameWin, ptsForGameTie,
-                    ptsForBye, swissRounds, rankedBy, rrPtsForMatchWin, rrPtsForMatchTie, rrPtsForGameWin, rrPtsForGameTie,
+                    ptsForBye, swissRounds, rankedBy,
                     acceptAttachments, hideForum, showRounds, isPrivate, notifyUsersWhenMatchesOpen,
                     notifyUsersWhenTournamentsEnds, sequentialPairings, signupCap, startAt, checkInDuration,
                     grandFinalsModifier);
 
                 FormUrlEncodedContent content = new FormUrlEncodedContent(parameters);
 
-                TournamentData tournamentData = await PostAsync<TournamentData>(httpClient, request, content);
+                TournamentData tournamentData = await PostAsync<TournamentData>(_httpClient, request, content);
                 return tournamentData.Tournament;
             }
 
@@ -377,7 +370,7 @@ namespace Challonge
             /// <returns></returns>
             public async Task<TournamentApiResult> GetTournamentAsync(string tournament, bool includeMatches = false, bool includeParticipants = false)
             {
-                string request = $"https://api.challonge.com/v1/tournaments/{tournament}.json?api_key={apiKey}";
+                string request = $"https://api.challonge.com/v1/tournaments/{tournament}.json?api_key={_apiKey}";
 
                 if (includeMatches)
                     request += "&include_matches=1";
@@ -385,14 +378,30 @@ namespace Challonge
                 if (includeParticipants)
                     request += "&include_participants=1";
 
-                HttpResponseMessage response = await httpClient.GetAsync(request);
+                HttpResponseMessage response = await _httpClient.GetAsync(request);
                 string responseString = await ErrorHandler.ParseResponseAsync(response);
 
                 return await ParseTournamentApiResultAsync(responseString, includeMatches, includeParticipants);
             }
 
             /// <summary>
-            /// Creates a new tournament
+            /// Updates an existing tournament
+            /// </summary>
+            /// <param name="builder">The builder containing the properties to be updated</param>
+            /// <returns>The updated tournament</returns>
+            public async Task<Tournament> UpdateTournamentAsync(TournamentBuilder builder)
+            {
+                return await UpdateTournamentAsync(builder.Url, builder.Name, builder.Url, builder.TournamentType,
+                    builder.Subdomain, builder.Description, builder.OpenSignup, builder.HoldThirdPlaceMatch,
+                    builder.PointsForMatchWin, builder.PointsForMatchTie, builder.PointsForGameWin,
+                    builder.PointsForGameTie, builder.PointsForBye, builder.SwissRounds, builder.RankedBy,
+                    builder.AcceptAttachments, builder.HideForum, builder.ShowRounds, builder.IsPrivate,
+                    builder.NotifyUsersWhenMatchesOpen, builder.NotifyUsersWhenTournamentEnds, builder.SequentialPairings, 
+                    builder.SignupCap, builder.StartAt, builder.CheckInDuration, builder.GrandFinalsModifier);
+            }
+            
+            /// <summary>
+            /// Updates an existing tournament
             /// </summary>
             /// <param name="tournament">Tournament ID (e.g. 10230) or URL (e.g. 'single_elim' for challonge.com/single_elim). If assigned to a subdomain, URL format must be "subdomain-tournament_url" (e.g. 'test-mytourney' for test.challonge.com/mytourney) </param>
             /// <param name="url">Url of your tournament (letters, numbers and underscores only). 
@@ -434,28 +443,27 @@ namespace Challonge
             /// <param name="grandFinalsModifier">Double elimination only: how the grand finals will be played</param>
             /// <returns>The updated tournament</returns>
             public async Task<Tournament> UpdateTournamentAsync(string tournament, string name = null,
-                string url = null, TournamentType type = TournamentType.SingleElimination,
-                string subdomain = null, string description = null, bool openSignup = false, bool holdThirdPlaceMatch = false,
-                float ptsForMatchWin = 1.0f, float ptsForMatchTie = 0.5f, float ptsForGameWin = 0f, float ptsForGameTie = 0f,
-                float ptsForBye = 1.0f, int? swissRounds = null, TournamentRankingStats? rankedBy = null, float rrPtsForMatchWin = 1.0f,
-                float rrPtsForMatchTie = 0.5f, float rrPtsForGameWin = 0f, float rrPtsForGameTie = 0f, bool acceptAttachments = false,
-                bool hideForum = false, bool showRounds = false, bool isPrivate = false, bool notifyUsersWhenMatchesOpen = false,
+                string url = null, TournamentType type = TournamentType.SingleElimination, string subdomain = null,
+                string description = null, bool openSignup = false, bool holdThirdPlaceMatch = false, 
+                float ptsForMatchWin = 1.0f, float ptsForMatchTie = 0.5f, float ptsForGameWin = 0f, 
+                float ptsForGameTie = 0f, float ptsForBye = 1.0f, int? swissRounds = null, 
+                TournamentRankingStats rankedBy = TournamentRankingStats.MatchWins, bool acceptAttachments = false, 
+                bool hideForum = false, bool showRounds = false, bool isPrivate = false, bool notifyUsersWhenMatchesOpen = false, 
                 bool notifyUsersWhenTournamentsEnds = false, bool sequentialPairings = false, int? signupCap = null,
-                DateTimeOffset? startAt = null, int? checkInDuration = null,
-                TournamentGrandFinals? grandFinalsModifier = null)
+                DateTimeOffset? startAt = null, int? checkInDuration = null, 
+                TournamentGrandFinals grandFinalsModifier = TournamentGrandFinals.TwoChances)
             {
                 string request = $"https://api.challonge.com/v1/tournaments/{tournament}.json";
 
                 Dictionary<string, string> parameters = PrepareParams(name, url, type, subdomain, description,
                     openSignup, holdThirdPlaceMatch, ptsForMatchWin, ptsForMatchTie, ptsForGameWin, ptsForGameTie,
-                    ptsForBye, swissRounds, rankedBy, rrPtsForMatchWin, rrPtsForMatchTie, rrPtsForGameWin, rrPtsForGameTie,
-                    acceptAttachments, hideForum, showRounds, isPrivate, notifyUsersWhenMatchesOpen,
-                    notifyUsersWhenTournamentsEnds, sequentialPairings, signupCap, startAt, checkInDuration,
-                    grandFinalsModifier);
+                    ptsForBye, swissRounds, rankedBy, acceptAttachments, hideForum, showRounds, isPrivate, 
+                    notifyUsersWhenMatchesOpen, notifyUsersWhenTournamentsEnds, sequentialPairings, signupCap, startAt, 
+                    checkInDuration, grandFinalsModifier);
 
                 FormUrlEncodedContent content = new FormUrlEncodedContent(parameters);
 
-                TournamentData tournamentData = await PutAsync<TournamentData>(httpClient, request, content);
+                TournamentData tournamentData = await PutAsync<TournamentData>(_httpClient, request, content);
                 return tournamentData.Tournament;
             }
 
@@ -467,9 +475,9 @@ namespace Challonge
             /// "subdomain-tournament_url" (e.g. 'test-mytourney' for test.challonge.com/mytourney)</param>
             public async Task DeleteTournamentAsync(string tournament)
             {
-                string request = $"https://api.challonge.com/v1/tournaments/{tournament}.json?api_key={apiKey}";
+                string request = $"https://api.challonge.com/v1/tournaments/{tournament}.json?api_key={_apiKey}";
 
-                await DeleteAsync(httpClient, request);
+                await DeleteAsync(_httpClient, request);
             }
 
             /// <summary>
@@ -502,9 +510,10 @@ namespace Challonge
             /// <see cref="TournamentState.Pending"/>
             /// </summary>
             /// <remarks>
-            /// When your tournament is in a 'checkingIn' or 'checkedIn' state, there's no way to edit the 
-            /// tournament's start time (start_at) or check-in duration (check_in_duration). 
-            /// You must first abort check-in, then you may edit those attributes.
+            /// When your tournament is in a <see cref="TournamentState.CheckingIn"/> or
+            /// <see cref="TournamentState.CheckedIn"/> state, there's no way to edit the tournament's start time
+            /// (<see cref="Tournament.StartAt"/>) or <see cref="Tournament.CheckInDuration"/>. You must first abort
+            /// check-in, then you may edit those attributes.
             /// </remarks>
             /// <param name="tournament">Tournament ID (e.g. 10230) or URL (e.g. 'single_elim' for 
             /// challonge.com/single_elim). If assigned to a subdomain, URL format must be 

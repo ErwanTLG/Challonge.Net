@@ -12,13 +12,13 @@ namespace Challonge
         /// </summary>
         public class MatchesHandler
         {
-            private readonly string apiKey;
-            private readonly HttpClient httpClient;
+            private readonly string _apiKey;
+            private readonly HttpClient _httpClient;
 
             internal MatchesHandler(string apiKey, HttpClient httpClient)
             {
-                this.apiKey = apiKey;
-                this.httpClient = httpClient;
+                _apiKey = apiKey;
+                    _httpClient = httpClient;
             }
 
             /// <summary>
@@ -33,7 +33,7 @@ namespace Challonge
             /// <returns>The matches corresponding to the given query</returns>
             public async Task<Match[]> GetMatchesAsync(string tournament, MatchState? state = null, int? participantId = null)
             {
-                string request = $"https://api.challonge.com/v1/tournaments/{tournament}/matches.json?api_key={apiKey}";
+                string request = $"https://api.challonge.com/v1/tournaments/{tournament}/matches.json?api_key={_apiKey}";
 
                 switch (state)
                 {
@@ -51,7 +51,7 @@ namespace Challonge
                 if (participantId != null)
                     request += "&participant_id=" + participantId;
 
-                MatchData[] matchDatas = await GetAsync<MatchData[]>(httpClient, request);
+                MatchData[] matchDatas = await GetAsync<MatchData[]>(_httpClient, request);
                 Match[] matches = new Match[matchDatas.Length];
 
                 for (int i = 0; i < matchDatas.Length; i++)
@@ -71,9 +71,9 @@ namespace Challonge
             /// <returns></returns>
             public async Task<Match> GetMatchAsync(string tournament, int matchId, bool includeAttachments = false)
             {
-                string request = $"https://api.challonge.com/v1/tournaments/{tournament}/matches/{matchId}.json?api_key={apiKey}";
+                string request = $"https://api.challonge.com/v1/tournaments/{tournament}/matches/{matchId}.json?api_key={_apiKey}";
 
-                MatchData matchData = await GetAsync<MatchData>(httpClient, request);
+                MatchData matchData = await GetAsync<MatchData>(_httpClient, request);
                 return matchData.Match;
             }
 
@@ -105,7 +105,7 @@ namespace Challonge
 
                 Dictionary<string, string> parameters = new Dictionary<string, string>
                 {
-                    ["api_key"] = apiKey
+                    ["api_key"] = _apiKey
                 };
 
                 if (scoresCsv != null)
@@ -122,7 +122,7 @@ namespace Challonge
 
                 FormUrlEncodedContent content = new FormUrlEncodedContent(parameters);
 
-                MatchData matchData = await PutAsync<MatchData>(httpClient, request, content);
+                MatchData matchData = await PutAsync<MatchData>(_httpClient, request, content);
                 return matchData.Match;
             }
 
@@ -139,11 +139,12 @@ namespace Challonge
             /// <param name="tournament">Tournament ID (e.g. 10230) or URL (e.g. 'single_elim' for 
             /// challonge.com/single_elim). If assigned to a subdomain, URL format must be 
             /// subdomain-tournamentUrl (e.g. 'test-mytourney' for test.challonge.com/mytourney) </param>
-            /// <param name="match">The updated version of the match</param>
+            /// <param name="matchId">The match's unique id</param>
+            /// <param name="builder">The updated version of the match</param>
             /// <returns></returns>
-            public async Task<Match> UpdateMatchAsync(string tournament, Match match)
+            public async Task<Match> UpdateMatchAsync(string tournament, int matchId, MatchBuilder builder)
             {
-                return await UpdateMatchAsync(tournament, match.Id, match.ScoresCsv, match.WinnerId, match.Player1Votes, match.Player2Votes);
+                return await UpdateMatchAsync(tournament, matchId, builder.ScoresCsv, builder.WinnerId, builder.Player1Votes, builder.Player2Votes);
             }
 
             /// <summary>
@@ -157,7 +158,7 @@ namespace Challonge
             {
                 string request = $"https://api.challonge.com/v1/tournaments/{tournament}/matches/{matchId}/reopen.json";
 
-                await ApiCallAsync(httpClient, apiKey, request);
+                await ApiCallAsync(_httpClient, _apiKey, request);
             }
 
             /// <summary>
@@ -171,7 +172,7 @@ namespace Challonge
             {
                 string request = $"https://api.challonge.com/v1/tournaments/{tournament}/matches/{matchId}/mark_as_underway.json";
 
-                await ApiCallAsync(httpClient, apiKey, request);
+                await ApiCallAsync(_httpClient, _apiKey, request);
             }
 
             /// <summary>
@@ -185,7 +186,7 @@ namespace Challonge
             {
                 string request = $"https://api.challonge.com/v1/tournaments/{tournament}/matches/{matchId}/mark_as_underway.json";
 
-                await ApiCallAsync(httpClient, apiKey, request);
+                await ApiCallAsync(_httpClient, _apiKey, request);
             }
         }
     }

@@ -32,7 +32,7 @@ namespace Challonge.Tournaments
         public bool AnonymousVoting { get; set; }
 
         [JsonPropertyName("category")]
-        public string Category { get; set; }   // I'm not sure what type this should be parsed to
+        public string Category { get; set; } // I'm not sure what type this should be parsed to
 
         /// <summary>
         /// Length of the participant check-in window in minutes
@@ -316,7 +316,7 @@ namespace Challonge.Tournaments
 
         /// <summary>
         /// Your tournament's url (challonge.com/url)
-        /// letters, numbers, and undescores only
+        /// letters, numbers, and underscores only
         /// </summary>
         [JsonPropertyName("url")]
         public string Url { get; set; }
@@ -326,7 +326,7 @@ namespace Challonge.Tournaments
 
         /// <summary>
         /// Your tournament's subdomain (subdomain.challonge.com/url)
-        /// letters, numbers, and undescores only
+        /// letters, numbers, and underscores only
         /// </summary>
         [JsonPropertyName("subdomain")]
         public string Subdomain { get; set; }
@@ -403,18 +403,25 @@ namespace Challonge.Tournaments
         /// The check-in process has started
         /// </summary>
         CheckingIn,
+
         /// <summary>
         /// The check-in process is completed
         /// </summary>
         CheckedIn,
+
         /// <summary>
         /// The tournament has not started yet
         /// </summary>
         Pending,
+
         /// <summary>
         /// The tournament has started
         /// </summary>
         Underway,
+        
+        /// <summary>
+        /// The tournament is completed
+        /// </summary>
         Completed,
         Invalid
     }

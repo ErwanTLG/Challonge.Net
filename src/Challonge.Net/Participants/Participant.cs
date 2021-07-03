@@ -11,7 +11,7 @@ namespace Challonge.Participants
 
     public class Participant
     {
-        [JsonPropertyName("acitve")]
+        [JsonPropertyName("active")]
         public bool Active { get; set; }
 
         /// <summary>

@@ -16,13 +16,13 @@ namespace Challonge
         /// </summary>
         public class ParticipantsHandler
         {
-            private readonly string apiKey;
-            private readonly HttpClient httpClient;
+            private readonly string _apiKey;
+            private readonly HttpClient _httpClient;
 
             public ParticipantsHandler(string apiKey, HttpClient httpClient)
             {
-                this.apiKey = apiKey;
-                this.httpClient = httpClient;
+                _apiKey = apiKey;
+                _httpClient = httpClient;
             }
 
             /// <summary>
@@ -34,9 +34,9 @@ namespace Challonge
             /// <returns>The list of participants of the given tournament</returns>
             public async Task<Participant[]> GetParticipantsAsync(string tournament)
             {
-                string request = $" https://api.challonge.com/v1/tournaments/{tournament}/participants.json?api_key={apiKey}";
+                string request = $" https://api.challonge.com/v1/tournaments/{tournament}/participants.json?api_key={_apiKey}";
 
-                ParticipantData[] participantDatas = await GetAsync<ParticipantData[]>(httpClient, request);
+                ParticipantData[] participantDatas = await GetAsync<ParticipantData[]>(_httpClient, request);
                 Participant[] participants = new Participant[participantDatas.Length];
 
                 for (int i = 0; i < participantDatas.Length; i++)
@@ -72,7 +72,7 @@ namespace Challonge
 
                 Dictionary<string, string> parameters = new Dictionary<string, string>
                 {
-                    ["api_key"] = apiKey
+                    ["api_key"] = _apiKey
                 };
 
                 if (name != null)
@@ -92,7 +92,7 @@ namespace Challonge
 
                 FormUrlEncodedContent content = new FormUrlEncodedContent(parameters);
 
-                ParticipantData participantData = await PostAsync<ParticipantData>(httpClient, request, content);
+                ParticipantData participantData = await PostAsync<ParticipantData>(_httpClient, request, content);
                 return participantData.Participant;
             }
 
@@ -102,14 +102,12 @@ namespace Challonge
             /// <param name="tournament">Tournament ID (e.g. 10230) or URL (e.g. 'single_elim' for 
             /// challonge.com/single_elim). If assigned to a subdomain, URL format must be 
             /// subdomain-tournament_url (e.g. 'test-mytourney' for test.challonge.com/mytourney) </param>
-            /// <param name="participant">Participant to create</param>
+            /// <param name="builder">Participant to create</param>
             /// <returns>The created participant</returns>
-            /// <remarks>The returned participant will differ from the one you passed as an argument,
-            /// because the api will set some properties that you have not write access to.</remarks>
-            public async Task<Participant> CreateParticipantAsync(string tournament, Participant participant)
+            public async Task<Participant> CreateParticipantAsync(string tournament, ParticipantBuilder builder)
             {
-                return await CreateParticipantAsync(tournament, participant.Name, participant.ChallongeUsername,
-                    participant.InviteEmail, participant.Seed, participant.Misc);
+                return await CreateParticipantAsync(tournament, builder.Name, builder.ChallongeUsername,
+                    builder.Email, builder.Seed, builder.Misc);
             }
 
             public async Task<Participant[]> CreateParticipantsAsync(string tournament, string[] names = null,
@@ -119,7 +117,7 @@ namespace Challonge
 
                 List<KeyValuePair<string, string>> parameters = new List<KeyValuePair<string, string>>
                 {
-                    new KeyValuePair<string, string>("api_key", apiKey)
+                    new KeyValuePair<string, string>("api_key", _apiKey)
                 };
 
                 for (int i = 0; i < names.Length; i++)
@@ -139,7 +137,7 @@ namespace Challonge
                 }
 
                 FormUrlEncodedContent content = new FormUrlEncodedContent(parameters);
-                ParticipantData[] participantDatas = await PostAsync<ParticipantData[]>(httpClient, request, content);
+                ParticipantData[] participantDatas = await PostAsync<ParticipantData[]>(_httpClient, request, content);
 
                 Participant[] participants = new Participant[participantDatas.Length];
 
@@ -160,12 +158,12 @@ namespace Challonge
             /// <returns>A result containing the participant and if requested its match records</returns>
             public async Task<ParticipantApiResult> GetParticipantAsync(string tournament, int participantId, bool includeMatches = false)
             {
-                string request = $"https://api.challonge.com/v1/tournaments/{tournament}/participants/{participantId}.json?api_key={apiKey}";
+                string request = $"https://api.challonge.com/v1/tournaments/{tournament}/participants/{participantId}.json?api_key={_apiKey}";
 
                 if (includeMatches)
                     request += "&include_matches=1";
 
-                HttpResponseMessage response = await httpClient.GetAsync(request);
+                HttpResponseMessage response = await _httpClient.GetAsync(request);
                 string responseString = await ErrorHandler.ParseResponseAsync(response);
 
                 ParticipantApiResult result = new ParticipantApiResult();
@@ -200,6 +198,7 @@ namespace Challonge
             /// <param name="tournament">Tournament ID (e.g. 10230) or URL (e.g. 'single_elim' for 
             /// challonge.com/single_elim). If assigned to a subdomain, URL format must be 
             /// subdomain-tournament_url (e.g. 'test-mytourney' for test.challonge.com/mytourney) </param>
+            /// <param name="participantId">The participant's unique id</param>
             /// <param name="name">The name displayed in the bracket/schedule - not required if email 
             /// or challongeUsername is provided. Must be unique per tournament. </param>
             /// <param name="challongeUsername">Provide this if the participant has a Challonge account. 
@@ -221,7 +220,7 @@ namespace Challonge
 
                 Dictionary<string, string> parameters = new Dictionary<string, string>
                 {
-                    ["api_key"] = apiKey
+                    ["api_key"] = _apiKey
                 };
 
                 if (name != null)
@@ -241,7 +240,7 @@ namespace Challonge
 
                 FormUrlEncodedContent content = new FormUrlEncodedContent(parameters);
 
-                ParticipantData participantData = await PutAsync<ParticipantData>(httpClient, request, content);
+                ParticipantData participantData = await PutAsync<ParticipantData>(_httpClient, request, content);
                 return participantData.Participant;
             }
 
@@ -251,14 +250,13 @@ namespace Challonge
             /// <param name="tournament">Tournament ID (e.g. 10230) or URL (e.g. 'single_elim' for 
             /// challonge.com/single_elim). If assigned to a subdomain, URL format must be 
             /// subdomain-tournament_url (e.g. 'test-mytourney' for test.challonge.com/mytourney) </param>
-            /// <param name="participant">Updated participant</param>
+            /// <param name="participantId">The participant's unique id</param>
+            /// <param name="builder">Updated participant</param>
             /// <returns>The updated participant</returns>
-            /// <remarks>The returned participant will differ from the one you passed as an argument.
-            /// (the value UpdatedAt will have changed)</remarks>
-            public async Task<Participant> UpdateParticipantAsync(string tournament, Participant participant)
+            public async Task<Participant> UpdateParticipantAsync(string tournament, int participantId, ParticipantBuilder builder)
             {
-                return await UpdateParticipantAsync(tournament, participant.Id, participant.Name,
-                    participant.ChallongeUsername, participant.InviteEmail, participant.Seed, participant.Misc);
+                return await UpdateParticipantAsync(tournament, participantId, builder.Name,
+                    builder.ChallongeUsername, builder.Email, builder.Seed, builder.Misc);
             }
 
             /// <summary>
@@ -272,7 +270,7 @@ namespace Challonge
             {
                 string request = $"https://api.challonge.com/v1/tournaments/{tournament}/participants/{participantId}/check_in.json";
 
-                await ApiCallAsync(httpClient, apiKey, request);
+                await ApiCallAsync(_httpClient, _apiKey, request);
             }
 
             /// <summary>
@@ -287,7 +285,7 @@ namespace Challonge
             {
                 string request = $"https://api.challonge.com/v1/tournaments/{tournament}/participants/{participantId}/undo_check_in.json";
 
-                await ApiCallAsync(httpClient, apiKey, request);
+                await ApiCallAsync(_httpClient, _apiKey, request);
             }
 
             /// <summary>
@@ -302,9 +300,9 @@ namespace Challonge
             /// <returns></returns>
             public async Task DeleteParticipantAsync(string tournament, int participantId)
             {
-                string request = $"https://api.challonge.com/v1/tournaments/{tournament}/participants/{participantId}.json?api_key={apiKey}";
+                string request = $"https://api.challonge.com/v1/tournaments/{tournament}/participants/{participantId}.json?api_key={_apiKey}";
 
-                await DeleteAsync(httpClient, request);
+                await DeleteAsync(_httpClient, request);
             }
 
             /// <summary>
@@ -316,9 +314,9 @@ namespace Challonge
             /// <returns></returns>
             public async Task ClearAsync(string tournament)
             {
-                string request = $"https://api.challonge.com/v1/tournaments/{tournament}/participants/clear.json?api_key={apiKey}";
+                string request = $"https://api.challonge.com/v1/tournaments/{tournament}/participants/clear.json?api_key={_apiKey}";
 
-                await DeleteAsync(httpClient, request);
+                await DeleteAsync(_httpClient, request);
             }
 
             /// <summary>
@@ -332,7 +330,7 @@ namespace Challonge
             {
                 string request = $"https://api.challonge.com/v1/tournaments/{tournament}/participants/randomize.json";
 
-                await ApiCallAsync(httpClient, apiKey, request);
+                await ApiCallAsync(_httpClient, _apiKey, request);
             }
         }
     }
