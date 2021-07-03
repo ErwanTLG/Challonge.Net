@@ -5,9 +5,9 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>Welcome to Challonge.Net api documentation </title>
+    <title>First Steps </title>
     <meta name="viewport" content="width=device-width">
-    <meta name="title" content="Welcome to Challonge.Net api documentation ">
+    <meta name="title" content="First Steps ">
     <meta name="generator" content="docfx 2.58.0.0">
     
     <link rel="shortcut icon" href="../favicon.ico">
@@ -66,16 +66,41 @@
         </div>
         <div class="article row grid-right">
           <div class="col-md-10">
-            <article class="content wrap" id="_content" data-uid="">
-<h1 id="welcome-to-challongenet-api-documentation">Welcome to Challonge.Net api documentation</h1>
+            <article class="content wrap" id="_content" data-uid="articles_first_steps">
+<h1 id="first-steps">First Steps</h1>
 
-<p>You can find the methods related to the api under the 4 following classes:</p>
+<p>Every interaction with the Challonge! API happens through the <a class="xref" href="../api/Challonge.ChallongeClient.html"><code>ChallongeClient</code></a>.
+You have to initialize it using the api key you obtained in the <a class="xref" href="index.html">previous section</a>.
+You can find it under the <a class="xref" href="../api/Challonge.html"><code>Challonge</code></a> namespace</p>
+<pre><code class="lang-c#">using Challonge;
+
+class Program
+{
+    static void Main(string[] args)
+    {
+        ChallongeClient client = new ChallongeClient(&quot;YOUR API KEY HERE&quot;);
+    }
+}
+</code></pre>
+<div class="WARNING">
+<h5>Warning</h5>
+<p>As explained previously, your api key is like your password. You shouldn't expose it like this in your
+code, your should rather use an external configuration file or environment variables.</p>
+</div>
+<p>The code above creates a new <a class="xref" href="../api/Challonge.ChallongeClient.html"><code>ChallongeClient</code></a>. By default, it is instantiated with a new
+<a href="https://docs.microsoft.com/en-us/dotnet/api/system.net.http.httpclient?view=net-5.0"><code>HttpClient</code></a> class.</p>
+<h2 id="using-the-api">Using the Api</h2>
+<p>The api is divided into 4 parts:</p>
 <ul>
-<li><a class="xref" href="Challonge.ChallongeClient.TournamentHandler.html">Tournaments</a></li>
-<li><a class="xref" href="Challonge.ChallongeClient.ParticipantsHandler.html">Participants</a></li>
-<li><a class="xref" href="Challonge.ChallongeClient.MatchesHandler.html">Matches</a></li>
-<li><a class="xref" href="Challonge.ChallongeClient.AttachmentsHandler.html">Attachments</a></li>
+<li><a class="xref" href="../api/Challonge.ChallongeClient.TournamentHandler.html">Tournaments</a></li>
+<li><a class="xref" href="../api/Challonge.ChallongeClient.ParticipantsHandler.html">Participants</a></li>
+<li><a class="xref" href="../api/Challonge.ChallongeClient.MatchesHandler.html">Matches</a></li>
+<li><a class="xref" href="../api/Challonge.ChallongeClient.AttachmentsHandler.html">Attachments</a></li>
 </ul>
+<div class="NOTE">
+<h5>Note</h5>
+<p>The Attachments api is incomplete due to server-side issues</p>
+</div>
 </article>
           </div>
           
@@ -84,7 +109,7 @@
               <div class="contribution">
                 <ul class="nav">
                   <li>
-                    <a href="https://github.com/ErwanTLG/Challonge.Net/blob/master/docs/api/index.md/#L1" class="contribution-link">Improve this Doc</a>
+                    <a href="https://github.com/ErwanTLG/Challonge.Net/blob/docs/docfx/articles/first_steps.md/#L1" class="contribution-link">Improve this Doc</a>
                   </li>
                 </ul>
               </div>

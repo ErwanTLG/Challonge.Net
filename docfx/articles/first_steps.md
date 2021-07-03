@@ -19,11 +19,11 @@ class Program
 }
 ```
 
-> [!WARNING] 
+> [!WARNING]
 > As explained previously, your api key is like your password. You shouldn't expose it like this in your
 > code, your should rather use an external configuration file or environment variables.
 
-The code above creates a new [`ChallongeClient`](xref:Challonge.ChallongeClient). By default, it is instantiated with a new 
+The code above creates a new [`ChallongeClient`](xref:Challonge.ChallongeClient). By default, it is instantiated with a new
 [`HttpClient`](https://docs.microsoft.com/en-us/dotnet/api/system.net.http.httpclient?view=net-5.0) class.
 
 ## Using the Api

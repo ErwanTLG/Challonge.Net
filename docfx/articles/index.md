@@ -13,7 +13,7 @@ to get your api key, which you can find [here](https://challonge.com/settings/de
 
 ## Installation
 
-You now want to install Challonge.Net. You can install it like any other package using 
-[NuGet](https://www.nuget.org/packages/Challonge.Net). 
+You now want to install Challonge.Net. You can install it like any other package using
+[NuGet](https://www.nuget.org/packages/Challonge.Net).
 
 Now that your project is set up, you can check [First Steps](xref:articles_first_steps)
