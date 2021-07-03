@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.1</TargetFramework>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
-    <Version>1.0.0-beta.1</Version>
+    <Version>1.0.0-beta.2</Version>
     <Authors>Challonge.Net Contributors</Authors>
     <Company>Challonge.Net</Company>
     <Description>An unofficial API wrapper for Challonge! It uses modern async code.</Description>
@@ -13,16 +13,22 @@
     <PackageTags>Challonge; ChallongeAPI</PackageTags>
     <RepositoryType>git</RepositoryType>
     <RepositoryUrl>https://github.com/ErwanTLG/Challonge.Net</RepositoryUrl>
-    <PackageReleaseNotes>Initial pre-release. May contain bugs.</PackageReleaseNotes>
+    <PackageReleaseNotes>Added helpers for the creation and update of tournaments/participants/matches : WILL REQUIRE SOME RE-WRITING. Please check the release on GitHub to see how to switch to the new system.
+
+Small documentation improvements.
+</PackageReleaseNotes>
     <SignAssembly>false</SignAssembly>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="docfx.console" Version="2.58.0">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
     <PackageReference Include="System.Text.Json" Version="5.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\..\LICENSE">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
   </ItemGroup>
 
 </Project>

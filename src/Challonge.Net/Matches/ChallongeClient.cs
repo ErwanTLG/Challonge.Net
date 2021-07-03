@@ -144,7 +144,8 @@ namespace Challonge
             /// <returns></returns>
             public async Task<Match> UpdateMatchAsync(string tournament, int matchId, MatchBuilder builder)
             {
-                return await UpdateMatchAsync(tournament, matchId, builder.ScoresCsv, builder.WinnerId, builder.Player1Votes, builder.Player2Votes);
+                return await UpdateMatchAsync(tournament, matchId, builder.ScoresCsv, builder.WinnerId, 
+                    builder.Player1Votes, builder.Player2Votes);
             }
 
             /// <summary>

@@ -363,11 +363,14 @@ namespace Challonge
             /// <summary>
             /// Updates an existing tournament
             /// </summary>
+            /// <param name="tournament">Tournament ID (e.g. 10230) or URL (e.g. 'single_elim' for 
+            /// challonge.com/single_elim). If assigned to a subdomain, URL format must be "subdomain-tournament_url"
+            /// (e.g. 'test-mytourney' for test.challonge.com/mytourney)</param>
             /// <param name="builder">The builder containing the properties to be updated</param>
             /// <returns>The updated tournament</returns>
-            public async Task<Tournament> UpdateTournamentAsync(TournamentBuilder builder)
+            public async Task<Tournament> UpdateTournamentAsync(string tournament, TournamentBuilder builder)
             {
-                return await UpdateTournamentAsync(builder.Url, builder.Name, builder.Url, builder.TournamentType,
+                return await UpdateTournamentAsync(tournament, builder.Name, builder.Url, builder.TournamentType,
                     builder.Subdomain, builder.Description, builder.OpenSignup, builder.HoldThirdPlaceMatch,
                     builder.PointsForMatchWin, builder.PointsForMatchTie, builder.PointsForGameWin,
                     builder.PointsForGameTie, builder.PointsForBye, builder.SwissRounds, builder.RankedBy,
