@@ -99,10 +99,10 @@ namespace Challonge.Participants
         public string ChallongeUsername { get; set; }
 
         /// <summary>
-        /// The verified email address attached to this participant
+        /// Whether or not the email of the participant has been verified by Challonge!
         /// </summary>
         [JsonPropertyName("challonge_email_address_verified")]
-        public string ChallongeEmailAddressVerified { get; set; }
+        public bool ChallongeEmailAddressVerified { get; set; }
 
         [JsonPropertyName("removable")]
         public bool Removable { get; set; }

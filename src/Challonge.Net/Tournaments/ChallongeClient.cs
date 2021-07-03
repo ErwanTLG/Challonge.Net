@@ -116,24 +116,14 @@ namespace Challonge
                 if (url != null)
                     parameters["tournament[url]"] = url;
 
-                switch (type)
+                parameters["tournament[tournament_type]"] = type switch
                 {
-                    case TournamentType.SingleElimination:
-                        parameters["tournament[tournament_type]"] = "single elimination";
-                        break;
-                    case TournamentType.DoubleElimination:
-                        parameters["tournament[tournament_type]"] = "double elimination";
-                        break;
-                    case TournamentType.RoundRobin:
-                        parameters["tournament[tournament_type]"] = "round robin";
-                        break;
-                    case TournamentType.Swiss:
-                        parameters["tournament[tournament_type]"] = "swiss";
-                        break;
-                    default:
-                        parameters["tournament[tournament_type]"] = "";
-                        break;
-                }
+                    TournamentType.SingleElimination => "single elimination",
+                    TournamentType.DoubleElimination => "double elimination",
+                    TournamentType.RoundRobin => "round robin",
+                    TournamentType.Swiss => "swiss",
+                    _ => ""
+                };
 
                 if (subdomain != null)
                     parameters["tournament[subdomain]"] = subdomain;
@@ -158,25 +148,16 @@ namespace Challonge
                 if (swissRounds != null)
                     parameters["swiss_rounds]"] = swissRounds.Value.ToString();
 
-                switch (rankedBy)
+                parameters["tournament[ranked_by]"] = rankedBy switch
                 {
                     // TODO check if the api accepts game wins percentage
-                    case TournamentRankingStats.MatchWins:
-                        parameters["tournament[ranked_by]"] = "match wins";
-                        break;
-                    case TournamentRankingStats.GameWins:
-                        parameters["tournament[ranked_by]"] = "game wins";
-                        break;
-                    case TournamentRankingStats.PointsScored:
-                        parameters["tournament[ranked_by]"] = "points scored";
-                        break;
-                    case TournamentRankingStats.PointsDifference:
-                        parameters["tournament[ranked_by]"] = "points difference";
-                        break;
-                    case TournamentRankingStats.Custom:
-                        parameters["tournament[ranked_by]"] = "custom";
-                        break;
-                }
+                    TournamentRankingStats.MatchWins => "match wins",
+                    TournamentRankingStats.GameWins => "game wins",
+                    TournamentRankingStats.PointsScored => "points scored",
+                    TournamentRankingStats.PointsDifference => "points difference",
+                    TournamentRankingStats.Custom => "custom",
+                    _ => parameters["tournament[ranked_by]"]
+                };
 
                 parameters["tournament[accept_attachments]"] = acceptAttachments.ToString().ToLower();
 
@@ -201,18 +182,13 @@ namespace Challonge
                 if (checkInDuration != null)
                     parameters["tournament[check_in_duration]"] = checkInDuration.Value.ToString();
 
-                switch (grandFinalsModifier)
+                parameters["tournament[grand_finals_modifier]"] = grandFinalsModifier switch
                 {
-                    case TournamentGrandFinals.TwoChances:
-                        parameters["tournament[grand_finals_modifier]"] = "";
-                        break;
-                    case TournamentGrandFinals.Skip:
-                        parameters["tournament[grand_finals_modifier]"] = "skip";
-                        break;
-                    case TournamentGrandFinals.SingleMatch:
-                        parameters["tournament[grand_finals_modifier]"] = "single match";
-                        break;
-                }
+                    TournamentGrandFinals.TwoChances => "",
+                    TournamentGrandFinals.Skip => "skip",
+                    TournamentGrandFinals.SingleMatch => "single match",
+                    _ => parameters["tournament[grand_finals_modifier]"]
+                };
 
                 return parameters;
             }
@@ -263,10 +239,10 @@ namespace Challonge
                 }
 
                 if (createdAfter != null)
-                    request += "&created_after=" + createdAfter?.ToString("yyyy-MM-dd");
+                    request += "&created_after=" + createdAfter.Value.ToString("yyyy-MM-dd");
 
                 if (createdBefore != null)
-                    request += "&created_before=" + createdBefore?.ToString("yyyy-MM-dd");
+                    request += "&created_before=" + createdBefore.Value.ToString("yyyy-MM-dd");
 
                 if (subdomain != null)
                     request += "&subdomain=" + subdomain;
@@ -320,7 +296,7 @@ namespace Challonge
             /// <param name="hideForum">Hide the forum tab on your Challonge page</param>
             /// <param name="showRounds">Whether or not to label each round above the bracket</param>
             /// <param name="isPrivate">Hide this tournament from the public browsable index and your profile</param>
-            /// <param name="notifyUsersWhenMatchesOpen">Whether or not to email regisitered Challonge 
+            /// <param name="notifyUsersWhenMatchesOpen">Whether or not to email registered Challonge 
             /// participants when matches open up for them</param>
             /// <param name="notifyUsersWhenTournamentsEnds">Whether or not to email registered Challonge
             /// participants when this tournament ends</param>
@@ -420,15 +396,11 @@ namespace Challonge
             /// <param name="ptsForBye">Swiss only: number of points gained for a bye</param>
             /// <param name="swissRounds">Number of rounds</param>
             /// <param name="rankedBy">How the participants are ranked</param>
-            /// <param name="rrPtsForMatchWin">Round robin only: number of points gained for a match win</param>
-            /// <param name="rrPtsForMatchTie">Round robin only: number of points gained for a match tie</param>
-            /// <param name="rrPtsForGameWin">Round robin only: number of points gained for a game win</param>
-            /// <param name="rrPtsForGameTie">Round robin only: number of points gained for a game tie</param>
             /// <param name="acceptAttachments">Allow match attachment uploads</param>
             /// <param name="hideForum">Hide the forum tab on your Challonge page</param>
             /// <param name="showRounds">Whether or not to label each round above the bracket</param>
             /// <param name="isPrivate">Hide this tournament from the public browsable index and your profile</param>
-            /// <param name="notifyUsersWhenMatchesOpen">Whether or not to email regisitered Challonge 
+            /// <param name="notifyUsersWhenMatchesOpen">Whether or not to email registered Challonge 
             /// participants when matches open up for them</param>
             /// <param name="notifyUsersWhenTournamentsEnds">Whether or not to email registered Challonge
             /// participants when this tournament ends</param>

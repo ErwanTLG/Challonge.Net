@@ -18,7 +18,7 @@ namespace Challonge
             internal MatchesHandler(string apiKey, HttpClient httpClient)
             {
                 _apiKey = apiKey;
-                    _httpClient = httpClient;
+                _httpClient = httpClient;
             }
 
             /// <summary>

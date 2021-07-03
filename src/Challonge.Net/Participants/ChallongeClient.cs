@@ -110,32 +110,41 @@ namespace Challonge
                     builder.Email, builder.Seed, builder.Misc);
             }
 
-            public async Task<Participant[]> CreateParticipantsAsync(string tournament, string[] names = null,
-                string[] challongeUsernames = null, int[] seeds = null, string[] miscs = null)
+            /// <summary>
+            /// Add participants to a tournament
+            /// </summary>
+            /// <param name="tournament">Tournament ID (e.g. 10230) or URL (e.g. 'single_elim' for 
+            /// challonge.com/single_elim). If assigned to a subdomain, URL format must be 
+            /// subdomain-tournament_url (e.g. 'test-mytourney' for test.challonge.com/mytourney)</param>
+            /// <param name="builders">The participants to add</param>
+            /// <remarks>
+            /// If an invalid participant is
+            /// detected, participants creation will halt and any previously added participants (from this
+            /// API request) will be rolled back.
+            /// </remarks>
+            /// <returns>The created participants</returns>
+            public async Task<Participant[]> CreateParticipantsAsync(string tournament, ParticipantBuilder[] builders)
             {
                 string request = $" https://api.challonge.com/v1/tournaments/{tournament}/participants/bulk_add.json";
-
+                
                 List<KeyValuePair<string, string>> parameters = new List<KeyValuePair<string, string>>
                 {
                     new KeyValuePair<string, string>("api_key", _apiKey)
                 };
 
-                for (int i = 0; i < names.Length; i++)
+                foreach (ParticipantBuilder builder in builders)
                 {
-                    if (names != null)
-                        parameters.Add(new KeyValuePair<string, string>("participants[][name]", names[i]));
+                    string name = builder.Name ?? "";
+                    string username = builder.ChallongeUsername ?? "";
+                    string seed = builder.Seed == null ? "" : builder.Seed.ToString();
+                    string misc = builder.Misc ?? "";
 
-                    if (challongeUsernames != null)
-                        parameters.Add(new KeyValuePair<string, string>("participants[][invite_name_or_email]",
-                            challongeUsernames[i]));
-
-                    if (seeds != null)
-                        parameters.Add(new KeyValuePair<string, string>("participants[][seed]", seeds[i].ToString()));
-
-                    if (miscs != null)
-                        parameters.Add(new KeyValuePair<string, string>("participants[][misc]", miscs[i]));
+                    parameters.Add(new KeyValuePair<string, string>("participants[][name]", name));
+                    parameters.Add(new KeyValuePair<string, string>("participants[][invite_name_or_email]", username));
+                    parameters.Add(new KeyValuePair<string, string>("participants[][seed]", seed));
+                    parameters.Add(new KeyValuePair<string, string>("participants[][misc]", misc));
                 }
-
+                
                 FormUrlEncodedContent content = new FormUrlEncodedContent(parameters);
                 ParticipantData[] participantDatas = await PostAsync<ParticipantData[]>(_httpClient, request, content);
 

@@ -193,7 +193,7 @@ namespace Challonge.Tournaments
         public bool QuickAdvance { get; set; }
 
         /// <summary>
-        /// For round robin and siss: how the participants are ranked
+        /// For round robin and swiss: how the participants are ranked
         /// </summary>
         [JsonPropertyName("ranked_by")]
         [JsonConverter(typeof(TournamentRankingStatsJsonConverter))]
@@ -206,28 +206,28 @@ namespace Challonge.Tournaments
         public bool RequireScoreAgreement { get; set; }
 
         /// <summary>
-        /// For round robin only: number of points gainded for a game tie
+        /// For round robin only: number of points gained for a game tie
         /// </summary>
         [JsonPropertyName("rr_pts_for_game_tie")]
         [JsonNumberHandling(JsonNumberHandling.AllowReadingFromString | JsonNumberHandling.WriteAsString)]
         public float RoundRobinPointsForGameTie { get; set; }
 
         /// <summary>
-        /// For round robin only: number of points gainded for a game win
+        /// For round robin only: number of points gained for a game win
         /// </summary>
         [JsonPropertyName("rr_pts_for_game_win")]
         [JsonNumberHandling(JsonNumberHandling.AllowReadingFromString | JsonNumberHandling.WriteAsString)]
         public float RoundRobinPointsForGameWin { get; set; }
 
         /// <summary>
-        /// For round robin only: number of points gainded for a match tie
+        /// For round robin only: number of points gained for a match tie
         /// </summary>
         [JsonPropertyName("rr_pts_for_match_tie")]
         [JsonNumberHandling(JsonNumberHandling.AllowReadingFromString | JsonNumberHandling.WriteAsString)]
         public float RoundRobinPointsForMatchTie { get; set; }
 
         /// <summary>
-        /// For round robin only: number of points gainded for a match win
+        /// For round robin only: number of points gained for a match win
         /// </summary>
         [JsonPropertyName("rr_pts_for_match_win")]
         [JsonNumberHandling(JsonNumberHandling.AllowReadingFromString | JsonNumberHandling.WriteAsString)]

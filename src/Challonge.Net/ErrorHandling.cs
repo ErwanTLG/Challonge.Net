@@ -18,7 +18,7 @@ namespace Challonge
         }
 
         /// <summary>
-        /// Checks if the request returned an error or not. If not, returns the content of the reponse.
+        /// Checks if the request returned an error or not. If not, returns the content of the response.
         /// </summary>
         /// <param name="response">Response to the http request</param>
         /// <returns>The content of the request if it was successful</returns>

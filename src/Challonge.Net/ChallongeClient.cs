@@ -10,10 +10,6 @@ namespace Challonge
 {
     public partial class ChallongeClient
     {
-        internal readonly string apiKey;
-
-        internal readonly HttpClient httpClient = new HttpClient();
-
         /// <summary>
         /// Tournaments API handler
         /// </summary>
@@ -33,8 +29,9 @@ namespace Challonge
 
         public ChallongeClient(string key)
         {
-            apiKey = key ?? throw new ArgumentNullException(nameof(key));
-
+            string apiKey = key ?? throw new ArgumentNullException(nameof(key));
+            HttpClient httpClient = new HttpClient();
+            
             Tournaments = new TournamentHandler(apiKey, httpClient);
             Participants = new ParticipantsHandler(apiKey, httpClient);
             Matches = new MatchesHandler(apiKey, httpClient);
@@ -43,9 +40,11 @@ namespace Challonge
 
         public ChallongeClient(string key, HttpClient httpClient)
         {
-            apiKey = key ?? throw new ArgumentNullException(nameof(key));
-            this.httpClient = httpClient ?? throw new ArgumentNullException(nameof(httpClient));
+            string apiKey = key ?? throw new ArgumentNullException(nameof(key));
 
+            if (httpClient == null)
+                throw new ArgumentNullException(nameof(httpClient));
+            
             Tournaments = new TournamentHandler(apiKey, httpClient);
             Participants = new ParticipantsHandler(apiKey, httpClient);
             Matches = new MatchesHandler(apiKey, httpClient);

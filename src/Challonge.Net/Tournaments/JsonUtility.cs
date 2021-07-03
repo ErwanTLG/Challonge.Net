@@ -53,7 +53,7 @@ namespace Challonge.Tournaments.Json
                 "single race" => TournamentType.SingleRace,
                 "grand prix" => TournamentType.GrandPrix,
                 "free for all" => TournamentType.FreeForAll,
-                _ => TournamentType.Invalid,
+                _ => TournamentType.Invalid
             };
         }
 
@@ -171,9 +171,9 @@ namespace Challonge.Tournaments.Json
         {
             writer.WriteStartArray("tie_breaks");
 
-            for (int i = 0; i < value.Length; i++)
+            foreach (TournamentTieBreak tieBreak in value)
             {
-                switch (value[i])
+                switch (tieBreak)
                 {
                     case TournamentTieBreak.MatchWins:
                         writer.WriteStringValue("match wins");
