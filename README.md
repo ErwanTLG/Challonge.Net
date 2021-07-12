@@ -3,6 +3,8 @@ Challonge.Net is an unofficial wrapper for the [Challonge!](https://challonge.co
 
 It uses modern async/await non blocking code.
 
+The documentation of this project is available [here](https://erwantlg.github.io/Challonge.Net/index.html) 
+
 # Quick start
 To start, you will need to create a ChallongeClient class. This class will allow you to make the api calls.
 ```csharp
