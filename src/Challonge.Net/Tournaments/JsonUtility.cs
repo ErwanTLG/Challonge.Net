@@ -232,4 +232,24 @@ namespace Challonge.Tournaments.Json
             }
         }
     }
+
+    // we use this class to convert Tournament.ParticipantsPerMatch, which can be an empty string sometimes, which 
+    // is not supported by the deserializer
+    internal class EmptyIntJsonConverter : JsonConverter<int?>
+    {
+        public override int? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+        {
+            string value = reader.GetString();
+
+            if (string.IsNullOrEmpty(value))
+                return null;
+
+            return int.Parse(value);
+        }
+
+        public override void Write(Utf8JsonWriter writer, int? value, JsonSerializerOptions options)
+        {
+            writer.WriteStringValue(value.ToString());
+        }
+    }
 }

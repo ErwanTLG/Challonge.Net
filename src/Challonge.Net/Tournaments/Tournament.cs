@@ -14,6 +14,12 @@ namespace Challonge.Tournaments
     public class Tournament
     {
         /// <summary>
+        /// Holds some information for races or free-for-all
+        /// </summary>
+        [JsonPropertyName("non_elimination_tournament_data")]
+        public NonEliminationTournamentData NonEliminationTournamentData { get; set; }
+        
+        /// <summary>
         /// Allow match attachment uploads
         /// </summary>
         [JsonPropertyName("accept_attachments")]
@@ -239,7 +245,7 @@ namespace Challonge.Tournaments
         /// then qualifying matches (if applicable)
         /// </summary>
         [JsonPropertyName("sequential_pairings")]
-        public bool SequentialPairing { get; set; }
+        public bool SequentialsPairing { get; set; }
 
         /// <summary>
         /// Label each round above the bracket (only works with single and double elimination brackets)
@@ -382,6 +388,34 @@ namespace Challonge.Tournaments
         [JsonPropertyName("grand_finals_modifier")]
         [JsonConverter(typeof(TournamentGrandFinalsJsonConverter))]
         public TournamentGrandFinals GrandFinalsModifier { get; set; }
+        
+        /// <summary>
+        /// For <see cref="TournamentType.GrandPrix"/>: number of races being played.
+        /// For <see cref="TournamentType.Swiss"/>: must be less than or equal to 3. 
+        /// </summary>
+        [JsonPropertyName("rr_iterations")]
+        [JsonNumberHandling(JsonNumberHandling.AllowReadingFromString | JsonNumberHandling.WriteAsString)]
+        public int? RoundRobinIterations { get; set; }
+    }
+
+    /// <summary>
+    /// Holds some information for races or free-for-all
+    /// </summary>
+    public class NonEliminationTournamentData
+    {
+        /// <summary>
+        /// For races only: the round being played
+        /// </summary>
+        [JsonPropertyName("current_round")]
+        [JsonNumberHandling(JsonNumberHandling.AllowReadingFromString | JsonNumberHandling.WriteAsString)]
+        public int? CurrentRound { get; set; }
+        
+        /// <summary>
+        /// For <see cref="TournamentType.FreeForAll"/> only: number of participants per match
+        /// </summary>
+        [JsonPropertyName("participants_per_match")]
+        [JsonConverter(typeof(EmptyIntJsonConverter))]
+        public int? ParticipantsPerMatch { get; set; }
     }
 
     public enum TournamentType

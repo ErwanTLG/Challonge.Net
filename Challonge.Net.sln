@@ -5,6 +5,8 @@ VisualStudioVersion = 16.0.30804.86
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Challonge.Net", "src\Challonge.Net\Challonge.Net.csproj", "{87CCB181-D7B2-4164-844B-7CC9C1196480}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests", "src\Tests\Tests.csproj", "{C0100345-E617-482B-8348-E4EBBB25D257}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{87CCB181-D7B2-4164-844B-7CC9C1196480}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{87CCB181-D7B2-4164-844B-7CC9C1196480}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{87CCB181-D7B2-4164-844B-7CC9C1196480}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C0100345-E617-482B-8348-E4EBBB25D257}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C0100345-E617-482B-8348-E4EBBB25D257}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C0100345-E617-482B-8348-E4EBBB25D257}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C0100345-E617-482B-8348-E4EBBB25D257}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

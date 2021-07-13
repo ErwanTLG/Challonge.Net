@@ -12,6 +12,7 @@ namespace Challonge.Tournaments
         /// <summary>
         /// Length of the participant check-in window in minutes
         /// </summary>
+        /// <remarks>Requires <see cref="StartAt"/> to be set.</remarks>
         public int? CheckInDuration { get; set; }
 
         /// <summary>
@@ -130,7 +131,7 @@ namespace Challonge.Tournaments
         /// Otherwise, an impossible pairing situation can be reached and your tournament may end before
         /// the desired number of rounds are played.
         /// </remarks>
-        public int? SwissRounds { get; set; }
+        public int SwissRounds { get; set; }
 
         /// <summary>
         /// The type of the tournament
@@ -143,6 +144,19 @@ namespace Challonge.Tournaments
         /// </summary>
         public string Url { get; set; }
 
+        // NON ELIMINATAI0N TOURNAMENT DATA
+        /// <summary>
+        /// For <see cref="TournamentType.FreeForAll"/> only: number of participants per match
+        /// </summary>
+        public int? ParticipantsPerMatch { get; set; }
+        
+        /// <summary>
+        /// For <see cref="TournamentType.GrandPrix"/>: number of races being played
+        /// </summary>
+        public int? RrIterations { get; set; }
+        
+        // TODO check if we can add current round
+        
         public TournamentBuilder() { }
         
         public TournamentBuilder(Tournament tournament)
@@ -159,15 +173,15 @@ namespace Challonge.Tournaments
             NotifyUsersWhenTournamentEnds = tournament.NotifyUsersWhenTournamentEnds;
             OpenSignup = tournament.OpenSignup;
             PointsForBye = tournament.PointsForBye;
-            RankedBy = RankedBy;
-            SequentialPairings = SequentialPairings;
-            SignupCap = SignupCap;
-            ShowRounds = ShowRounds;
-            StartAt = StartAt;
-            Subdomain = Subdomain;
-            SwissRounds = SwissRounds;
+            RankedBy = tournament.RankedBy;
+            SequentialPairings = tournament.SequentialsPairing;
+            SignupCap = tournament.SignupCap;
+            ShowRounds = tournament.ShowRounds;
+            StartAt = tournament.StartAt;
+            Subdomain = tournament.Subdomain;
+            SwissRounds = tournament.SwissRounds;
             TournamentType = tournament.TournamentType;
-            Url = Url;
+            Url = tournament.Url;
             
             if (tournament.TournamentType == TournamentType.RoundRobin)
             {
@@ -178,11 +192,15 @@ namespace Challonge.Tournaments
             }
             else
             {
-                PointsForGameTie = PointsForGameTie;
-                PointsForGameWin = PointsForGameWin;
                 PointsForMatchTie = PointsForMatchTie;
-                PointsForMatchWin = PointsForMatchWin;
+                PointsForGameTie = tournament.PointsForGameTie;
+                PointsForGameWin = tournament.PointsForGameWin;
+                PointsForMatchTie = tournament.PointsForMatchTie;
+                PointsForMatchWin = tournament.PointsForMatchWin;
             }
+
+            ParticipantsPerMatch = tournament.NonEliminationTournamentData.ParticipantsPerMatch;
+            RrIterations = tournament.RoundRobinIterations;
         }
         
         /// <summary>
@@ -217,17 +235,20 @@ namespace Challonge.Tournaments
                 RoundRobinPointsForMatchTie = PointsForMatchTie,
                 RoundRobinPointsForMatchWin = PointsForMatchWin,
                 RankedBy = RankedBy,
-                SequentialPairing = SequentialPairings,
+                SequentialsPairing = SequentialPairings,
                 SignupCap = SignupCap,
                 ShowRounds = ShowRounds,
                 StartAt = StartAt,
                 Subdomain = Subdomain,
+                SwissRounds = SwissRounds,
                 TournamentType = TournamentType,
-                Url = Url
+                Url = Url,
+                RoundRobinIterations = RrIterations
             };
 
-            if (SwissRounds != null)
-                tournament.SwissRounds = SwissRounds.Value;
+            if (ParticipantsPerMatch != null)
+                tournament.NonEliminationTournamentData = new NonEliminationTournamentData
+                    { ParticipantsPerMatch = ParticipantsPerMatch };
 
             return tournament;
         }
