@@ -1,3 +1,6 @@
+[![Challonge.Net on nuget.org](https://img.shields.io/nuget/vpre/Challonge.Net)](https://www.nuget.org/packages/Challonge.Net)
+[![Challonge.Net on fuget.org](https://www.fuget.org/packages/Challonge.Net/badge.svg)](https://www.fuget.org/packages/Challonge.Net)
+
 # Challonge.Net
 Challonge.Net is an unofficial wrapper for the [Challonge!](https://challonge.com/) [API](https://api.challonge.com/v1).
 
