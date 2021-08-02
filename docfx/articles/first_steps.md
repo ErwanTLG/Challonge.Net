@@ -24,7 +24,8 @@ class Program
 > code, your should rather use an external configuration file or environment variables.
 
 The code above creates a new [`ChallongeClient`](xref:Challonge.ChallongeClient). By default, it is instantiated with a new
-[`HttpClient`](https://docs.microsoft.com/en-us/dotnet/api/system.net.http.httpclient?view=net-5.0) class.
+[`HttpClient`](https://docs.microsoft.com/en-us/dotnet/api/system.net.http.httpclient?view=net-5.0) class, but you can 
+also construct it by passing your own `HttpClient`.
 
 ## Using the Api
 The api is divided into 4 parts:
@@ -35,3 +36,5 @@ The api is divided into 4 parts:
 
 > [!NOTE]
 > The Attachments api is incomplete due to server-side issues
+
+You can take a look at the [next section](xref:articles_basic_examples) to see some examples.

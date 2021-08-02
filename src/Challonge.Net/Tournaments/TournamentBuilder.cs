@@ -192,7 +192,6 @@ namespace Challonge.Tournaments
             }
             else
             {
-                PointsForMatchTie = PointsForMatchTie;
                 PointsForGameTie = tournament.PointsForGameTie;
                 PointsForGameWin = tournament.PointsForGameWin;
                 PointsForMatchTie = tournament.PointsForMatchTie;

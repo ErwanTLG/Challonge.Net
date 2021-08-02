@@ -69,7 +69,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Challonge.ChallongeClient.TournamentHandler.html",
-          "hash": "AUq0Ry9TZiMHZ815YzXaWmqCbyAFz1HXVg4u13dudCM="
+          "hash": "Y7rPpX3WbdMq49XFQw/0LoEvCNp1gkB+vIDP0g6UfX8="
         }
       },
       "is_incremental": true,
@@ -209,11 +209,23 @@
     },
     {
       "type": "ManagedReference",
+      "source_relative_path": "api/Challonge.Tournaments.NonEliminationTournamentData.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Challonge.Tournaments.NonEliminationTournamentData.html",
+          "hash": "dF46s/pzEiQctN07chT0NEpWHfdtrOj7I7oZJwP9xYs="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
       "source_relative_path": "api/Challonge.Tournaments.Tournament.yml",
       "output": {
         ".html": {
           "relative_path": "api/Challonge.Tournaments.Tournament.html",
-          "hash": "MdY0x+o1ERJIJD/+qp0x2SrgtQQeyWyo3WWWn+CBwYE="
+          "hash": "3FGQAqgvxtF0zmhpx3QKid2kx/Kwec4bXF1de/HQtOw="
         }
       },
       "is_incremental": true,
@@ -225,7 +237,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Challonge.Tournaments.TournamentBuilder.html",
-          "hash": "j6M/tjifjeaVcwT6XrVIyIyYq1SeaTuKkXYpGEOJ2p8="
+          "hash": "8FB2FfoKbomZaNjW78mGfW6kCiBZ0spE+jj1JTQiFD0="
         }
       },
       "is_incremental": true,
@@ -237,7 +249,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Challonge.Tournaments.TournamentGrandFinals.html",
-          "hash": "sTdXRtj6P3evhRJyHmFGf2XINerYuWxc2iTu/TKPXsw="
+          "hash": "frPTnxcfr38lxaMheScbv1+2e8mAsFPc4T+PQfp0GBw="
         }
       },
       "is_incremental": true,
@@ -249,7 +261,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Challonge.Tournaments.TournamentPredictionMethod.html",
-          "hash": "S295lAw3563vgcWuxcbHKgNW4gbU5emUzjNEQxByKMU="
+          "hash": "IOezfM+X9Nbl9yDyCBDjnfpmzkK7t6cJO77m95+kPKY="
         }
       },
       "is_incremental": true,
@@ -261,7 +273,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Challonge.Tournaments.TournamentRankingStats.html",
-          "hash": "h6NfcehpUIfmQkeP+sfs6o18jDKF1L7H7u8+RTqxOQs="
+          "hash": "xQqrnYWYAI5/Ih851PovkgZQ7WYnIWgKqZ2PGLruNu0="
         }
       },
       "is_incremental": true,
@@ -273,7 +285,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Challonge.Tournaments.TournamentState.html",
-          "hash": "EV0BAEtI86ZeQ6TlKjFh4tTkHZ+gaa1xW2eFVeY2dtc="
+          "hash": "yVjnFqTBhXNE4SMkF+I+/1zL74Zwb2aXl6jWmhAqcXQ="
         }
       },
       "is_incremental": true,
@@ -285,7 +297,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Challonge.Tournaments.TournamentTieBreak.html",
-          "hash": "IPPMBqq0VqvAxd+3DMC1AMqkjH1RYqAGG0aKA6Hay18="
+          "hash": "/Wt7hJ2gqZS01JG9nolobKcTb1Qxq8nT4mQnQ8lodxY="
         }
       },
       "is_incremental": true,
@@ -297,7 +309,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Challonge.Tournaments.TournamentType.html",
-          "hash": "tWGqomwtoaLmh/ea4v8iM1pRQiClW91lOS0OM1GZn4E="
+          "hash": "3UbUKYNA+Tg0Y+z+gKu+k8iWyCP61pCHWh1Sogc6DVQ="
         }
       },
       "is_incremental": true,
@@ -309,7 +321,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Challonge.Tournaments.html",
-          "hash": "XBFZ+yDXgLnqWJcLYGJYGTvdAVb/rt/hPn49zg5B564="
+          "hash": "Z5IU/RzZrjzk3a52ttlZwlTksdMSGIlymsmwXwN0z0Q="
         }
       },
       "is_incremental": true,
@@ -345,7 +357,19 @@
       "output": {
         ".html": {
           "relative_path": "api/toc.html",
-          "hash": "Ii+xrihD/wkV9GwCFnCrhIPx8YXZuCtRRQLo3QJa1Gs="
+          "hash": "kC6Ejwen7voLc7k+rpEoMSzezJPogUgeyNw0H4j4BNo="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "articles/basic_examples.md",
+      "output": {
+        ".html": {
+          "relative_path": "articles/basic_examples.html",
+          "hash": "GmxvukiNDnzjU1EhPa6Gg+Pe/+r6HR3WEaCGIUqaGrk="
         }
       },
       "is_incremental": false,
@@ -357,7 +381,7 @@
       "output": {
         ".html": {
           "relative_path": "articles/first_steps.html",
-          "hash": "kCRA+9TDftw36DlvlKBT89pgIGcSFGArfJQED3m0cPk="
+          "hash": "5wNKnsgDwDPPhnj89frTFgfoSsjr1IaEYmoJwHUdfI0="
         }
       },
       "is_incremental": false,
@@ -372,7 +396,7 @@
           "hash": "2lfDWy9qe7T12mGXFHmwAt37mvuBsUthlzJL37AtYmM="
         }
       },
-      "is_incremental": false,
+      "is_incremental": true,
       "version": ""
     },
     {
@@ -381,7 +405,7 @@
       "output": {
         ".html": {
           "relative_path": "articles/toc.html",
-          "hash": "rfDYSv7zbAGvN+EMNJhlyWGKjIHGEdH+b/bQiW1W+ZI="
+          "hash": "bs9DKmX0xsdiW/1/VR+lRCLa88cyNZbGc/wcVj1STLc="
         }
       },
       "is_incremental": false,
@@ -393,7 +417,7 @@
       "output": {
         ".html": {
           "relative_path": "index.html",
-          "hash": "9mr1cnUNlI0vbx/ZD08K4qyx0z3k3Y3j7QsVNEYzjjA="
+          "hash": "Hjwyz5jeYzbhhlh/ajPX/7d782soK0IQVlI2r3kM/8w="
         }
       },
       "is_incremental": false,
@@ -424,14 +448,14 @@
         "ConceptualDocumentProcessor": {
           "can_incremental": true,
           "incrementalPhase": "build",
-          "total_file_count": 4,
-          "skipped_file_count": 3
+          "total_file_count": 5,
+          "skipped_file_count": 4
         },
         "ManagedReferenceDocumentProcessor": {
           "can_incremental": true,
           "incrementalPhase": "build",
-          "total_file_count": 27,
-          "skipped_file_count": 27
+          "total_file_count": 28,
+          "skipped_file_count": 28
         },
         "TocDocumentProcessor": {
           "can_incremental": false,

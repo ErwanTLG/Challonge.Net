@@ -35,10 +35,8 @@ namespace Tests
                     }
                     else if (expectedValue != actualValue) 
                         // if both are != null (which means that one is null and the other not)
-                    {
                         Assert.Fail($"Property {property.DeclaringType}.{property.Name} does not match. " +
                                     $"Expected: {expectedValue} but was: {actualValue}");
-                    }
                 }
                 else if (!Equals(expectedValue, actualValue))
                     Assert.Fail($"Property {property.DeclaringType}.{property.Name} does not match. " +

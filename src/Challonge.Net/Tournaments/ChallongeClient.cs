@@ -178,14 +178,14 @@ namespace Challonge
 
                 parameters["tournament[sequential_pairings]"] = sequentialPairings.ToString().ToLower();
 
-                if (signupCap != null)
-                    parameters["tournament[signup_cap]"] = signupCap.Value.ToString();
+                parameters["tournament[signup_cap]"] = signupCap.ToString();
 
                 if (startAt != null)
                     parameters["tournament[start_at]"] = startAt.Value.ToString("yyyy'-'MM'-'dd'T'HH':'mm':'ss'.'fffzzz");
-
-                if (checkInDuration != null)
-                    parameters["tournament[check_in_duration]"] = checkInDuration.Value.ToString();
+                else
+                    parameters["tournament[start_at]"] = null;
+                
+                parameters["tournament[check_in_duration]"] = checkInDuration.ToString();
 
                 parameters["tournament[grand_finals_modifier]"] = grandFinalsModifier switch
                 {
@@ -195,11 +195,9 @@ namespace Challonge
                     _ => parameters["tournament[grand_finals_modifier]"]
                 };
 
-                if (participantsPerMatch != null)
-                    parameters["tournament[non_elimination_tournament_data][participants_per_match]"] = participantsPerMatch.Value.ToString();
+                parameters["tournament[non_elimination_tournament_data][participants_per_match]"] = participantsPerMatch.ToString();
 
-                if (rrIterations != null)
-                    parameters["tournament[rr_iterations]"] = rrIterations.Value.ToString();
+                parameters["tournament[rr_iterations]"] = rrIterations.ToString();
                 
                 return parameters;
             }

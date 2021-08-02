@@ -6,7 +6,7 @@
           "files": [
             "**.csproj"
           ],
-          "src": "../src"
+          "src": "../src/Challonge.Net/"
         }
       ],
       "dest": "api",

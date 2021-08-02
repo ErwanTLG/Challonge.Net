@@ -1,0 +1,231 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Basic examples </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Basic examples ">
+    <meta name="generator" content="docfx 2.58.0.0">
+    
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="articles_basic_examples">
+<h1 id="basic-examples">Basic examples</h1>
+
+<h2 id="setting-up-the-client">Setting up the client</h2>
+<pre><code class="lang-c#">using Challonge;
+
+class Program
+{
+    static void Main(string[] args)
+    {
+        ChallongeClient client = new ChallongeClient(&quot;YOUR API KEY HERE&quot;);
+    }
+}
+</code></pre>
+<hr>
+<h2 id="creating-a-tournament">Creating a tournament</h2>
+<p>Add the following using statement to the previous code:</p>
+<pre><code class="lang-c#">using Challonge.Tournaments;
+</code></pre>
+<p>Now inside the <code>Main</code> method, add the following lines:</p>
+<div class="tabGroup" id="tabgroup_bHGHmlrG6S">
+<ul role="tablist">
+<li role="presentation">
+<a href="#tabpanel_bHGHmlrG6S_tournamentBuilder" role="tab" aria-controls="tabpanel_bHGHmlrG6S_tournamentBuilder" data-tab="tournamentBuilder" tabindex="0" aria-selected="true">using TournamentBuilder</a>
+</li>
+<li role="presentation">
+<a href="#tabpanel_bHGHmlrG6S_optionalParams" role="tab" aria-controls="tabpanel_bHGHmlrG6S_optionalParams" data-tab="optionalParams" tabindex="-1">using optional method params</a>
+</li>
+</ul>
+<section id="tabpanel_bHGHmlrG6S_tournamentBuilder" role="tabpanel" data-tab="tournamentBuilder">
+
+<pre><code class="lang-c#">// We set the properties of the tournament we want to create
+TournamentBuilder builder = new TournamentBuilder { Name = &quot;MyTournament&quot; };
+// We then create the tournament using the properties we previously set
+client.Tournaments.CreateTournamentAsync(builder).ConfigureAwait(false);
+</code></pre>
+</section>
+<section id="tabpanel_bHGHmlrG6S_optionalParams" role="tabpanel" data-tab="optionalParams" aria-hidden="true" hidden="hidden">
+
+<pre><code class="lang-c#">// We create the tournament
+client.Tournaments.CreateTournamentAsync(&quot;MyTournament&quot;).ConfigureAwait(false);
+</code></pre>
+</section>
+</div>
+
+<div class="TIP">
+<h5>Tip</h5>
+<p>The methods provided by the<code>ChallongeClient</code> are all <code>async</code>.
+You can take advantage of this by using the <code>await</code> keyword before the method call.
+More information about this is available <a href="https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/concepts/async/">here</a>.</p>
+</div>
+<p>This will create a tournament named <em>MyTournament</em> on your Challonge! account.
+You can further customize the created tournament using the
+<a class="xref" href="../api/Challonge.Tournaments.TournamentBuilder.html"><code>TournamentBuilder</code>'s properties</a>
+or the optional parameters of the <code>CreateTournamentAsync</code> method.</p>
+<p>Let's update some of the tournament's properties.</p>
+<hr>
+<h2 id="updating-a-tournament">Updating a tournament</h2>
+<p>First of all, we need to retrieve the tournament we previously created. Change the last line of
+the code you added in the previous step :</p>
+<div class="tabGroup" id="tabgroup_bHGHmlrG6S-1">
+<ul role="tablist">
+<li role="presentation">
+<a href="#tabpanel_bHGHmlrG6S-1_tournamentBuilder" role="tab" aria-controls="tabpanel_bHGHmlrG6S-1_tournamentBuilder" data-tab="tournamentBuilder" tabindex="0" aria-selected="true">using TournamentBuilder</a>
+</li>
+<li role="presentation">
+<a href="#tabpanel_bHGHmlrG6S-1_optionalParams" role="tab" aria-controls="tabpanel_bHGHmlrG6S-1_optionalParams" data-tab="optionalParams" tabindex="-1">using optional method params</a>
+</li>
+</ul>
+<section id="tabpanel_bHGHmlrG6S-1_tournamentBuilder" role="tabpanel" data-tab="tournamentBuilder">
+
+<pre><code class="lang-c#">// Replace the last line of the previous step by this one
+Tournament tournament = client.Tournaments.CreateTournamentAsync(builder).Result;
+</code></pre>
+</section>
+<section id="tabpanel_bHGHmlrG6S-1_optionalParams" role="tabpanel" data-tab="optionalParams" aria-hidden="true" hidden="hidden">
+
+<pre><code class="lang-c#">// Replace the last line of the previous step by this one
+Tournament tournament = client.Tournaments.CreateTournamentAsync(&quot;MyTournament&quot;).Result;
+</code></pre>
+</section>
+</div>
+
+<p>Now we can update the created tournament. Let's change its name, type, and give it
+a custom url:</p>
+<p>Add the following lines to your code:</p>
+<div class="tabGroup" id="tabgroup_bHGHmlrG6S-2">
+<ul role="tablist">
+<li role="presentation">
+<a href="#tabpanel_bHGHmlrG6S-2_tournamentBuilder" role="tab" aria-controls="tabpanel_bHGHmlrG6S-2_tournamentBuilder" data-tab="tournamentBuilder" tabindex="0" aria-selected="true">using TournamentBuilder</a>
+</li>
+<li role="presentation">
+<a href="#tabpanel_bHGHmlrG6S-2_optionalParams" role="tab" aria-controls="tabpanel_bHGHmlrG6S-2_optionalParams" data-tab="optionalParams" tabindex="-1">using optional method params</a>
+</li>
+</ul>
+<section id="tabpanel_bHGHmlrG6S-2_tournamentBuilder" role="tabpanel" data-tab="tournamentBuilder">
+
+<pre><code class="lang-c#">// We create a new builder based on the created tournament, and update its properties.
+TournamentBuilder updater = new TournamentBuilder(tournament)
+{ Name = &quot;Updated tournament&quot;, Url = &quot;new_url&quot;, TournamentType = TournamentType.DoubleElimination };
+// Finally we update the tournament
+client.Tournaments.UpdateTournamentAsync(tournament.Url, updater).ConfigureAwait(false);
+</code></pre>
+</section>
+<section id="tabpanel_bHGHmlrG6S-2_optionalParams" role="tabpanel" data-tab="optionalParams" aria-hidden="true" hidden="hidden">
+
+<pre><code class="lang-c#">// We update the tournament
+client.Tournaments.UpdateTournamentAsync(tournament.Url, name: &quot;Updated tournament&quot;, url: &quot;new_url&quot;, type: TournamentType.DoubleElimination).ConfigureAwait(false); 
+</code></pre>
+</section>
+</div>
+
+<div class="TIP">
+<h5>Tip</h5>
+<p>As you can see, using the optional parameters results in fewer lines of code.
+However, we recommend using the TournamentBuilder instead, because it makes your
+easier to understand when using lots of parameters, and it might be more bug proof
+(both should have the same behaviour, but you never know).</p>
+</div>
+<h2 id="working-with-matches-and-participants">Working with matches and participants</h2>
+<p>The Matches and the Participants api work the same way as described here.
+If you have some questions about anything related to Challonge.Net, please
+visit <a href="https://github.com/ErwanTLG/Challonge.Net/discussions">our discussions tab on GitHub</a>.</p>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/ErwanTLG/Challonge.Net/blob/master/docfx/articles/basic_examples.md/#L1" class="contribution-link">Improve this Doc</a>
+                  </li>
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+                <h5>In This Article</h5>
+                <div></div>
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            
+            <span>Generated by <strong>DocFX</strong></span>
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

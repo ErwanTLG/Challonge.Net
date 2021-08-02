@@ -1,6 +1,9 @@
 ### YamlMime:XRefMap
 sorted: true
 references:
+- uid: articles_basic_examples
+  name: Basic examples
+  href: articles/basic_examples.html
 - uid: articles_first_steps
   name: First Steps
   href: articles/first_steps.html
@@ -633,15 +636,15 @@ references:
   commentId: M:Challonge.ChallongeClient.TournamentHandler.CreateTournamentAsync(Challonge.Tournaments.TournamentBuilder)
   fullName: Challonge.ChallongeClient.TournamentHandler.CreateTournamentAsync(Challonge.Tournaments.TournamentBuilder)
   nameWithType: ChallongeClient.TournamentHandler.CreateTournamentAsync(TournamentBuilder)
-- uid: Challonge.ChallongeClient.TournamentHandler.CreateTournamentAsync(System.String,System.String,Challonge.Tournaments.TournamentType,System.String,System.String,System.Boolean,System.Boolean,System.Single,System.Single,System.Single,System.Single,System.Single,System.Nullable{System.Int32},Challonge.Tournaments.TournamentRankingStats,System.Boolean,System.Boolean,System.Boolean,System.Boolean,System.Boolean,System.Boolean,System.Boolean,System.Nullable{System.Int32},System.Nullable{System.DateTimeOffset},System.Nullable{System.Int32},Challonge.Tournaments.TournamentGrandFinals)
-  name: CreateTournamentAsync(String, String, TournamentType, String, String, Boolean, Boolean, Single, Single, Single, Single, Single, Nullable<Int32>, TournamentRankingStats, Boolean, Boolean, Boolean, Boolean, Boolean, Boolean, Boolean, Nullable<Int32>, Nullable<DateTimeOffset>, Nullable<Int32>, TournamentGrandFinals)
-  href: api/Challonge.ChallongeClient.TournamentHandler.html#Challonge_ChallongeClient_TournamentHandler_CreateTournamentAsync_System_String_System_String_Challonge_Tournaments_TournamentType_System_String_System_String_System_Boolean_System_Boolean_System_Single_System_Single_System_Single_System_Single_System_Single_System_Nullable_System_Int32__Challonge_Tournaments_TournamentRankingStats_System_Boolean_System_Boolean_System_Boolean_System_Boolean_System_Boolean_System_Boolean_System_Boolean_System_Nullable_System_Int32__System_Nullable_System_DateTimeOffset__System_Nullable_System_Int32__Challonge_Tournaments_TournamentGrandFinals_
-  commentId: M:Challonge.ChallongeClient.TournamentHandler.CreateTournamentAsync(System.String,System.String,Challonge.Tournaments.TournamentType,System.String,System.String,System.Boolean,System.Boolean,System.Single,System.Single,System.Single,System.Single,System.Single,System.Nullable{System.Int32},Challonge.Tournaments.TournamentRankingStats,System.Boolean,System.Boolean,System.Boolean,System.Boolean,System.Boolean,System.Boolean,System.Boolean,System.Nullable{System.Int32},System.Nullable{System.DateTimeOffset},System.Nullable{System.Int32},Challonge.Tournaments.TournamentGrandFinals)
-  name.vb: CreateTournamentAsync(String, String, TournamentType, String, String, Boolean, Boolean, Single, Single, Single, Single, Single, Nullable(Of Int32), TournamentRankingStats, Boolean, Boolean, Boolean, Boolean, Boolean, Boolean, Boolean, Nullable(Of Int32), Nullable(Of DateTimeOffset), Nullable(Of Int32), TournamentGrandFinals)
-  fullName: Challonge.ChallongeClient.TournamentHandler.CreateTournamentAsync(System.String, System.String, Challonge.Tournaments.TournamentType, System.String, System.String, System.Boolean, System.Boolean, System.Single, System.Single, System.Single, System.Single, System.Single, System.Nullable<System.Int32>, Challonge.Tournaments.TournamentRankingStats, System.Boolean, System.Boolean, System.Boolean, System.Boolean, System.Boolean, System.Boolean, System.Boolean, System.Nullable<System.Int32>, System.Nullable<System.DateTimeOffset>, System.Nullable<System.Int32>, Challonge.Tournaments.TournamentGrandFinals)
-  fullName.vb: Challonge.ChallongeClient.TournamentHandler.CreateTournamentAsync(System.String, System.String, Challonge.Tournaments.TournamentType, System.String, System.String, System.Boolean, System.Boolean, System.Single, System.Single, System.Single, System.Single, System.Single, System.Nullable(Of System.Int32), Challonge.Tournaments.TournamentRankingStats, System.Boolean, System.Boolean, System.Boolean, System.Boolean, System.Boolean, System.Boolean, System.Boolean, System.Nullable(Of System.Int32), System.Nullable(Of System.DateTimeOffset), System.Nullable(Of System.Int32), Challonge.Tournaments.TournamentGrandFinals)
-  nameWithType: ChallongeClient.TournamentHandler.CreateTournamentAsync(String, String, TournamentType, String, String, Boolean, Boolean, Single, Single, Single, Single, Single, Nullable<Int32>, TournamentRankingStats, Boolean, Boolean, Boolean, Boolean, Boolean, Boolean, Boolean, Nullable<Int32>, Nullable<DateTimeOffset>, Nullable<Int32>, TournamentGrandFinals)
-  nameWithType.vb: ChallongeClient.TournamentHandler.CreateTournamentAsync(String, String, TournamentType, String, String, Boolean, Boolean, Single, Single, Single, Single, Single, Nullable(Of Int32), TournamentRankingStats, Boolean, Boolean, Boolean, Boolean, Boolean, Boolean, Boolean, Nullable(Of Int32), Nullable(Of DateTimeOffset), Nullable(Of Int32), TournamentGrandFinals)
+- uid: Challonge.ChallongeClient.TournamentHandler.CreateTournamentAsync(System.String,System.String,Challonge.Tournaments.TournamentType,System.String,System.String,System.Boolean,System.Boolean,System.Single,System.Single,System.Single,System.Single,System.Single,System.Int32,Challonge.Tournaments.TournamentRankingStats,System.Boolean,System.Boolean,System.Boolean,System.Boolean,System.Boolean,System.Boolean,System.Boolean,System.Nullable{System.Int32},System.Nullable{System.DateTimeOffset},System.Nullable{System.Int32},Challonge.Tournaments.TournamentGrandFinals,System.Nullable{System.Int32},System.Nullable{System.Int32})
+  name: CreateTournamentAsync(String, String, TournamentType, String, String, Boolean, Boolean, Single, Single, Single, Single, Single, Int32, TournamentRankingStats, Boolean, Boolean, Boolean, Boolean, Boolean, Boolean, Boolean, Nullable<Int32>, Nullable<DateTimeOffset>, Nullable<Int32>, TournamentGrandFinals, Nullable<Int32>, Nullable<Int32>)
+  href: api/Challonge.ChallongeClient.TournamentHandler.html#Challonge_ChallongeClient_TournamentHandler_CreateTournamentAsync_System_String_System_String_Challonge_Tournaments_TournamentType_System_String_System_String_System_Boolean_System_Boolean_System_Single_System_Single_System_Single_System_Single_System_Single_System_Int32_Challonge_Tournaments_TournamentRankingStats_System_Boolean_System_Boolean_System_Boolean_System_Boolean_System_Boolean_System_Boolean_System_Boolean_System_Nullable_System_Int32__System_Nullable_System_DateTimeOffset__System_Nullable_System_Int32__Challonge_Tournaments_TournamentGrandFinals_System_Nullable_System_Int32__System_Nullable_System_Int32__
+  commentId: M:Challonge.ChallongeClient.TournamentHandler.CreateTournamentAsync(System.String,System.String,Challonge.Tournaments.TournamentType,System.String,System.String,System.Boolean,System.Boolean,System.Single,System.Single,System.Single,System.Single,System.Single,System.Int32,Challonge.Tournaments.TournamentRankingStats,System.Boolean,System.Boolean,System.Boolean,System.Boolean,System.Boolean,System.Boolean,System.Boolean,System.Nullable{System.Int32},System.Nullable{System.DateTimeOffset},System.Nullable{System.Int32},Challonge.Tournaments.TournamentGrandFinals,System.Nullable{System.Int32},System.Nullable{System.Int32})
+  name.vb: CreateTournamentAsync(String, String, TournamentType, String, String, Boolean, Boolean, Single, Single, Single, Single, Single, Int32, TournamentRankingStats, Boolean, Boolean, Boolean, Boolean, Boolean, Boolean, Boolean, Nullable(Of Int32), Nullable(Of DateTimeOffset), Nullable(Of Int32), TournamentGrandFinals, Nullable(Of Int32), Nullable(Of Int32))
+  fullName: Challonge.ChallongeClient.TournamentHandler.CreateTournamentAsync(System.String, System.String, Challonge.Tournaments.TournamentType, System.String, System.String, System.Boolean, System.Boolean, System.Single, System.Single, System.Single, System.Single, System.Single, System.Int32, Challonge.Tournaments.TournamentRankingStats, System.Boolean, System.Boolean, System.Boolean, System.Boolean, System.Boolean, System.Boolean, System.Boolean, System.Nullable<System.Int32>, System.Nullable<System.DateTimeOffset>, System.Nullable<System.Int32>, Challonge.Tournaments.TournamentGrandFinals, System.Nullable<System.Int32>, System.Nullable<System.Int32>)
+  fullName.vb: Challonge.ChallongeClient.TournamentHandler.CreateTournamentAsync(System.String, System.String, Challonge.Tournaments.TournamentType, System.String, System.String, System.Boolean, System.Boolean, System.Single, System.Single, System.Single, System.Single, System.Single, System.Int32, Challonge.Tournaments.TournamentRankingStats, System.Boolean, System.Boolean, System.Boolean, System.Boolean, System.Boolean, System.Boolean, System.Boolean, System.Nullable(Of System.Int32), System.Nullable(Of System.DateTimeOffset), System.Nullable(Of System.Int32), Challonge.Tournaments.TournamentGrandFinals, System.Nullable(Of System.Int32), System.Nullable(Of System.Int32))
+  nameWithType: ChallongeClient.TournamentHandler.CreateTournamentAsync(String, String, TournamentType, String, String, Boolean, Boolean, Single, Single, Single, Single, Single, Int32, TournamentRankingStats, Boolean, Boolean, Boolean, Boolean, Boolean, Boolean, Boolean, Nullable<Int32>, Nullable<DateTimeOffset>, Nullable<Int32>, TournamentGrandFinals, Nullable<Int32>, Nullable<Int32>)
+  nameWithType.vb: ChallongeClient.TournamentHandler.CreateTournamentAsync(String, String, TournamentType, String, String, Boolean, Boolean, Single, Single, Single, Single, Single, Int32, TournamentRankingStats, Boolean, Boolean, Boolean, Boolean, Boolean, Boolean, Boolean, Nullable(Of Int32), Nullable(Of DateTimeOffset), Nullable(Of Int32), TournamentGrandFinals, Nullable(Of Int32), Nullable(Of Int32))
 - uid: Challonge.ChallongeClient.TournamentHandler.CreateTournamentAsync*
   name: CreateTournamentAsync
   href: api/Challonge.ChallongeClient.TournamentHandler.html#Challonge_ChallongeClient_TournamentHandler_CreateTournamentAsync_
@@ -762,15 +765,15 @@ references:
   commentId: M:Challonge.ChallongeClient.TournamentHandler.UpdateTournamentAsync(System.String,Challonge.Tournaments.TournamentBuilder)
   fullName: Challonge.ChallongeClient.TournamentHandler.UpdateTournamentAsync(System.String, Challonge.Tournaments.TournamentBuilder)
   nameWithType: ChallongeClient.TournamentHandler.UpdateTournamentAsync(String, TournamentBuilder)
-- uid: Challonge.ChallongeClient.TournamentHandler.UpdateTournamentAsync(System.String,System.String,System.String,Challonge.Tournaments.TournamentType,System.String,System.String,System.Boolean,System.Boolean,System.Single,System.Single,System.Single,System.Single,System.Single,System.Nullable{System.Int32},Challonge.Tournaments.TournamentRankingStats,System.Boolean,System.Boolean,System.Boolean,System.Boolean,System.Boolean,System.Boolean,System.Boolean,System.Nullable{System.Int32},System.Nullable{System.DateTimeOffset},System.Nullable{System.Int32},Challonge.Tournaments.TournamentGrandFinals)
-  name: UpdateTournamentAsync(String, String, String, TournamentType, String, String, Boolean, Boolean, Single, Single, Single, Single, Single, Nullable<Int32>, TournamentRankingStats, Boolean, Boolean, Boolean, Boolean, Boolean, Boolean, Boolean, Nullable<Int32>, Nullable<DateTimeOffset>, Nullable<Int32>, TournamentGrandFinals)
-  href: api/Challonge.ChallongeClient.TournamentHandler.html#Challonge_ChallongeClient_TournamentHandler_UpdateTournamentAsync_System_String_System_String_System_String_Challonge_Tournaments_TournamentType_System_String_System_String_System_Boolean_System_Boolean_System_Single_System_Single_System_Single_System_Single_System_Single_System_Nullable_System_Int32__Challonge_Tournaments_TournamentRankingStats_System_Boolean_System_Boolean_System_Boolean_System_Boolean_System_Boolean_System_Boolean_System_Boolean_System_Nullable_System_Int32__System_Nullable_System_DateTimeOffset__System_Nullable_System_Int32__Challonge_Tournaments_TournamentGrandFinals_
-  commentId: M:Challonge.ChallongeClient.TournamentHandler.UpdateTournamentAsync(System.String,System.String,System.String,Challonge.Tournaments.TournamentType,System.String,System.String,System.Boolean,System.Boolean,System.Single,System.Single,System.Single,System.Single,System.Single,System.Nullable{System.Int32},Challonge.Tournaments.TournamentRankingStats,System.Boolean,System.Boolean,System.Boolean,System.Boolean,System.Boolean,System.Boolean,System.Boolean,System.Nullable{System.Int32},System.Nullable{System.DateTimeOffset},System.Nullable{System.Int32},Challonge.Tournaments.TournamentGrandFinals)
-  name.vb: UpdateTournamentAsync(String, String, String, TournamentType, String, String, Boolean, Boolean, Single, Single, Single, Single, Single, Nullable(Of Int32), TournamentRankingStats, Boolean, Boolean, Boolean, Boolean, Boolean, Boolean, Boolean, Nullable(Of Int32), Nullable(Of DateTimeOffset), Nullable(Of Int32), TournamentGrandFinals)
-  fullName: Challonge.ChallongeClient.TournamentHandler.UpdateTournamentAsync(System.String, System.String, System.String, Challonge.Tournaments.TournamentType, System.String, System.String, System.Boolean, System.Boolean, System.Single, System.Single, System.Single, System.Single, System.Single, System.Nullable<System.Int32>, Challonge.Tournaments.TournamentRankingStats, System.Boolean, System.Boolean, System.Boolean, System.Boolean, System.Boolean, System.Boolean, System.Boolean, System.Nullable<System.Int32>, System.Nullable<System.DateTimeOffset>, System.Nullable<System.Int32>, Challonge.Tournaments.TournamentGrandFinals)
-  fullName.vb: Challonge.ChallongeClient.TournamentHandler.UpdateTournamentAsync(System.String, System.String, System.String, Challonge.Tournaments.TournamentType, System.String, System.String, System.Boolean, System.Boolean, System.Single, System.Single, System.Single, System.Single, System.Single, System.Nullable(Of System.Int32), Challonge.Tournaments.TournamentRankingStats, System.Boolean, System.Boolean, System.Boolean, System.Boolean, System.Boolean, System.Boolean, System.Boolean, System.Nullable(Of System.Int32), System.Nullable(Of System.DateTimeOffset), System.Nullable(Of System.Int32), Challonge.Tournaments.TournamentGrandFinals)
-  nameWithType: ChallongeClient.TournamentHandler.UpdateTournamentAsync(String, String, String, TournamentType, String, String, Boolean, Boolean, Single, Single, Single, Single, Single, Nullable<Int32>, TournamentRankingStats, Boolean, Boolean, Boolean, Boolean, Boolean, Boolean, Boolean, Nullable<Int32>, Nullable<DateTimeOffset>, Nullable<Int32>, TournamentGrandFinals)
-  nameWithType.vb: ChallongeClient.TournamentHandler.UpdateTournamentAsync(String, String, String, TournamentType, String, String, Boolean, Boolean, Single, Single, Single, Single, Single, Nullable(Of Int32), TournamentRankingStats, Boolean, Boolean, Boolean, Boolean, Boolean, Boolean, Boolean, Nullable(Of Int32), Nullable(Of DateTimeOffset), Nullable(Of Int32), TournamentGrandFinals)
+- uid: Challonge.ChallongeClient.TournamentHandler.UpdateTournamentAsync(System.String,System.String,System.String,Challonge.Tournaments.TournamentType,System.String,System.String,System.Boolean,System.Boolean,System.Single,System.Single,System.Single,System.Single,System.Single,System.Int32,Challonge.Tournaments.TournamentRankingStats,System.Boolean,System.Boolean,System.Boolean,System.Boolean,System.Boolean,System.Boolean,System.Boolean,System.Nullable{System.Int32},System.Nullable{System.DateTimeOffset},System.Nullable{System.Int32},Challonge.Tournaments.TournamentGrandFinals,System.Nullable{System.Int32},System.Nullable{System.Int32})
+  name: UpdateTournamentAsync(String, String, String, TournamentType, String, String, Boolean, Boolean, Single, Single, Single, Single, Single, Int32, TournamentRankingStats, Boolean, Boolean, Boolean, Boolean, Boolean, Boolean, Boolean, Nullable<Int32>, Nullable<DateTimeOffset>, Nullable<Int32>, TournamentGrandFinals, Nullable<Int32>, Nullable<Int32>)
+  href: api/Challonge.ChallongeClient.TournamentHandler.html#Challonge_ChallongeClient_TournamentHandler_UpdateTournamentAsync_System_String_System_String_System_String_Challonge_Tournaments_TournamentType_System_String_System_String_System_Boolean_System_Boolean_System_Single_System_Single_System_Single_System_Single_System_Single_System_Int32_Challonge_Tournaments_TournamentRankingStats_System_Boolean_System_Boolean_System_Boolean_System_Boolean_System_Boolean_System_Boolean_System_Boolean_System_Nullable_System_Int32__System_Nullable_System_DateTimeOffset__System_Nullable_System_Int32__Challonge_Tournaments_TournamentGrandFinals_System_Nullable_System_Int32__System_Nullable_System_Int32__
+  commentId: M:Challonge.ChallongeClient.TournamentHandler.UpdateTournamentAsync(System.String,System.String,System.String,Challonge.Tournaments.TournamentType,System.String,System.String,System.Boolean,System.Boolean,System.Single,System.Single,System.Single,System.Single,System.Single,System.Int32,Challonge.Tournaments.TournamentRankingStats,System.Boolean,System.Boolean,System.Boolean,System.Boolean,System.Boolean,System.Boolean,System.Boolean,System.Nullable{System.Int32},System.Nullable{System.DateTimeOffset},System.Nullable{System.Int32},Challonge.Tournaments.TournamentGrandFinals,System.Nullable{System.Int32},System.Nullable{System.Int32})
+  name.vb: UpdateTournamentAsync(String, String, String, TournamentType, String, String, Boolean, Boolean, Single, Single, Single, Single, Single, Int32, TournamentRankingStats, Boolean, Boolean, Boolean, Boolean, Boolean, Boolean, Boolean, Nullable(Of Int32), Nullable(Of DateTimeOffset), Nullable(Of Int32), TournamentGrandFinals, Nullable(Of Int32), Nullable(Of Int32))
+  fullName: Challonge.ChallongeClient.TournamentHandler.UpdateTournamentAsync(System.String, System.String, System.String, Challonge.Tournaments.TournamentType, System.String, System.String, System.Boolean, System.Boolean, System.Single, System.Single, System.Single, System.Single, System.Single, System.Int32, Challonge.Tournaments.TournamentRankingStats, System.Boolean, System.Boolean, System.Boolean, System.Boolean, System.Boolean, System.Boolean, System.Boolean, System.Nullable<System.Int32>, System.Nullable<System.DateTimeOffset>, System.Nullable<System.Int32>, Challonge.Tournaments.TournamentGrandFinals, System.Nullable<System.Int32>, System.Nullable<System.Int32>)
+  fullName.vb: Challonge.ChallongeClient.TournamentHandler.UpdateTournamentAsync(System.String, System.String, System.String, Challonge.Tournaments.TournamentType, System.String, System.String, System.Boolean, System.Boolean, System.Single, System.Single, System.Single, System.Single, System.Single, System.Int32, Challonge.Tournaments.TournamentRankingStats, System.Boolean, System.Boolean, System.Boolean, System.Boolean, System.Boolean, System.Boolean, System.Boolean, System.Nullable(Of System.Int32), System.Nullable(Of System.DateTimeOffset), System.Nullable(Of System.Int32), Challonge.Tournaments.TournamentGrandFinals, System.Nullable(Of System.Int32), System.Nullable(Of System.Int32))
+  nameWithType: ChallongeClient.TournamentHandler.UpdateTournamentAsync(String, String, String, TournamentType, String, String, Boolean, Boolean, Single, Single, Single, Single, Single, Int32, TournamentRankingStats, Boolean, Boolean, Boolean, Boolean, Boolean, Boolean, Boolean, Nullable<Int32>, Nullable<DateTimeOffset>, Nullable<Int32>, TournamentGrandFinals, Nullable<Int32>, Nullable<Int32>)
+  nameWithType.vb: ChallongeClient.TournamentHandler.UpdateTournamentAsync(String, String, String, TournamentType, String, String, Boolean, Boolean, Single, Single, Single, Single, Single, Int32, TournamentRankingStats, Boolean, Boolean, Boolean, Boolean, Boolean, Boolean, Boolean, Nullable(Of Int32), Nullable(Of DateTimeOffset), Nullable(Of Int32), TournamentGrandFinals, Nullable(Of Int32), Nullable(Of Int32))
 - uid: Challonge.ChallongeClient.TournamentHandler.UpdateTournamentAsync*
   name: UpdateTournamentAsync
   href: api/Challonge.ChallongeClient.TournamentHandler.html#Challonge_ChallongeClient_TournamentHandler_UpdateTournamentAsync_
@@ -1848,6 +1851,38 @@ references:
   commentId: N:Challonge.Tournaments
   fullName: Challonge.Tournaments
   nameWithType: Challonge.Tournaments
+- uid: Challonge.Tournaments.NonEliminationTournamentData
+  name: NonEliminationTournamentData
+  href: api/Challonge.Tournaments.NonEliminationTournamentData.html
+  commentId: T:Challonge.Tournaments.NonEliminationTournamentData
+  fullName: Challonge.Tournaments.NonEliminationTournamentData
+  nameWithType: NonEliminationTournamentData
+- uid: Challonge.Tournaments.NonEliminationTournamentData.CurrentRound
+  name: CurrentRound
+  href: api/Challonge.Tournaments.NonEliminationTournamentData.html#Challonge_Tournaments_NonEliminationTournamentData_CurrentRound
+  commentId: P:Challonge.Tournaments.NonEliminationTournamentData.CurrentRound
+  fullName: Challonge.Tournaments.NonEliminationTournamentData.CurrentRound
+  nameWithType: NonEliminationTournamentData.CurrentRound
+- uid: Challonge.Tournaments.NonEliminationTournamentData.CurrentRound*
+  name: CurrentRound
+  href: api/Challonge.Tournaments.NonEliminationTournamentData.html#Challonge_Tournaments_NonEliminationTournamentData_CurrentRound_
+  commentId: Overload:Challonge.Tournaments.NonEliminationTournamentData.CurrentRound
+  isSpec: "True"
+  fullName: Challonge.Tournaments.NonEliminationTournamentData.CurrentRound
+  nameWithType: NonEliminationTournamentData.CurrentRound
+- uid: Challonge.Tournaments.NonEliminationTournamentData.ParticipantsPerMatch
+  name: ParticipantsPerMatch
+  href: api/Challonge.Tournaments.NonEliminationTournamentData.html#Challonge_Tournaments_NonEliminationTournamentData_ParticipantsPerMatch
+  commentId: P:Challonge.Tournaments.NonEliminationTournamentData.ParticipantsPerMatch
+  fullName: Challonge.Tournaments.NonEliminationTournamentData.ParticipantsPerMatch
+  nameWithType: NonEliminationTournamentData.ParticipantsPerMatch
+- uid: Challonge.Tournaments.NonEliminationTournamentData.ParticipantsPerMatch*
+  name: ParticipantsPerMatch
+  href: api/Challonge.Tournaments.NonEliminationTournamentData.html#Challonge_Tournaments_NonEliminationTournamentData_ParticipantsPerMatch_
+  commentId: Overload:Challonge.Tournaments.NonEliminationTournamentData.ParticipantsPerMatch
+  isSpec: "True"
+  fullName: Challonge.Tournaments.NonEliminationTournamentData.ParticipantsPerMatch
+  nameWithType: NonEliminationTournamentData.ParticipantsPerMatch
 - uid: Challonge.Tournaments.Tournament
   name: Tournament
   href: api/Challonge.Tournaments.Tournament.html
@@ -2192,6 +2227,19 @@ references:
   isSpec: "True"
   fullName: Challonge.Tournaments.Tournament.Name
   nameWithType: Tournament.Name
+- uid: Challonge.Tournaments.Tournament.NonEliminationTournamentData
+  name: NonEliminationTournamentData
+  href: api/Challonge.Tournaments.Tournament.html#Challonge_Tournaments_Tournament_NonEliminationTournamentData
+  commentId: P:Challonge.Tournaments.Tournament.NonEliminationTournamentData
+  fullName: Challonge.Tournaments.Tournament.NonEliminationTournamentData
+  nameWithType: Tournament.NonEliminationTournamentData
+- uid: Challonge.Tournaments.Tournament.NonEliminationTournamentData*
+  name: NonEliminationTournamentData
+  href: api/Challonge.Tournaments.Tournament.html#Challonge_Tournaments_Tournament_NonEliminationTournamentData_
+  commentId: Overload:Challonge.Tournaments.Tournament.NonEliminationTournamentData
+  isSpec: "True"
+  fullName: Challonge.Tournaments.Tournament.NonEliminationTournamentData
+  nameWithType: Tournament.NonEliminationTournamentData
 - uid: Challonge.Tournaments.Tournament.NotifyUsersWhenMatchesOpen
   name: NotifyUsersWhenMatchesOpen
   href: api/Challonge.Tournaments.Tournament.html#Challonge_Tournaments_Tournament_NotifyUsersWhenMatchesOpen
@@ -2426,6 +2474,19 @@ references:
   isSpec: "True"
   fullName: Challonge.Tournaments.Tournament.ReviewBeforeFinalizing
   nameWithType: Tournament.ReviewBeforeFinalizing
+- uid: Challonge.Tournaments.Tournament.RoundRobinIterations
+  name: RoundRobinIterations
+  href: api/Challonge.Tournaments.Tournament.html#Challonge_Tournaments_Tournament_RoundRobinIterations
+  commentId: P:Challonge.Tournaments.Tournament.RoundRobinIterations
+  fullName: Challonge.Tournaments.Tournament.RoundRobinIterations
+  nameWithType: Tournament.RoundRobinIterations
+- uid: Challonge.Tournaments.Tournament.RoundRobinIterations*
+  name: RoundRobinIterations
+  href: api/Challonge.Tournaments.Tournament.html#Challonge_Tournaments_Tournament_RoundRobinIterations_
+  commentId: Overload:Challonge.Tournaments.Tournament.RoundRobinIterations
+  isSpec: "True"
+  fullName: Challonge.Tournaments.Tournament.RoundRobinIterations
+  nameWithType: Tournament.RoundRobinIterations
 - uid: Challonge.Tournaments.Tournament.RoundRobinPointsForGameTie
   name: RoundRobinPointsForGameTie
   href: api/Challonge.Tournaments.Tournament.html#Challonge_Tournaments_Tournament_RoundRobinPointsForGameTie
@@ -2478,19 +2539,19 @@ references:
   isSpec: "True"
   fullName: Challonge.Tournaments.Tournament.RoundRobinPointsForMatchWin
   nameWithType: Tournament.RoundRobinPointsForMatchWin
-- uid: Challonge.Tournaments.Tournament.SequentialPairing
-  name: SequentialPairing
-  href: api/Challonge.Tournaments.Tournament.html#Challonge_Tournaments_Tournament_SequentialPairing
-  commentId: P:Challonge.Tournaments.Tournament.SequentialPairing
-  fullName: Challonge.Tournaments.Tournament.SequentialPairing
-  nameWithType: Tournament.SequentialPairing
-- uid: Challonge.Tournaments.Tournament.SequentialPairing*
-  name: SequentialPairing
-  href: api/Challonge.Tournaments.Tournament.html#Challonge_Tournaments_Tournament_SequentialPairing_
-  commentId: Overload:Challonge.Tournaments.Tournament.SequentialPairing
+- uid: Challonge.Tournaments.Tournament.SequentialsPairing
+  name: SequentialsPairing
+  href: api/Challonge.Tournaments.Tournament.html#Challonge_Tournaments_Tournament_SequentialsPairing
+  commentId: P:Challonge.Tournaments.Tournament.SequentialsPairing
+  fullName: Challonge.Tournaments.Tournament.SequentialsPairing
+  nameWithType: Tournament.SequentialsPairing
+- uid: Challonge.Tournaments.Tournament.SequentialsPairing*
+  name: SequentialsPairing
+  href: api/Challonge.Tournaments.Tournament.html#Challonge_Tournaments_Tournament_SequentialsPairing_
+  commentId: Overload:Challonge.Tournaments.Tournament.SequentialsPairing
   isSpec: "True"
-  fullName: Challonge.Tournaments.Tournament.SequentialPairing
-  nameWithType: Tournament.SequentialPairing
+  fullName: Challonge.Tournaments.Tournament.SequentialsPairing
+  nameWithType: Tournament.SequentialsPairing
 - uid: Challonge.Tournaments.Tournament.ShowRounds
   name: ShowRounds
   href: api/Challonge.Tournaments.Tournament.html#Challonge_Tournaments_Tournament_ShowRounds
@@ -2854,6 +2915,19 @@ references:
   isSpec: "True"
   fullName: Challonge.Tournaments.TournamentBuilder.OpenSignup
   nameWithType: TournamentBuilder.OpenSignup
+- uid: Challonge.Tournaments.TournamentBuilder.ParticipantsPerMatch
+  name: ParticipantsPerMatch
+  href: api/Challonge.Tournaments.TournamentBuilder.html#Challonge_Tournaments_TournamentBuilder_ParticipantsPerMatch
+  commentId: P:Challonge.Tournaments.TournamentBuilder.ParticipantsPerMatch
+  fullName: Challonge.Tournaments.TournamentBuilder.ParticipantsPerMatch
+  nameWithType: TournamentBuilder.ParticipantsPerMatch
+- uid: Challonge.Tournaments.TournamentBuilder.ParticipantsPerMatch*
+  name: ParticipantsPerMatch
+  href: api/Challonge.Tournaments.TournamentBuilder.html#Challonge_Tournaments_TournamentBuilder_ParticipantsPerMatch_
+  commentId: Overload:Challonge.Tournaments.TournamentBuilder.ParticipantsPerMatch
+  isSpec: "True"
+  fullName: Challonge.Tournaments.TournamentBuilder.ParticipantsPerMatch
+  nameWithType: TournamentBuilder.ParticipantsPerMatch
 - uid: Challonge.Tournaments.TournamentBuilder.PointsForBye
   name: PointsForBye
   href: api/Challonge.Tournaments.TournamentBuilder.html#Challonge_Tournaments_TournamentBuilder_PointsForBye
@@ -2932,6 +3006,19 @@ references:
   isSpec: "True"
   fullName: Challonge.Tournaments.TournamentBuilder.RankedBy
   nameWithType: TournamentBuilder.RankedBy
+- uid: Challonge.Tournaments.TournamentBuilder.RrIterations
+  name: RrIterations
+  href: api/Challonge.Tournaments.TournamentBuilder.html#Challonge_Tournaments_TournamentBuilder_RrIterations
+  commentId: P:Challonge.Tournaments.TournamentBuilder.RrIterations
+  fullName: Challonge.Tournaments.TournamentBuilder.RrIterations
+  nameWithType: TournamentBuilder.RrIterations
+- uid: Challonge.Tournaments.TournamentBuilder.RrIterations*
+  name: RrIterations
+  href: api/Challonge.Tournaments.TournamentBuilder.html#Challonge_Tournaments_TournamentBuilder_RrIterations_
+  commentId: Overload:Challonge.Tournaments.TournamentBuilder.RrIterations
+  isSpec: "True"
+  fullName: Challonge.Tournaments.TournamentBuilder.RrIterations
+  nameWithType: TournamentBuilder.RrIterations
 - uid: Challonge.Tournaments.TournamentBuilder.SequentialPairings
   name: SequentialPairings
   href: api/Challonge.Tournaments.TournamentBuilder.html#Challonge_Tournaments_TournamentBuilder_SequentialPairings
